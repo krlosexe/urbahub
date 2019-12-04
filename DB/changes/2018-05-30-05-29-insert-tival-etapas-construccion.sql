@@ -1,0 +1,1 @@
+INSERT INTO `tipolval` (`tipolval`, `descriplval`, `edit`) VALUES ('ETAPA_CONSTR', 'ETAPAS DE CONSTRUCCIÓN', '1');

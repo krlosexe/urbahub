@@ -1,0 +1,23 @@
+db.membresia.insert({
+	"serial_acceso" : "",
+	"n_membresia" : "",
+	"id_grupo_empresarial" : "",
+	"id_prospecto_cliente" : "",
+	"fecha_inicio" : "",
+	"fecha_fin" : "",
+	"valor":"",
+	"servicios":[{
+					"id_servicios":""
+	}]
+	"status" : true,
+	"eliminado" : false,
+	"auditoria" : [
+		{
+			"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+			"nomuser" : "  ",
+			"fecha" : ISODate("2018-09-18T20:17:23.485Z"),
+			"accion" : "Nuevo registro usuario",
+			"operacion" : ""
+		},
+	]
+})

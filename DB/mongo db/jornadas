@@ -1,0 +1,40 @@
+//----------------------------------------------------------------------------------------
+//--permiso para pantalla de jornadas
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5c4b2c25791e316747329e02"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+//---Estructura de jornada
+db.jornadas.insert({
+	"_id" : "",
+	"id_membresia" : "",
+	"fecha_hora_inicio" : "",
+	"fecha_hora_fin" : "",
+	"status" : true,
+	"eliminado" : false,
+	"auditoria" : [
+		{
+			"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+			"nomuser" : "  ",
+			"fecha" : ISODate("2018-09-18T20:17:23.485Z"),
+			"accion" : "Nuevo registro usuario",
+			"operacion" : ""
+		},
+	]
+})
+//-----------------------------------------------------------------------------------------							

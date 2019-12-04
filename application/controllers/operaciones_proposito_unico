@@ -1,0 +1,55 @@
+db.ventas.insert({
+    "_id":1,
+    "item":"abc",
+    "precio":10,
+    "cantidad":2,
+    "fecha":ISODate("2014-03-01")
+})
+db.ventas.insert({
+    "_id":2,
+    "item":"jkl",
+    "precio":20,
+    "cantidad":1,
+    "fecha":ISODate("2014-03-01")
+})
+db.ventas.insert({
+    "_id":3,
+    "item":"xyz",
+    "precio":5,
+    "cantidad":10,
+    "fecha":ISODate("2014-03-15")
+})
+db.ventas.insert({
+    "_id":4,
+    "item":"xyz",
+    "precio":5,
+    "cantidad":20,
+    "fecha":ISODate("2014-04-04")
+})
+db.ventas.insert({
+    "_id":5,
+    "item":"abc",
+    "precio":10,
+    "cantidad":10,
+    "fecha":ISODate("2014-04-04")
+})
+$count:
+db.ventas.count({"item":"abc"})
+
+$distinct
+db.ventas.distinct("item")
+db.ventas.distinct("item",{"precio":10})
+
+db.ventas.aggregate(
+    [{
+        $group:{
+                    _id:{
+                            mes:{ "$month":"$fecha"},
+                            dia:{ "$dayOfMonth":"$fecha"},
+                            año:{ "$year":"$fecha"},
+                    },
+                    precioTotal:{ $sum:{ $multiply:["$precio","$cantidad"]}},
+                    cantidadMedia: {$avg: "$cantidad"}
+        }
+    }]
+)

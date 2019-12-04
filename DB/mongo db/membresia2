@@ -1,0 +1,31 @@
+{
+   "_id": ,
+   "serial_acceso": "",
+   "n_membresia": ,
+   "id_grupo_empresarial": "",
+   "tipo_persona": "",
+   "identificador_prospecto_cliente": "",
+   "plan": "",
+   "fecha_inicio": ISODate("2019-02-05T00:00:00.0Z"),
+   "fecha_fin": ISODate("2019-03-05T00:00:00.0Z"),
+   "valor": "",
+   "status": true,
+   "eliminado": false,
+   "trabajadores": [
+     
+  ],
+  "servicios":[{
+          "id_servicios":"",
+          "consumido":"",
+          "disponible":""
+  }]
+   "auditoria": [
+     {
+       "cod_user": ObjectId("5bd09133791e310257337635"),
+       "nomuser": "VEANNEYS HERNÁNDEZ HERNÁNDEZ",
+       "fecha": ISODate("2019-02-05T23:28:46.150Z"),
+       "accion": "Nuevo registro membresia",
+       "operacion": "" 
+    } 
+  ] 
+}

@@ -1,0 +1,22 @@
+//---Estructura de jornada
+db.jornadas.insert({
+	"_id" : "",
+	"id_membresia" : "",
+	"fecha_hora_inicio" : "",
+	"fecha_hora_fin" : "",
+	"status" : true,
+	"eliminado" : false,
+	"servicios":[{
+          "id_servicios":"",
+          "consumido_jornada":"",
+  	}]
+	"auditoria" : [
+		{
+			"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+			"nomuser" : "  ",
+			"fecha" : ISODate("2018-09-18T20:17:23.485Z"),
+			"accion" : "Nuevo registro usuario",
+			"operacion" : ""
+		},
+	]
+})

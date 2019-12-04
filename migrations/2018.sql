@@ -1,0 +1,1 @@
+INSERT INTO `banco` (`id_banco`, `cod_banco`, `nombre_banco`) VALUES (NULL, '12', 'asdasd');

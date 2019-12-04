@@ -1,0 +1,359 @@
+#esquemas
+db.esquemas.insert({ 'tipo':298, 'cod_esquema':'DESC00001', 'descripcion':'ESQUEMA DESCUENTO', 'auditoria' : [  {  	"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),  	"nom_user" : "Gianni Santucci",  	"fecha" : ISODate("2018-09-10T13:56:11.705Z"),  	"accion" : "Nuevo registro",  	"operacion" : ""  }]})
+
+
+29	PAULINA	CRUZ	ROJAS	INTERNO	CURP890726A66	26-07-2018
+
+#Para cliente pagador:
+#Contactos
+db.contactos.insert({
+	"id_codigo_postal" : "5",
+	"telefono_principal_contacto" : "+99 (999) 999-99-99",
+	"telefono_movil_contacto" : "+99 (999) 999-99-99",
+	"direccion_contacto" : "PRUEBA",
+	"calle_contacto" : "CALLE",
+	"interior_contacto" : "2",
+	"exterior_contacto" : "0999",
+	"status" : true,
+	"eliminado" : false,
+	"auditoria" : [
+		{
+			"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+			"nomuser" : "  ",
+			"fecha" : ISODate("2018-09-18T20:17:23.485Z"),
+			"accion" : "Nuevo registro usuario",
+			"operacion" : ""
+		},
+	]
+})
+#Usuario
+db.usuario.insert({
+						'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+						'correo_usuario':'paulina.cruz@urbahub.com',
+						'clave_usuario':'7c4a8d09ca3762af61e59520943dc26494f8941b',
+						'avatar_usuario':'default.png',
+						'fec_ult_acceso_usuario':'2018-01-31',
+						'estatus':true,
+						'eliminado':false,
+						'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+						}]
+})
+#Datos personales
+db.datos_personales.insert({
+						'id_usuario':ObjectId("5baa82a5ac92cbbb1837e6d4"),
+						'id_contacto':0,
+						'nombre_datos_personales':'Paulina',
+						'apellido_p_datos_personales':'Cruz ',
+						'apellido_m_datos_personales':'',
+						'curp_datos_personales':'CUXP180925MBCRXLA7',
+						'rfc_datos_personales':'CUXP180925LQ5',
+						'genero_datos_personales':'266',
+						'fecha_nac_datos_personales':'12-09-1987',
+						'edo_civil_datos_personales':'262',
+						'nacionalidad_datos_personales':'209',
+						'num_hijosdatos_personales':0,
+						'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+						}]		
+})
+#Cliente pagador
+db.cliente_pagador.insert({
+							'actividad_e_cliente':339,
+							'pais_cliente':33,
+							'tipo_persona_cliente':'FISICA',
+							'id_datos_personales':'5baa82f6ac92cbbb1837e6d5',
+							'id_contacto':'5baa7cc49828839bd416b42c',
+							'rfc_img':'fghfgh546456.PNG',
+							'dominio_fiscal_img':'fghfgh546456.PNG',
+							'giro_mercantil':'',
+							'acta_constitutiva':'',
+							'acta_img':'',
+							'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+							}]
+});		
+#Proyectos
+db.proyectos.insert({
+							'codigo':'0001',
+							'nombre':'LA ESTANCIA',
+							'descripcion':'VENTA DE LOTES',
+							'director':'5b9195896f17d5735a0db19d',
+							'plano':'1519609404.png',
+							'indicador_mora':'',
+							'can_dias_vencidos':0,
+							'porcentaje_mora':0,
+							'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+							}]
+})							
+	
+	
+db.rol_operaciones.insert({
+							"id_rol" : ObjectId("5b8dc599d06020d3e9a9eb90"),
+							"id_lista_vista" : ObjectId("5bb663bf8ff48316ec10a382"),
+							"admin_rol_operaciones" : "0",
+							"registrar" : "0",
+							"general" : "0",
+							"detallada" : "0",
+							"actualizar" : "0",
+							"eliminar" : "0",
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})
+
+#Vigencia
+db.vigencia.insert({
+							"descripcion":"Mensual",	
+							"status":true,
+							"eliminado":false,
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})
+#Planes
+db.planes.insert({
+							"cod_planes":"N",
+							"descripcion":"NOMAD (COWORK AREA)",
+							"id_vigencia":"5bb6760db5d368b23d1770f2",
+							"tiempo_contrato":3,
+							"precio":3.000,00
+							"status":true,
+							"eliminado":false,
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})
+#Rol para admin de servicios	
+
+db.rol_operaciones.insert({
+							"id_rol" : ObjectId("5b8dc599d06020d3e9a9eb90"),
+							"id_lista_vista" : ObjectId("5bba41d38ff4830fd83d82e2"),
+							"admin_rol_operaciones" : "0",
+							"registrar" : "0",
+							"general" : "0",
+							"detallada" : "0",
+							"actualizar" : "0",
+							"eliminar" : "0",
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})
+#Planes
+db.servicios.insert({
+							"cod_servicios":"1",
+							"descripcion":"HORAS URBANHUB",
+							"tipo":"N",
+							"status":true,
+							"eliminado":false,
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})	
+#Rol para admin de paquetes	
+
+db.rol_operaciones.insert({
+							"id_rol" : ObjectId("5b8dc599d06020d3e9a9eb90"),
+							"id_lista_vista" : ObjectId("5bbb3e2f8ff4831368714432"),
+							"admin_rol_operaciones" : "0",
+							"registrar" : "0",
+							"general" : "0",
+							"detallada" : "0",
+							"actualizar" : "0",
+							"eliminar" : "0",
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})	
+#Paquetes
+db.paquetes.insert({
+							"id_plan":ObjectId("5bb67ed6b5d368b23d1770f4"),
+							"id_servicio":ObjectId("5bba4e6505b8d0c6f1b3e98f"),
+							"valor":"80",
+							"status":true,
+							"eliminado":false,
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})		
+#Rol para admin temporadas
+
+db.rol_operaciones.insert({
+							"id_rol" : ObjectId("5b8dc599d06020d3e9a9eb90"),
+							"id_lista_vista" : ObjectId("5bbe019a791e311e5d036012"),
+							"admin_rol_operaciones" : "0",
+							"registrar" : "0",
+							"general" : "0",
+							"detallada" : "0",
+							"actualizar" : "0",
+							"eliminar" : "0",
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})	
+
+db.temporadas.insert({
+							"temporada":"1",
+							"desde":ISODate("2018-09-10T13:56:11.705Z"),
+							"hasta":ISODate("2018-09-11T13:56:11.705Z"),
+							"ajuste":5,
+							"operacion":true,
+							"status":true,
+							"eliminado" : false,
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})
+db.mapas_temporadas.insert({
+							"id_planes":ObjectId("5bb67ed6b5d368b23d1770f4"),
+							"id_temporadas":ObjectId("5bbf670cc84e4290c7327f33"),
+							"ajuste":"150",
+							"costo_temporada":"3150",
+							"status":true,
+							"eliminado" : false,
+							"auditoria" : [
+								{
+									"cod_user" : ObjectId("5b9195896f17d5735a0db19d"),
+									"nom_user" : "Gianni Santucci",
+									"fecha" : ISODate("2018-09-10T13:56:11.705Z"),
+									"accion" : "Nuevo registro",
+									"operacion" : ""
+								}
+							]
+})	
+#db banco
+db.banco.insert({
+						'cod_banco':'001',
+						'nombre_banco':'BANCO DE VENEZUELA',
+						'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+						}]
+})
+db.banco.insert({
+						'cod_banco':'002',
+						'nombre_banco':'BANCO BICENTENARIO',
+						'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+						}]
+})
+#db vendedor
+db.vendedor.insert({
+						'id_usuario':'5baa82a5ac92cbbb1837e6d4',
+						'tipo_vendedor':'270',	
+						'auditoria':[{
+															'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+															'nom_user':'Gianni Santucci',
+															'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+															'accion':'Nuevo registro',
+															'operacion':''
+											}]
+})
+#prospecto_vendedor
+db.prospecto_vendedor.insert({
+						id_proyecto:'5baa8eeeac92cbbb1837e6d7',
+						tipo_cliente:'PROSPECTO',
+						id_cliente:'5baa851aac92cbbb1837e6d6',
+						'eliminado':false,
+						'status':true,	
+						'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+						}]
+})
+
+#vendedores_inmobiliarias
+db.vendedores_inmobiliarias.insert({
+						'id_vendedor':'5be37820feb7a0363f107f69',
+						'id_proyecto':'5baa8eeeac92cbbb1837e6d7',
+						'eliminado':false,
+						'status':true,	
+						'auditoria':[{
+										'cod_user':ObjectId("5b9195896f17d5735a0db19d"),
+										'nom_user':'Gianni Santucci',
+										'fecha':ISODate("2018-09-10T13:56:11.705Z"),
+										'accion':'Nuevo registro',
+										'operacion':''
+						}]
+});

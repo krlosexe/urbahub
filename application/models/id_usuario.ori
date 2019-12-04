@@ -1,0 +1,561 @@
+id_usuario
+id_rol
+correo_usuario
+clave_usuario
+avatar_usuario
+fec_ult_acceso_usuario
+
+
+1
+1
+gianni.santucci@ag2.com.mx
+7c4a8d09ca3762af61e59520943dc26494f8941b
+default.png
+2018-01-31
+
+--------
+id_datos_personales
+id_usuario
+id_contacto
+nombre_datos_personales
+apellido_p_datos_personales
+apellido_m_datos_personales
+curp_datos_personales
+rfc_datos_personales
+genero_datos_personales
+fecha_nac_datos_personales
+edo_civil_datos_personales
+nacionalidad_datos_personales
+num_hijosdatos_personales
+
+
+1
+1
+1
+MICHAEL DANIEL
+RONDON
+PEREIRA
+1SA2F1DA
+fsa5f4as6
+266
+1993-02-27
+262
+209
+0
+----------------
+id_rol
+nombre_rol
+descripcion_rol
+editable_rol
+----------------
+id_rol_operaciones
+id_rol
+id_lista_vista
+admin_rol_operaciones
+registrar
+general
+detallada
+actualizar
+eliminar
+--------------------
+id_lista_vista
+id_modulo_vista
+nombre_lista_vista
+descripcion_lista_vista
+posicion_lista_vista
+url_lista_vista
+visibilidad_lista_vista
+-----------------------
+id_modulo_vista
+nombre_modulo_vista
+descripcion_modulo_vista
+posicion_modulo_vista
+------------------------------------------------------------------------
+/*
+**** Rol de operaciones
+*/
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f09f78ce6f2e194339a45"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({	
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a018ce6f2e194339a46"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}		
+							})
+db.rol_operaciones.insert({										
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a098ce6f2e194339a47"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a108ce6f2e194339a48"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})	
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a178ce6f2e194339a49"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a218ce6f2e194339a4a"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a288ce6f2e194339a4b"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a308ce6f2e194339a4c"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+/*db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId("5b8f0a3a8ce6f2e194339a4d"),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId(""),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})
+db.rol_operaciones.insert({
+								'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+								'id_lista_vista':ObjectId(""),
+								'admin_rol_operaciones':'0',
+								'registrar':'0',
+								'general':'0',
+								'detallada':'0',
+								'actualizar':'0',
+								'eliminar':'0',
+								'auditoria':{
+										
+										status:true,
+										fec_status:'01-01-2018',
+										usr_regins:'1',
+										fec_regins:'01-01-2018',
+										usr_regmod:'1',
+										fec_regmod:'01-01-2018'
+								}
+							})*/
+------------------------------------------------------------------------
+/*
+**** Rol
+*/
+db.rol.insert({
+					'nombre_rol':'ADMINISTRADOR',
+					'editable_rol':'1',
+					'auditoria':{
+							
+							status:'true',
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+					}
+})
+------------------------------------------------------------------------
+/*
+**** Usuario
+*/
+db.usuario.insert({
+						'id_rol':ObjectId("5b8dc599d06020d3e9a9eb90"),
+						'correo_usuario':'gianni.santucci@ag2.com.mx',
+						'clave_usuario':'7c4a8d09ca3762af61e59520943dc26494f8941b',
+						'avatar_usuario':'default.png',
+						'fec_ult_acceso_usuario':'2018-01-31',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}			
+})
+------------------------------------------------------------------------
+/*
+**** datos_personales
+*/
+db.datos_personales.insert({
+						'id_usuario':ObjectId("5b8dc55fd06020d3e9a9eb8f"),
+						'id_contacto':0,
+						'nombre_datos_personales':'Gianni Dario',
+						'apellido_p_datos_personales':'Santucci ',
+						'apellido_m_datos_personales':'Carrillo',
+						'curp_datos_personales':'1SA2F1DA',
+						'rfc_datos_personales':'fsa5f4as6',
+						'genero_datos_personales':'266',
+						'fecha_nac_datos_personales':'12-09-1987',
+						'edo_civil_datos_personales':'262',
+						'nacionalidad_datos_personales':'209',
+						'num_hijosdatos_personales':0,
+						'auditoria':{
+							status:'true'
+							fec_status:'01-01-2018',
+							usr_regins:'1'
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}			
+})
+---------------------------------------------------------------------------
+/**
+** Modulo Vista
+**/
+	
+
+
+db.modulo_vista.insert({
+						'nombre_modulo_vista':'CONFIGURACIÓN',
+						'descripcion_modulo_vista':'BANCOS, LISTA DE VALORES, MI CORREO, MI EMPRESA, PLAZAS BANCARIAS, SEPOMEX',
+						'posicion_modulo_vista':'3',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.modulo_vista.insert({
+						'nombre_modulo_vista':'PERFILES',
+						'descripcion_modulo_vista':'USUARIOS',
+						'posicion_modulo_vista':'2',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.modulo_vista.insert({
+						'nombre_modulo_vista':'CATÁLOGOS',
+						'descripcion_modulo_vista':'',
+						'posicion_modulo_vista':'2',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})			
+---------------------------------------------------------------------------
+/**
+** Lista vista
+**/
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f081f8ce6f2e194339a43"),
+						'nombre_lista_vista':'Módulos',
+						'descripcion_lista_vista':'para crear dinamicamente el menu del sistema',
+						'posicion_lista_vista':'1',
+						'url_lista_vista':'Modulos',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f081f8ce6f2e194339a43"),
+						'nombre_lista_vista':'Funciones',
+						'descripcion_lista_vista':'',
+						'posicion_lista_vista':'2',
+						'url_lista_vista':'ListaVista',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f081f8ce6f2e194339a43"),
+						'nombre_lista_vista':'Roles',
+						'descripcion_lista_vista':'control de la permisologia de los usuarios',
+						'posicion_lista_vista':'3',
+						'url_lista_vista':'Roles',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f07fa8ce6f2e194339a42"),
+						'nombre_lista_vista':'Mi Correo',
+						'descripcion_lista_vista':'control de la permisologia de los usuarios',
+						'posicion_lista_vista':'6',
+						'url_lista_vista':'MiCorreo',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f07fa8ce6f2e194339a42"),
+						'nombre_lista_vista':'Mi Empresa',
+						'descripcion_lista_vista':'',
+						'posicion_lista_vista':'5',
+						'url_lista_vista':'MiEmpresa',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f081f8ce6f2e194339a43"),
+						'nombre_lista_vista':'Usuarios',
+						'descripcion_lista_vista':'una sola pantalla para todo el crud',
+						'posicion_lista_vista':'5',
+						'url_lista_vista':'Usuarios',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f083d8ce6f2e194339a44"),
+						'nombre_lista_vista':'Comisiones',
+						'descripcion_lista_vista':'esquema de comision por vendedor',
+						'posicion_lista_vista':'5',
+						'url_lista_vista':'Comision',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f083d8ce6f2e194339a44"),
+						'nombre_lista_vista':'Descuentos',
+						'descripcion_lista_vista':'',
+						'posicion_lista_vista':'3',
+						'url_lista_vista':'Descuento',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+db.lista_vista.insert({
+						'id_modulo_vista':ObjectId("5b8f083d8ce6f2e194339a44"),
+						'nombre_lista_vista':'Esquemas',
+						'descripcion_lista_vista':'',
+						'posicion_lista_vista':'1',
+						'url_lista_vista':'Esquemas',
+						'visibilidad_lista_vista':'0',
+						'auditoria':{
+							
+							status:true,
+							fec_status:'01-01-2018',
+							usr_regins:'1',
+							fec_regins:'01-01-2018',
+							usr_regmod:'1',
+							fec_regmod:'01-01-2018'
+						}
+					})
+
+-----------------------------------------------------------
+
+tablas migradas
+usuarios
+roles
+datos personales
+modulo_vista
+lista_vista
+rol_operaciones
