@@ -1526,13 +1526,20 @@ function enviar_emailC(){
 			function(isConfirm){
 				if (isConfirm) {
 
-					if(data.membresia == false){
-						GenerarCobranzaOtrosServicios(data._id.$id, data.data_service, data.numero_cotizacion, data.identificador_prospecto_cliente)
+					if(data.tipo_cliente == "PROSPECTO"){
+						
+						mensajes("danger", "Debe traspasar el prospecto a cliente, antes de aprobar la cotizacion")
 					}else{
-						GetDataPlanAprobar(data.data_plan, data.identificador_prospecto_cliente, "#tableAprobarListPlanes tbody", data.tipo_persona)
-						$("#id_cotizacion").val(data._id.$id)
-						cuadros("#cuadro1", "#cuadro5");
+						
+						if(data.membresia == false){
+							GenerarCobranzaOtrosServicios(data._id.$id, data.data_service, data.numero_cotizacion, data.identificador_prospecto_cliente)
+						}else{
+							GetDataPlanAprobar(data.data_plan, data.identificador_prospecto_cliente, "#tableAprobarListPlanes tbody", data.tipo_persona, data.tipo_cliente)
+							$("#id_cotizacion").val(data._id.$id)
+							cuadros("#cuadro1", "#cuadro5");
+						}
 					}
+					
 					
 					
 				} else {
@@ -1581,7 +1588,8 @@ function enviar_emailC(){
 
 
 	var ObjCliente =  [];
-	function GetDataPlanAprobar(data_plan, id_cliente, table, tipo_persona) {
+	function GetDataPlanAprobar(data_plan, id_cliente, table, tipo_persona, tipo_cliente) {
+		
 		
 		$(table+" tr").remove();
 		$("#tableAprobarFacturar tbody tr").remove();

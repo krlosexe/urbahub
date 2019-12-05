@@ -40,6 +40,8 @@ class Cotizacion_model extends CI_Model {
             
             $id_datos_personales =  new MongoDB\BSON\ObjectId($res_cliente_pagador[0]["id_datos_personales"]);
             
+            $valores["tipo_cliente"] = $res_cliente_pagador[0]["tipo_cliente"];
+
             $res_dt = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array("_id"=>$id_datos_personales))->get("datos_personales");
             
             if(count($res_dt)>0){
