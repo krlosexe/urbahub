@@ -808,11 +808,9 @@ class Cotizacion extends CI_Controller {
         }
 
 
-
-        $dia_init  = 01;
-        $mes_init  = $mes_fecha_aprobacion + 1;
-        $new_fecha = $year_fecha_aprobacion."-".$mes_init."-".$dia_init;
-
+        $dia_init  = '01';
+        $fecha_m = $year_fecha_aprobacion."-".$mes_fecha_aprobacion."-".$dia_init;
+        $new_fecha = date("Y-d-m",strtotime($fecha_m."+ 1 month"));
         $new_fecha = new DateTime($new_fecha);
 
         for ($i=1; $i <= $plan["tiempo_contrato"]; $i++) { 
