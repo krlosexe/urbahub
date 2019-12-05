@@ -536,12 +536,12 @@ function eliminarServiciosPlanes(id_servicio){
 				$("#indicador_membresia_edit").prop("checked", true);
 				$("#membresia_edit").val("S")
 				$(".remove").css("display", "block")
-				GetPlanes("#plan_editar", true)
+				GetPlanes("#plan_editar", true, data.plan)
 			}else{
 				$("#indicador_membresia_edit").prop("checked", false);
 				$("#membresia_edit").val("N")
 				$(".remove").css("display", "none")
-				GetPlanes("#plan_editar", false)
+				GetPlanes("#plan_editar", false,data.plan)
 			}
 			$("#plan_editar option[value='" + data.plan + "']").prop("selected",true);
 
@@ -1376,8 +1376,7 @@ $("#indicador_membresia_edit").on("change", function(){
 
 
 
-function GetPlanes(select, membresia){
-
+function GetPlanes(select, membresia,id=''){
 	var url=document.getElementById('ruta').value;
 	$.ajax({
 	   url:url+"Planes/listado_planes/",
@@ -1398,10 +1397,18 @@ function GetPlanes(select, membresia){
 		  text : "Seleccione"
 		}));
 		$.each(data, function(i, item){
-		  
-
-			if(item.status == true){
+			console.log(item)
+				if(item.status == true){
 				if((membresia == true && item.membresia == true) || (membresia == false && item.membresia == false)){
+					$(select).append($('<option>',
+					{
+					  value: item._id.$id,
+					  text : item.titulo
+					}));
+				}
+			}else {
+				if(id !=''){	
+				if(id == item.id_planes)
 					$(select).append($('<option>',
 					{
 					  value: item._id.$id,
