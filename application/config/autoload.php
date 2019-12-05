@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('menu_rol_operaciones','generar_token','mongo_db');
+$autoload['libraries'] = array('menu_rol_operaciones','mongo_db');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers
@@ -88,7 +88,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url','prp');
 
 /*
 | -------------------------------------------------------------------

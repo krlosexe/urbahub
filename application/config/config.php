@@ -23,8 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-//$config['base_url'] = 'http://'.$_SERVER["SERVER_NAME"].'/';
-$config['base_url'] = BASE_DIRECCION;
+$config['base_url'] = 'http://localhost/urbahub';
+//$config['base_url'] = /*'http://'*/(isset($_SERVER['HTTPS']) == TRUE ? "https://":"http://"). $_SERVER['HTTP_HOST'] .'/escorfin/';
+//$config['base_url'] = BASE_DIRECCION;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,7 @@ $config['base_url'] = BASE_DIRECCION;
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = 'Acceso/';
 
 /*
 |--------------------------------------------------------------------------
@@ -64,8 +66,6 @@ $config['uri_protocol']	= 'REQUEST_URI';
 | For more information please see the user guide:
 |
 | https://codeigniter.com/user_guide/general/urls.html
-|
-| Note: This option is ignored for CLI requests.
 */
 $config['url_suffix'] = '';
 
@@ -160,8 +160,6 @@ $config['composer_autoload'] = FALSE;
 |
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
-| Note: This option is ignored for CLI requests.
-|
 */
 $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 
@@ -194,6 +192,20 @@ $config['directory_trigger'] = 'd';
 
 /*
 |--------------------------------------------------------------------------
+| Allow $_GET array
+|--------------------------------------------------------------------------
+|
+| By default CodeIgniter enables access to the $_GET array.  If for some
+| reason you would like to disable it, set 'allow_get_array' to FALSE.
+|
+| WARNING: This feature is DEPRECATED and currently available only
+|          for backwards compatibility purposes!
+|
+*/
+$config['allow_get_array'] = TRUE;
+
+/*
+|--------------------------------------------------------------------------
 | Error Logging Threshold
 |--------------------------------------------------------------------------
 |
@@ -214,7 +226,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------
@@ -222,7 +234,7 @@ $config['log_threshold'] = 0;
 |--------------------------------------------------------------------------
 |
 | Leave this BLANK unless you would like to set something other than the default
-| application/logs/ directory. Use a full server path.
+| application/logs/ directory. Use a full server path with trailing slash.
 |
 */
 $config['log_path'] = '';
@@ -270,7 +282,7 @@ $config['log_date_format'] = 'Y-m-d H:i:s';
 |--------------------------------------------------------------------------
 |
 | Leave this BLANK unless you would like to set something other than the default
-| application/views/errors/ directory.  Use a full server path.
+| application/views/errors/ directory.  Use a full server path with trailing slash.
 |
 */
 $config['error_views_path'] = '';
@@ -281,7 +293,7 @@ $config['error_views_path'] = '';
 |--------------------------------------------------------------------------
 |
 | Leave this BLANK unless you would like to set something other than the default
-| application/cache/ directory.  Use a full server path.
+| application/cache/ directory.  Use a full server path with trailing slash.
 |
 */
 $config['cache_path'] = '';
@@ -315,7 +327,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'fs%&/';
+$config['encryption_key'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -371,7 +383,7 @@ $config['encryption_key'] = 'fs%&/';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = sys_get_temp_dir();
+$config['sess_save_path'] = APPPATH . 'cache/session/';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -396,6 +408,34 @@ $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
+
+/*
+|--------------------------------------------------------------------------
+| Standardize newlines
+|--------------------------------------------------------------------------
+|
+| Determines whether to standardize newline characters in input data,
+| meaning to replace \r\n, \r, \n occurrences with the PHP_EOL value.
+|
+| WARNING: This feature is DEPRECATED and currently available only
+|          for backwards compatibility purposes!
+|
+*/
+$config['standardize_newlines'] = FALSE;
+
+/*
+|--------------------------------------------------------------------------
+| Global XSS Filtering
+|--------------------------------------------------------------------------
+|
+| Determines whether the XSS filter is always active when GET, POST or
+| COOKIE data is encountered
+|
+| WARNING: This feature is DEPRECATED and currently available only
+|          for backwards compatibility purposes!
+|
+*/
+$config['global_xss_filtering'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -455,6 +495,20 @@ $config['time_reference'] = 'local';
 
 /*
 |--------------------------------------------------------------------------
+| Rewrite PHP Short Tags
+|--------------------------------------------------------------------------
+|
+| If your PHP installation does not have short tag support enabled CI
+| can rewrite the tags on-the-fly, enabling you to utilize that syntax
+| in your view files.  Options are TRUE or FALSE (boolean)
+|
+| Note: You need to have eval() enabled for this to work.
+|
+*/
+$config['rewrite_short_tags'] = FALSE;
+
+/*
+|--------------------------------------------------------------------------
 | Reverse Proxy IPs
 |--------------------------------------------------------------------------
 |
@@ -470,3 +524,13 @@ $config['time_reference'] = 'local';
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+//Zona horaria
+if(true){
+	setlocale(LC_TIME, 'es_VE');
+	date_default_timezone_set('America/Manaus');
+}
+else{
+	setlocale(LC_TIME, 'es_MX');
+	date_default_timezone_set('America/Mexico_City');
+}
