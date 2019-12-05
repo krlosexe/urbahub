@@ -779,7 +779,7 @@ class Cotizacion extends CI_Controller {
                                       "mes"              => 0,
                                       "fecha"            => new DateTime($fecha_aprobacion),
                                       "tipo_operacion"   => "C",
-                                      "concepto"         => "Prorrata",
+                                      "concepto"         => "PRORRATA",
                                       "fecha_movimiento" => new DateTime($fecha_aprobacion),
                                       "fecha_contable"   => new DateTime($fecha_aprobacion),
                                       "cargo"            => ($mensualidad[$key] / 30) * $dias_prorrata,
