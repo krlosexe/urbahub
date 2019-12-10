@@ -1517,14 +1517,21 @@ Class Membresia_model extends CI_Model
     /*
     *   Registro de membresía
     */
-    public function registrar_membresia($data){
+    public function registrar_membresia($data,$case=false){
         /***/
+        if(!$case){
         $rs_membresia = $this->mongo_db->where_or(array('identificador_prospecto_cliente'=>$data['identificador_prospecto_cliente'],"serial_acceso"=>$data['serial_acceso']))->where(array("eliminado"=>false))->get("membresia"); 
+
+        }else{
+            $rs_membresia = $this->mongo_db->where(['identificador_prospecto_cliente'=>$data['identificador_prospecto_cliente'],"serial_acceso"=>$data['serial_acceso'],"eliminado"=>false])->get("membresia"); 
+        }
+
         if(count($rs_membresia) == 0){
             $insertar1 = $this->mongo_db->insert("membresia", $data);
             echo json_encode("<span>La membresía se ha registrado exitosamente!</span>");
         }else{
-            echo "<span>¡Ya se encuentra registrada una membresía con ese serial o con ese usuario!</span>";
+            if($case==false)
+                echo "<span>¡Ya se encuentra registrada una membresía con ese serial o con ese usuario!</span>";
         }
         /***/
     }

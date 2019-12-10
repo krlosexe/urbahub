@@ -26,6 +26,7 @@ class Membresia extends CI_Controller
     *   Metodo que arma el index...
     */
     public function index(){
+
         //--Cambio con servicio ag2
         //die('Error 955: Взяв под свой контроль свою команду ....');
         $nacionalidades = consumir_rest('Lista_Valor','buscar', array('cod_static_tipo_valor'=>'NACIONALIDAD'));
@@ -532,7 +533,6 @@ class Membresia extends CI_Controller
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         
         $formulario = $this->input->post();
-        
         //var_dump($formulario);die('');
         //---Planes:
         $plan = (isset($formulario["plan_membresia_registrar"]))? $formulario["plan_membresia_registrar"]: "";
@@ -1229,6 +1229,7 @@ class Membresia extends CI_Controller
         $fecha = new MongoDB\BSON\UTCDateTime();
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         $formulario = $this->input->post();
+
         //-----------------------------------
         //--Armo datos de trabajadores....
         $id_membresia = (isset($formulario["id_membresia"]))? $formulario["id_membresia"]: "";
