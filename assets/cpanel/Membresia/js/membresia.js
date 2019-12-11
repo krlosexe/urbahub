@@ -72,7 +72,14 @@ $(document).ready(function(){
 		          	}
 				},
 				{"data":"n_membresia"},
-				{"data":"serial_acceso"},
+				{"data":"serial_acceso",render : function(data, type, row) {
+						if(isNaN(data)== false){
+							return ''
+						}else{
+							return data
+						}
+						
+	          		}},
 				{"data":"identificador_prospecto_cliente"},
 				{"data":"tipo_persona"},
 				{"data":"nombre_datos_personales"},
@@ -338,6 +345,7 @@ $(document).ready(function(){
 
 			$("#alertas").css("display", "none");
 			var data = table.row( $(this).parents("tr") ).data();
+
 			
 			//console.log(table)
 			// *****   datos datos generales ****
@@ -379,19 +387,23 @@ $(document).ready(function(){
 			$("#tipo_persona_mostrar").val(data.tipo_persona);	
 			$("#alertas").css("display", "none");
 			
-			if (data.tipo_persona == "fisica"){ 
+			if (data.tipo_persona == "fisica" || data.tipo_persona == "FISICA"){ 
 				$("#fisica_mostrar").prop('checked', true)
 				$("#moral_mostrar").prop('checked', false)
 				$("#personaMoralC").hide();	
 				$("#personaFisicaC").show();
 				$(".pestana_datosTrabajadoresC").hide();
 				//--Asigno valores
-				$("#serial_acceso_mostrar_fisica").val(data.serial_acceso)
+				if(isNaN(data.serial_acceso)== false){
+				$("#serial_acceso_actualizar_fisica").val('')
+				}else{
+				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				}
 				$("#grupo_empresarial_mostrar_fisica").val(data.grupo_empresarial);
 				$("#rfc_cliente_mostrar_fisica").val(data.identificador_prospecto_cliente);
 				
 			}			
-			if (data.tipo_persona == "moral"){
+			if (data.tipo_persona == "moral" || data.tipo_persona == "MORAL"){
 				$("#moral_mostrar").prop('checked', true)
 				$("#fisica_mostrar").prop('checked', false)
 				$("#personaFisicaC").hide()
@@ -403,7 +415,11 @@ $(document).ready(function(){
 				//urlRepLegal = base_url+'Membresia/rep_legal/'+data.id_cliente
 				/***/
 				//--Asigno valores
-				$("#serial_acceso_mostrar_moral").val(data.serial_acceso)
+				if(isNaN(data.serial_acceso)== false){
+				$("#serial_acceso_actualizar_fisica").val('')
+				}else{
+				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				}
 				//alert(data.identificador_prospecto_cliente);
 				$("#rfc_cliente_mostrar_moral").val(data.identificador_prospecto_cliente)	
 			}
@@ -471,7 +487,7 @@ $(document).ready(function(){
 			$("#tipo_persona_actualizar").val(data.tipo_persona);	
 			$("#alertas").css("display", "none");
 
-			if (data.tipo_persona == "fisica"){ 
+			if (data.tipo_persona == "fisica" || data.tipo_persona == "FISICA"){ 
 				$('#fisica_actualizar').attr('checked', true)
 				$("#personaMoralE").hide();
 				$("#personaFisicaE").show();
@@ -479,7 +495,11 @@ $(document).ready(function(){
 				$(".morale").removeAttr("required");
 				$(".pestana_datosTrabajadoresE").hide();
 				//--Asigno valores
-				$("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				if(isNaN(data.serial_acceso)== false){
+				$("#serial_acceso_actualizar_fisica").val('')
+				}else{
+				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				}
 				$("#grupo_empresarial_jornada_registrar option[value='" + data.id_grupo_empresarial + "']").prop("selected",true);
 				$("#rfc_cliente_actualizar_fisica").val(data.identificador_prospecto_cliente);
 				/*document.getElementById('nombre_cliente_editar').value = data.nombre_datos_personales;
@@ -497,7 +517,7 @@ $(document).ready(function(){
 				$("#pais_origen_editar option[value='" + data.pais_cliente + "']").prop("selected",true);*/
 
 			}else		
-			if (data.tipo_persona == "moral"){
+			if (data.tipo_persona == "moral" || data.tipo_persona == "MORAL"){
 				$('#moral_actualizar').attr('checked', true);
 				$("#personaMoralE").show();
 				$("#personaFisicaE").hide();
@@ -512,7 +532,11 @@ $(document).ready(function(){
 				$(".morale").attr("required", true)
 				$("#razon_social").focus()		
 				//--Asigno valores
-				$("#serial_acceso_actualizar_moral").val(data.serial_acceso)
+				if(isNaN(data.serial_acceso)== false){
+				$("#serial_acceso_actualizar_fisica").val('')
+				}else{
+				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				}
 				$("#rfc_cliente_actualizar_moral").val(data.identificador_prospecto_cliente);
 				/*document.getElementById('razon_social_e').value = data.nombre_datos_personales;
 				document.getElementById('rfc_moral_e').value = data.rfc_datos_personales;
@@ -891,7 +915,7 @@ function consultarCliente(){
 	            		//--
 	            	}else{//Si es un cliente
 						//--
-						if(tipo_per=="fisica"){
+						if(tipo_per=="fisica" || tipo_per=="FISICA"){
 							//---------------------------------------------------------------------
 							$("#nombre_fisica_registrar").val(respuesta[0]["nombre_datos_personales"]);
 			            	$("#apellido_paterno_fisica_registrar").val(respuesta[0]["apellido_p_datos_personales"]);
@@ -927,7 +951,7 @@ function consultarCliente(){
 							$("#colonia_fisica_registrar option[value='"+respuesta[0].id_codigo_postal+"']").prop("selected",true);
 							//--
 							//---------------------------------------------------------------------
-						}else if(tipo_per=="moral"){
+						}else if(tipo_per=="moral" || tipo_per=="MORAL"){
 							//---------------------------------------------------------------------
 							$("#razon_social_moral_registrar").val(respuesta[0]["nombre_datos_personales"]);
 							$("#genero_membresia_registrar_moral option[value='" + respuesta[0]["genero_datos_personales"] + "']").prop("selected",true);
@@ -1052,7 +1076,7 @@ function consultarClienteRFCModificar(rfc_cliente,tipo_per){
 	            		//--
 	            	}else{//Si es un cliente
 						//--
-						if(tipo_per=="fisica"){
+						if(tipo_per=="fisica" || tipo_per=="FISICA"){
 							//---------------------------------------------------------------------
 							$("#nombre_fisica_actualizar").val(respuesta[0]["nombre_datos_personales"]);
 			            	$("#apellido_paterno_fisica_actualizar").val(respuesta[0]["apellido_p_datos_personales"]);
@@ -1110,7 +1134,7 @@ function consultarClienteRFCModificar(rfc_cliente,tipo_per){
 							//---------------------------------------------------------------------
 
 							//---------------------------------------------------------------------
-						}else if(tipo_per=="moral"){
+						}else if(tipo_per=="moral" || tipo_per=="MORAL" ){
 							//---------------------------------------------------------------------
 							$("#razon_social_moral_actualizar").val(respuesta[0]["nombre_datos_personales"])
 							$("#genero_membresia_actualizar_moral option[value='" + respuesta[0]["genero_datos_personales"] + "']").prop("selected",true);
