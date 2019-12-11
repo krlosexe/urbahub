@@ -13,7 +13,10 @@ class Cobranza extends CI_Controller {
 	    $this->load->library('session');
 	    $this->load->model('Menu_model');
 	    $this->load->model('Cobranza_model');
+	    $this->load->model('Cotizacion_model');
 	    $this->load->model('MiCorreo_model');
+	    $this->load->model('Membresia_model');
+        $this->load->model('ClientePagador_model');
 	    $this->load->library('form_validation');
 	    if (!$this->session->userdata("login")) {
 	      redirect(base_url());
@@ -300,6 +303,23 @@ class Cobranza extends CI_Controller {
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         
 		$formulario = $this->input->post();
+		
+		/***/
+		/*$dias_es = $this->input->post('vigencia_cobranza_registrar');
+		preg_match_all('/\d+/',$dias_es, $cantidad_mes);
+				prp($cantidad_mes,1);*/
+		/***/
+		/**/
+		/*
+		$cobranza = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array('id_venta'=>$formulario['id_cotizacion']))->get("recibos_cobranzas")[0];
+		$id_cliente  = new MongoDB\BSON\ObjectId($cobranza['id_cliente']);
+		$cliente = $this->mongo_db->where(['_id'=>$id_cliente])->get("cliente_pagador");
+		$paquete = $this->Cotizacion_model->getPaquete($cobranza['paquete'])[0];
+		$plan 	 = $this->Cotizacion_model->getPlan($paquete['plan']);
+
+		prp($plan[0]['_id']->{'$id'},1);*/
+		/**/
+		
 		$monto_pago =  $monto_pago != "" ? $monto_pago : (float) str_replace(',', '', $formulario["monto_pago"]);
 		$monto      =  $monto      != "" ? $monto      : (float) str_replace(',', '', $formulario["monto"]);
 
@@ -324,7 +344,7 @@ class Cobranza extends CI_Controller {
         $this->mensajes_reglas_cobranza();
         
 		#Consultar operacion
-
+        
 
 		$abono_sig = 0;
 		if ($monto_pago > $monto) {
@@ -442,6 +462,76 @@ class Cobranza extends CI_Controller {
 				$recibo_pendiente = $this->GetReciboPendienteCobranza($id_cotizacion);
 				$this->registrar_cobranza($abono_sig, $recibo_pendiente->saldo, (string)$recibo_pendiente->_id, $id_cobranza, $id_cotizacion, $recibo_pendiente->mes, $recibo_pendiente->numero_recibo, $fecha_pago);
 			}
+			
+			if($status_recibo == true && $numero_secuencia == 1){
+
+				$fecha = new MongoDB\BSON\UTCDateTime();
+        		$id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
+
+				$cobranza = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array('id_venta'=>$formulario['id_cotizacion']))->get("recibos_cobranzas")[0];
+				////////cliente///////////////
+				$id_cliente  = new MongoDB\BSON\ObjectId($cobranza['id_cliente']);
+				$cliente = $this->mongo_db->where(['_id'=>$id_cliente])->get("cliente_pagador")[0];
+				//////////////////////////////////////
+                
+                /////////////////////////////////////
+				$paquete = $this->Cotizacion_model->getPaquete($cobranza['paquete'])[0];
+				$plan 	 = $this->Cotizacion_model->getPlan($paquete['plan'])[0];
+				$numero_membresia = $this->Membresia_model->obtener_numero_membresia();
+				$numero_renovacion = 1; 
+				$tipo_persona = $cliente['tipo_persona_cliente'];
+				$identificador_prospecto_cliente = $cliente['rfc_datos_personales'];
+				//prp($fecha_pago,1);
+				$fecha_inicio_parse = DateTime::createFromFormat('Y-m-d',$fecha_pago);
+				$fecha_inicio = $this->mongo_db->date($fecha_inicio_parse);
+               //////////////////////////////////////
+
+                ////////get fecha fin//////////////
+                preg_match_all('/\d+/',$this->input->post('vigencia_cobranza_registrar'), $cantidad_mes);
+				$fecha_parse = new DateTime($fecha_pago);
+				//prp($cantidad_mes,1);
+				$fecha_parse = $fecha_parse->modify("+".$cantidad_mes[0][0]." month")->format('Y-m-d');
+				$fecha_fin_parse = DateTime::createFromFormat('Y-m-d',$fecha_parse);
+				$fecha_fin = $this->mongo_db->date($fecha_fin_parse);
+				///////////////////////////////////////////////////////////////
+				$valor = str_replace(",","",$monto_pago);
+                $arr_Serv     =  $this->Cotizacion_model->obtenerServicios($paquete['_id']->{'$id'});
+        		$servicios    = $arr_Serv["servicios_n"];
+        		$servicios_c  = $arr_Serv["servicios_c"];
+        		
+
+        		$membresia = [
+        			'serial_acceso' => rand(10000,1000000),
+        			'n_membresia'=> $numero_membresia,
+        			'numero_renovacion' => 1,
+        			'tipo_persona' => $tipo_persona,
+        			'identificador_prospecto_cliente' => $identificador_prospecto_cliente,
+        			'plan' => $plan['_id']->{'$id'},
+        			'paquete' =>$paquete['_id']->{'$id'},
+        			'fecha_inicio' =>  $fecha_inicio,
+        			'fecha_fin' =>  $fecha_fin,
+        			'valor'=> $valor,
+        			'status' => true,
+                  	'eliminado' => false,
+                  	'trabajadores' => [],
+                  	'renovaciones' => [],
+                  	'cancelado'=>false,
+                  	'servicios'=>$servicios,
+                    'servicios_c'=>$servicios_c,
+                    'auditoria' => [
+                    	array(
+		                    "cod_user" => $id_usuario,
+		                    "nomuser" => $this->session->userdata('nombre'),
+		                    "fecha" => $fecha,
+		                    "accion" => "Nuevo registro membresia",
+		                    "operacion" => ""
+	                	)
+                    ]
+        		];
+ 				$this->Membresia_model->registrar_membresia($membresia,true);
+	//			prp($fecha_) 
+
+			}
            	
             //--
             // if($comprobantes!=""){
@@ -478,13 +568,7 @@ class Cobranza extends CI_Controller {
             echo validation_errors();
         }  
         //----------------------------------------------------------------------------
-	} 
-
-
-
-
-
-
+	}
 
 
 	public function GetReciboPendienteCobranza($id_venta){

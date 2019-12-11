@@ -564,6 +564,7 @@ class Cotizacion_model extends CI_Model {
         echo "</br>";
         var_dump($paquetes);
         die('');*/
+        //prp($paquetes,1);
         foreach ($paquetes as $clave => $valor) {
            $arreglo_servicios = $valor["servicios"]; 
            $this->array_sort_by($arreglo_servicios,"posicion",$order = SORT_ASC);
@@ -582,11 +583,15 @@ class Cotizacion_model extends CI_Model {
                            $valores["servicios"] = (string)$servicios[0]["_id"]->{'$id'};
                            $valores["cantidad"] =  $value_serv->valor;
                            $valores["disponible"] = $value_serv->valor;
+                           if(is_string($servicios[0]["monto"]))
+                                $servicios[0]["monto"] = floatval($servicios[0]["monto"]);
                            $valores["monto"] = number_format($servicios[0]["monto"],2);
                            $servicios_n[]=$valores; 
                         }else{
                             $valores2["servicios"] = (string)$servicios[0]["_id"]->{'$id'};
                             $valores2["valor"] =  $value_serv->valor;
+                            if(is_string($servicios[0]["monto"]))
+                                $servicios[0]["monto"] = floatval($servicios[0]["monto"]);
                             $valores2["monto"] = number_format($servicios[0]["monto"],2); 
                             $servicios_c[]=$valores2; 
                         }

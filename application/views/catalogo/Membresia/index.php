@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                            Gestión de <?php echo $breadcrumbs[0]["nombre_lista_vista"]; ?>
 		                        </h2>
 		                        <ul class="header-dropdown m-r--5">
-		                            <button class="btn btn-primary waves-effect registrar ocultar" onclick="nuevoRegistro()"><i class='fa fa-plus-circle' style="color: white; font-size: 18px;"></i> | Nuevo</button>
+		                           <!-- <button class="btn btn-primary waves-effect registrar ocultar" onclick="nuevoRegistro()"><i class='fa fa-plus-circle' style="color: white; font-size: 18px;"></i> | Nuevo</button> -->
 		                        </ul>
 		                    </div>
 		                    <div class="body">
@@ -1203,7 +1203,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					                            		<label for="rfc_cliente_actualizar_fisica">Identificación (Prospecto/CLiente)*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="fisicaf form-control mayusculas" name="rfc_cliente_actualizar_fisica" autocomplete="off" onkeypress='return solosnumerosyletras(event)' id="rfc_cliente_actualizar_fisica" maxlength="30" placeholder="P. EJ.CONRA19901234" readonly="readonly" onchange="consultarCliente()">
+						                                        <input type="text" class="fisicaf form-control mayusculas" readonly name="rfc_cliente_actualizar_fisica" autocomplete="off" onkeypress='return solosnumerosyletras(event)' id="rfc_cliente_actualizar_fisica" maxlength="30" placeholder="P. EJ.CONRA19901234" readonly="readonly" onchange="consultarCliente()">
 					                                    	</div>
 					                             		</div>
 					                           		</div>
@@ -1211,7 +1211,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					                            		<label for="nombre_fisica_actualizar">Nombre(s)*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="fisicaf form-control mayusculas" name="nombre_fisica_actualizar" autocomplete="off" onkeypress='return sololetras(event)' id="nombre_fisica_actualizar" maxlength="30" placeholder="P. EJ.LUIS RAÚL" readonly="readonly" >
+						                                        <input type="text" class="fisicaf form-control mayusculas" readonly name="nombre_fisica_actualizar" autocomplete="off" onkeypress='return sololetras(event)' id="nombre_fisica_actualizar" maxlength="30" placeholder="P. EJ.LUIS RAÚL" readonly="readonly" >
 					                                    	</div>
 					                             		</div>
 					                           		</div>
@@ -1219,7 +1219,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				                            			<label for="apellido_paterno_fisica_actualizar">Apellido Paterno*</label>
 					                                	<div class="form-group valid-required">
 					                                    	<div class="form-line">
-					                                        	<input type="text" class="fisicaf form-control mayusculas" name="apellido_paterno_fisica_actualizar" autocomplete="off" onkeypress='return sololetras(event)' maxlength="15" id="apellido_paterno_fisica_actualizar" placeholder="P. EJ. BELLO" readonly="readonly">
+					                                        	<input type="text" class="fisicaf form-control mayusculas" readonly name="apellido_paterno_fisica_actualizar" autocomplete="off" onkeypress='return sololetras(event)' maxlength="15" id="apellido_paterno_fisica_actualizar" placeholder="P. EJ. BELLO" readonly="readonly">
 					                                    	</div>
 					                                	</div>
 					                             	</div>
@@ -1227,7 +1227,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					                            		<label for="apellido_materno_fisica_actualizar">Apellido Materno*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="fisicaf form-control mayusculas" name="apellido_materno_fisica_actualizar" autocomplete="off" maxlength="15" onkeypress='return sololetras(event)' id="apellido_materno_fisica_actualizar" placeholder="P. EJ. MENA" readonly="readonly">
+						                                        <input type="text" class="fisicaf form-control mayusculas" readonly name="apellido_materno_fisica_actualizar" autocomplete="off" maxlength="15" onkeypress='return sololetras(event)' id="apellido_materno_fisica_actualizar" placeholder="P. EJ. MENA" readonly="readonly">
 						                                    </div>
 					                                	</div>
 				                          			</div>
@@ -1235,7 +1235,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								                		<label for="fecha_nac_fisica_actualizar">Fecha de Nacimiento*</label>
 								                		<div class="form-group valid-required">
 								                   			 <div class="form-line input-group fecha">
-								                        		<input type="text" class="form-control " name="fecha_nac_fisica_actualizar" id="fecha_nac_fisica_actualizar" placeholder="dd-mm-yyyy"  readonly="readonly">
+								                        		<input type="text" class="form-control " readonly name="fecha_nac_fisica_actualizar" id="fecha_nac_fisica_actualizar" placeholder="dd-mm-yyyy"  readonly="readonly">
 								                        		<span class="input-group-addon">
 									                       			 <span class="glyphicon glyphicon-calendar"></span>
 									                   		 	</span>
@@ -1245,7 +1245,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                           
 						                            <div class="col-sm-4 hide" style="margin-bottom: 60px;">
 					                            		<label for="genero_membresia_fisica_actualizar">Género*</label>
-				                                    	<select name="genero_membresia_fisica_actualizar" id="genero_membresia_fisica_actualizar"  class="form-control" disabled>
+				                                    	<select name="genero_membresia_fisica_actualizar" readonly id="genero_membresia_fisica_actualizar"  class="form-control" disabled>
 				                                    		<option value="" selected>Seleccione</option>
 				                                    		<?php foreach ($sexos as $sexo): ?>
 				                                    			<option value="<?=$sexo->id_lista_valor;?>"><?=$sexo->nombre_lista_valor;?></option>
@@ -1254,7 +1254,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            </div>
 						                            <div class="col-sm-4 hide">
 					                            		<label for="edo_civil_fisica_actualizar">Estado Civil*</label>
-				                                    	<select name="edo_civil_fisica_actualizar" id="edo_civil_fisica_actualizar" class="form-control" disabled>
+				                                    	<select name="edo_civil_fisica_actualizar" readonly id="edo_civil_fisica_actualizar" class="form-control" disabled>
 				                                    		<option value="" selected>Seleccione</option>
 				                                    		<?php foreach ($estadosCiviles as $estadoCivil): ?>
 				                                    			<option value="<?=$estadoCivil->id_lista_valor;?>"><?=$estadoCivil->nombre_lista_valor;?></option>
@@ -1263,7 +1263,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            </div>
 						                            <div class="col-sm-4 hide">
 					                            		<label for="nacionalidad_fisica_actualizar">Nacionalidad*</label>
-				                                    	<select name="nacionalidad_fisica_actualizar" id="nacionalidad_fisica_actualizar" class="form-control" disabled>
+				                                    	<select name="nacionalidad_fisica_actualizar" readonly id="nacionalidad_fisica_actualizar" class="form-control" disabled>
 				                                    		<option value="" selected>Seleccione</option>
 				                                    		<?php foreach ($nacionalidades as $nacionalidad): ?>
 				                                    			<option value="<?=$nacionalidad->id_lista_valor;?>"><?=$nacionalidad->nombre_lista_valor;?></option>
@@ -1274,7 +1274,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                                <label for="curp_fisica_actualizar">C.U.R.P.*</label>
 						                                <div class="form-group form-float">
 						                                    <div class="form-line" id="validCurp">
-						                                        <input type="text" class="fisicaf form-control mayusculas" autocomplete="off" name="curp_fisica_actualizar" id="curp_fisica_actualizar" placeholder="P. EJ. BML920313HMLNNSOS" maxlength="18" onkeypress='return solosnumerosyletras(event)' oninput="validarInputCurp(this)" >
+						                                        <input type="text" class="fisicaf form-control mayusculas" readonly autocomplete="off" name="curp_fisica_actualizar" id="curp_fisica_actualizar" placeholder="P. EJ. BML920313HMLNNSOS" maxlength="18" onkeypress='return solosnumerosyletras(event)' oninput="validarInputCurp(this)" >
 						                                    </div>
 					                                	   	<span class="curpError text-danger"></span>
 					                               		</div>
@@ -1292,7 +1292,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					                                	<label for="telefono_fisica_actualizar">Teléfono*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="form-control telefono fisicaf" name="telefono_fisica_actualizar" id="telefono_fisica_actualizar" placeholder="P. EJ.: +00 (000) 000-00-00" onkeyup="validPhone(this)"  readonly="readonly">
+						                                        <input type="text" class="form-control telefono fisicaf" readonly name="telefono_fisica_actualizar" id="telefono_fisica_actualizar" placeholder="P. EJ.: +00 (000) 000-00-00" onkeyup="validPhone(this)"  readonly="readonly">
 				                                        		<span class="emailError text-danger"></span>
 						                                    </div>
 				                               		 	</div>
@@ -1301,14 +1301,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                                <label for="correo_fisica_actualizar">Correo Electrónico*</label>
 						                                <div class="form-group valid-required">
 					                                    	<div class="form-line">
-					                                        <input type="email" class="form-control fisicaf" autocomplete="off" name="correo_fisica_actualizar" id="correo_fisica_actualizar" placeholder="P. EJ. ejemplo@dominio.com" onchange="validEmail(this)" readonly="readonly">
+					                                        <input type="email" class="form-control fisicaf" autocomplete="off"readonly name="correo_fisica_actualizar" id="correo_fisica_actualizar" placeholder="P. EJ. ejemplo@dominio.com" onchange="validEmail(this)" readonly="readonly">
 				                                        	<span class="emailError text-danger"></span>
 				                                    		</div>
 			                                			</div>
 			                            			</div>
 			                            			<div class="col-sm-4">
 				                            	   		<label for="actividad_economica">Actividad Economica*</label>
-					                               		<select name="actividad_economica_fisica_actualizar" id="actividad_economica_fisica_actualizar" class="fisicaf form-control" disabled>
+					                               		<select name="actividad_economica_fisica_actualizar"readonly  id="actividad_economica_fisica_actualizar" class="fisicaf form-control" disabled>
 			                            					<option value="" selected>Seleccione</option>
 			                            						<?php foreach ($actividadesEconomicas as $actividadEconomica): ?>
 			                            					<option value="<?=$actividadEconomica->id_lista_valor;?>"><?=$actividadEconomica->nombre_lista_valor;?></option>
@@ -1325,7 +1325,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                                <label for="calle_contacto_actualizar">Calle*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="form-control mayusculas" name="calle_fisica_actualizar" id="calle_fisica_actualizar" placeholder="P. EJ. PRIMAVERA" readonly="readonly">
+						                                        <input type="text" class="form-control mayusculas" readonly name="calle_fisica_actualizar" id="calle_fisica_actualizar" placeholder="P. EJ. PRIMAVERA" readonly="readonly">
 						                                    </div>
 						                                </div>
 						                            </div>
@@ -1333,7 +1333,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                                <label for="exterior_contacto_registrar">Número Exterior*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="form-control mayusculas" name="exterior_fisica_actualizar" maxlength="30" onkeypress='return solosnumerosyletras(event)' id="exterior_fisica_actualizar" placeholder="P. EJ. 33" maxlength="10" readonly="readonly">
+						                                        <input type="text" class="form-control mayusculas" readonly name="exterior_fisica_actualizar" maxlength="30" onkeypress='return solosnumerosyletras(event)' id="exterior_fisica_actualizar" placeholder="P. EJ. 33" maxlength="10" readonly="readonly">
 						                                    </div>
 						                                </div>
 						                            </div>
@@ -1341,7 +1341,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                                <label for="interior_contacto_registrar">Número Interior</label>
 						                                <div class="form-group">
 						                                    <div class="form-line">
-						                                        <input type="text" class="form-control mayusculas interior_contacto_registrar_fisica" onkeypress='return solosnumerosyletras(event)' name="numero_interior_fisica_actualizar" id="numero_interior_fisica_actualizar" placeholder="P. EJ. 2" maxlength="10" readonly="readonly">
+						                                        <input type="text" class="form-control mayusculas interior_contacto_registrar_fisica" readonly onkeypress='return solosnumerosyletras(event)' name="numero_interior_fisica_actualizar" id="numero_interior_fisica_actualizar" placeholder="P. EJ. 2" maxlength="10" readonly="readonly">
 						                                    </div>
 						                                </div>
 						                            </div>
@@ -1349,14 +1349,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                                <label for="codigo_postal_registrar">Código Postal*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="form-control" id="codigo_postal_fisica_actualizar" onkeypress='return codigoPostal(event)' name="codigo_postal_fisica_actualizar" maxlength="5" onchange="buscarCodigosUs(this.value, 'create')" readonly="readonly">
+						                                        <input type="text" class="form-control" id="codigo_postal_fisica_actualizar" readonly onkeypress='return codigoPostal(event)' name="codigo_postal_fisica_actualizar" maxlength="5" onchange="buscarCodigosUs(this.value, 'create')" readonly="readonly">
 						                                    </div>
 						                                </div>
 						                            </div>
 						                            <div class="col-sm-4">
 						                            	<label for="colonia_actualizar">Colonia*</label>
 						                            	<div class="valid-required">
-						                                <select id="colonia_fisica_actualizar" class="form-control form-group" name="colonia_fisica_actualizar" disabled>
+						                                <select id="colonia_fisica_actualizar" class="form-control form-group" readonly name="colonia_fisica_actualizar" disabled>
 							                                	<option value="">Seleccione</option>
 							                                </select>
 							                            </div>
@@ -1364,7 +1364,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            <div class="col-sm-4"  style="padding-bottom: 10px;">
 						                                <label for="municipio_registrar">Municipio*</label>
 						                                <div class="valid-required">
-							                                <select id="municipio_fisica_actualizar" class="form-control form-group" name="municipio_fisica_actualizar" disabled>
+							                                <select id="municipio_fisica_actualizar" readonly class="form-control form-group" name="municipio_fisica_actualizar" disabled>
 							                                	<option value="">Seleccione</option>
 							                                </select>
 							                            </div>
@@ -1372,7 +1372,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            <div class="col-sm-4">
 						                                <label for="ciudad_registrar">Ciudad*</label>
 						                                <div class="valid-required">
-							                                <select id="ciudad_fisica_actualizar" class="form-control form-group" name="ciudad_fisica_actualizar" disabled>
+							                                <select id="ciudad_fisica_actualizar" readonly class="form-control form-group" name="ciudad_fisica_actualizar" disabled>
 							                                	<option value="">Seleccione</option>
 							                                </select>
 							                            </div>
@@ -1380,7 +1380,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            <div class="col-sm-4">
 						                                <label for="estado_registrar">Estado*</label>
 						                                <div class="valid-required">
-							                                <select id="estado_fisica_actualizar" class="form-control form-group" name="estado_fisica_actualizar" disabled>
+							                                <select id="estado_fisica_actualizar" readonly class="form-control form-group" name="estado_fisica_actualizar" disabled>
 							                                	<option value="">Seleccione</option>
 							                                </select>
 							                            </div>
@@ -1402,7 +1402,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					                            		<label for="identificacion_prospecto">Identificación (Prospecto/CLiente)*</label>
 						                                <div class="form-group valid-required">
 						                                    <div class="form-line">
-						                                        <input type="text" class="morale form-control mayusculas" name="rfc_cliente_actualizar_moral" autocomplete="off" onkeypress='return solosnumerosyletras(event)' id="rfc_cliente_actualizar_moral" maxlength="30" placeholder="P. EJ.CONRA19901234" readonly="readonly" onchange="consultarCliente()">
+						                                        <input type="text" class="morale form-control mayusculas" readonly name="rfc_cliente_actualizar_moral" autocomplete="off" onkeypress='return solosnumerosyletras(event)' id="rfc_cliente_actualizar_moral" maxlength="30" placeholder="P. EJ.CONRA19901234" readonly="readonly" onchange="consultarCliente()">
 					                                    	</div>
 					                             		</div>
 					                           		</div>
@@ -1410,14 +1410,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            		<label for="razon_social">Denominación o Razón Social*</label>
 							                                <div class="form-group valid-required">
 							                                    <div class="form-line">
-							                                        <input type="text" class="morale form-control mayusculas" name="razon_social_actualizar" id="razon_social_moral_actualizar" maxlength="30" placeholder="P. EJ.AG SITEMAS" readonly>
+							                                        <input type="text" class="morale form-control mayusculas" readonly name="razon_social_actualizar" id="razon_social_moral_actualizar" maxlength="30" placeholder="P. EJ.AG SITEMAS" readonly>
 						                                    	</div>
 						                             		</div>
 						                           		</div>
 						                           	
 							                            <div class="col-sm-4 hide" style="margin-bottom: 50px;">
 						                            		<label for="genero_actualizar">Género*</label>
-					                                    	<select name="genero_membresia_actualizar_moral" id="genero_membresia_actualizar_moral" class="form-control  morale" disabled>
+					                                    	<select name="genero_membresia_actualizar_moral" readonly id="genero_membresia_actualizar_moral" class="form-control  morale" disabled>
 					                                    		<option value="" selected>Seleccione</option>
 					                                    		<?php foreach ($sexos as $sexo): ?>
 					                                    			<option value="<?=$sexo->id_lista_valor;?>"><?=$sexo->nombre_lista_valor;?></option>
@@ -1426,7 +1426,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            </div>
 							                            <div class="col-sm-4 hide" style="margin-bottom: 50px;">
 						                            		<label for="edo_civil_membresia_actualizar">Estado Civil*</label>
-					                                    	<select name="edo_civil_membresia_actualizar_moral" id="edo_civil_membresia_actualizar_moral" class="form-control morale" disabled>
+					                                    	<select name="edo_civil_membresia_actualizar_moral" readonly id="edo_civil_membresia_actualizar_moral" class="form-control morale" disabled>
 					                                    		<option value="" selected>Seleccione</option>
 					                                    		<?php foreach ($estadosCiviles as $estadoCivil): ?>
 					                                    			<option value="<?=$estadoCivil->id_lista_valor;?>"><?=$estadoCivil->nombre_lista_valor;?></option>
@@ -1435,7 +1435,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            </div>
 							                            <div class="col-sm-4 hide">
 						                            		<label for="nacionalidad_membresia_actualizar">Nacionalidad*</label>
-					                                    	<select name="nacionalidad_membresia_moral_actualizar" id="nacionalidad_membresia_moral_actualizar" class="form-control morale"  style="margin-bottom: 50px;" disabled>
+					                                    	<select name="nacionalidad_membresia_moral_actualizar" readonly id="nacionalidad_membresia_moral_actualizar" class="form-control morale"  style="margin-bottom: 50px;" disabled>
 					                                    		<option value="" selected>Seleccione</option>
 					                                    		<?php foreach ($nacionalidades as $nacionalidad): ?>
 					                                    			<option value="<?=$nacionalidad->id_lista_valor;?>"><?=$nacionalidad->nombre_lista_valor;?></option>
@@ -1446,7 +1446,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            		<label for="fecha_nac_moral_actualizar">Fecha Nacimiento*</label>
 					                                		<div class="form-group valid-required">
 					                                   			 <div class="form-line input-group fecha">
-					                                        		<input type="text" class="morale form-control" name="fecha_nac_moral_actualizar" id="fecha_nac_moral_actualizar" placeholder="dd-mm-yyyy" readonly="readonly">
+					                                        		<input type="text" class="morale form-control" readonly name="fecha_nac_moral_actualizar" id="fecha_nac_moral_actualizar" placeholder="dd-mm-yyyy" readonly="readonly">
 					                                        		<span class="input-group-addon">
 										                       			 <span class="glyphicon glyphicon-calendar"></span>
 										                   		 	</span>
@@ -1466,7 +1466,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					                            			<label for="correo_moral_m">Correo Electrónico*</label>
 							                                <div class="form-group valid-required">
 						                                    	<div class="form-line">
-						                                        <input type="email" class="form-control morale" name="correo_moral_actualizar" id="correo_moral_actualizar" placeholder="P. EJ. ejemplo@dominio.com" onchange="validEmail(this)" readonly="readonly">
+						                                        <input type="email" class="form-control morale" readonly name="correo_moral_actualizar" id="correo_moral_actualizar" placeholder="P. EJ. ejemplo@dominio.com" onchange="validEmail(this)" readonly="readonly">
 
 					                                        	<span class="emailError text-danger"></span>
 					                                    		</div>
@@ -1476,14 +1476,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                            		<label for="telefono_moral_m">Teléfono*</label>
 							                                <div class="form-group valid-required">
 							                                    <div class="form-line">
-							                                        <input type="text" class="morale form-control telefono" name="telefono_moral_actualizar" id="telefono_moral_actualizar" placeholder="P. EJ.: +00 (000) 000-00-00" onkeyup="validPhone(this)" readonly="readonly">
+							                                        <input type="text" class="morale form-control telefono" readonly ame="telefono_moral_actualizar" id="telefono_moral_actualizar" placeholder="P. EJ.: +00 (000) 000-00-00" onkeyup="validPhone(this)" readonly="readonly">
 					                                        		<span class="emailError text-danger"></span>
 							                                    </div>
 					                               		 	</div>
 				                            			</div>
 							                            <div class="col-sm-4">
 					                                		<label for="actividad_economica">Giro Mercantil*</label>
-						                               		<select name="giro_mercantil_moral_actualizar" id="giro_mercantil_moral_actualizar" class="morale form-control" disabled>
+						                               		<select name="giro_mercantil_moral_actualizar" readonly id="giro_mercantil_moral_actualizar" class="morale form-control" disabled>
 				                            					<option value="" selected>Seleccione</option>
 				                            						<?php foreach ($giros as $giro): ?>
 				                            					<option value="<?=$giro->id_lista_valor;?>"><?=$giro->nombre_lista_valor;?></option>
@@ -1501,7 +1501,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                                <label for="calle_contacto_actualizar">Calle*</label>
 							                                <div class="form-group valid-required">
 							                                    <div class="form-line">
-							                                        <input type="text" class="form-control mayusculas morale" name="calle_contacto_moral_actualizar" id="calle_contacto_moral_actualizar" placeholder="P. EJ. PRIMAVERA" readonly="readonly">
+							                                        <input type="text" class="form-control mayusculas morale" readonly name="calle_contacto_moral_actualizar" id="calle_contacto_moral_actualizar" placeholder="P. EJ. PRIMAVERA" readonly="readonly">
 							                                    </div>
 							                                </div>
 							                            </div>
@@ -1509,7 +1509,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                                <label for="exterior_contacto_actualizar">Número Exterior*</label>
 							                                <div class="form-group valid-required">
 							                                    <div class="form-line">
-							                                        <input type="text" class="form-control mayusculas morale" name="exterior_moral_actualizar" maxlength="30" onkeypress='return solosnumerosyletras(event)' id="exterior_moral_actualizar" placeholder="P. EJ. 33" maxlength="10" readonly="readonly">
+							                                        <input type="text" class="form-control mayusculas morale" readonly name="exterior_moral_actualizar" maxlength="30" onkeypress='return solosnumerosyletras(event)' id="exterior_moral_actualizar" placeholder="P. EJ. 33" maxlength="10" readonly="readonly">
 							                                    </div>
 							                                </div>
 							                            </div>
@@ -1517,7 +1517,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                                <label for="interior_contacto_registrar">Número Interior</label>
 							                                <div class="form-group">
 							                                    <div class="form-line">
-							                                        <input type="text" class="form-control mayusculas numero_exterior morale" onkeypress='return solosnumerosyletras(event)' name="interior_moral_actualizar" id="interior_moral_actualizar" placeholder="P. EJ. 2" maxlength="10" readonly="readonly">
+							                                        <input type="text" class="form-control mayusculas numero_exterior morale" readonly onkeypress='return solosnumerosyletras(event)' name="interior_moral_actualizar" id="interior_moral_actualizar" placeholder="P. EJ. 2" maxlength="10" readonly="readonly">
 							                                    </div>
 							                                </div>
 							                            </div>
@@ -1525,14 +1525,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                                <label for="codigo_postal_registrar">Código Postal*</label>
 							                                <div class="form-group valid-required">
 							                                    <div class="form-line">
-							                                        <input type="text" class="form-control morale" id="codigo_postal_moral_actualizar" onkeypress='return codigoPostal(event)' name="codigo_postal_moral_actualizar" maxlength="5" onchange="buscarCodigosUs(this.value, 'create')" readonly="readonly">
+							                                        <input type="text" class="form-control morale" readonly id="codigo_postal_moral_actualizar" onkeypress='return codigoPostal(event)' name="codigo_postal_moral_actualizar" maxlength="5" onchange="buscarCodigosUs(this.value, 'create')" readonly="readonly">
 							                                    </div>
 							                            </div>
 							                            </div>
 							                            <div class="col-sm-4">
 							                            	<label for="colonia_registrar">Colonia*</label>
 							                            	<div class="valid-required">
-							                                <select id="colonia_actualizar_moral" class="form-control form-group morale" name="colonia_actualizar_moral" disabled>
+							                                <select id="colonia_actualizar_moral" class="form-control form-group morale" readonly name="colonia_actualizar_moral" disabled>
 								                                	<option value="">Seleccione</option>
 								                                </select>
 								                            </div>
@@ -1540,7 +1540,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            <div class="col-sm-4"  style="padding-bottom: 10px;">
 							                                <label for="municipio_registrar">Municipio*</label>
 							                                <div class="valid-required">
-								                                <select id="municipio_moral_actualizar" class="form-control form-group morale" name="municipio_moral_actualizar" disabled>
+								                                <select id="municipio_moral_actualizar" class="form-control form-group morale" readonly name="municipio_moral_actualizar" disabled>
 								                                	<option value="">Seleccione</option>
 								                                </select>
 								                            </div>
@@ -1548,7 +1548,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            <div class="col-sm-4">
 							                                <label for="ciudad_actualizar">Ciudad*</label>
 							                                <div class="valid-required">
-								                                <select id="ciudad_moral_actualizar" class="form-control form-group morale" name="ciudad_moral_actualizar" disabled>
+								                                <select id="ciudad_moral_actualizar" class="form-control form-group morale" readonly name="ciudad_moral_actualizar" disabled>
 								                                	<option value="">Seleccione</option>
 								                                </select>
 								                            </div>
@@ -1556,7 +1556,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            <div class="col-sm-4">
 							                                <label for="estado_actualizar">Estado*</label>
 							                                <div class="valid-required">
-								                                <select id="estado_moral_actualizar" class="form-control form-group morale" name="estado_moral_actualizar" disabled>
+								                                <select id="estado_moral_actualizar" class="form-control form-group morale" readonly name="estado_moral_actualizar" disabled>
 								                                	<option value="">Seleccione</option>
 								                                </select>
 								                            </div>

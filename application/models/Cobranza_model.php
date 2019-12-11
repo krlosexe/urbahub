@@ -14,7 +14,7 @@ public function listado_cobranza(){
      $listado = [];
      $resultados = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array('eliminado'=>false))->get("recibos_cobranzas");
      $contador = 0;
-     foreach ($resultados as $clave => $valor) {
+     foreach ($resultados as $clave => $valor){
          $valores = $valor;
         $valores["id_cobranza"] = (string)$valor["_id"]->{'$id'};
         $valores["id_cotizacion"] = (string)$valor["id_venta"];
