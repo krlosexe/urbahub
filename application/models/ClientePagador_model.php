@@ -1078,6 +1078,10 @@ co.telefono_trabajo_contacto, co.telefono_fax_contacto, co.telefono_casa_contact
     /*
     *
     */
+     public function consultarClienteCotizacion($id){
+              $resultados = $this->mongo_db->where(array('eliminado'=>false,'identificador_prospecto_cliente' => $id))->get("cotizacion");
+        return $resultados;
+    }
 
    public function eliminar ($id, $tipo){
       switch ($tipo) 

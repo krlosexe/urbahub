@@ -1542,6 +1542,14 @@ class ClientePagador extends CI_Controller
   public function eliminar ()
   {
     $id = $this->input->post('id');
+    $consulta = consultarClienteCotizacion($id);
+    if($consulta){
+       echo ("<span>El Cliente NO se puede eliminar ya que tiene una Cotizacion asociada!</span>");
+    }else{
+    $this->ClientePagador_model->eliminar($id, 'cliente');
+
+    }
+
     //--Verifico que el cliente no tenga prospecto...
     /*$prospecto = $this->ClientePagador_model->buscarProspecto($id);
     if (count($prospecto)>0){
@@ -1553,7 +1561,6 @@ class ClientePagador extends CI_Controller
      if (isset($consulta)){
       echo ("<span>El Cliente NO se puede eliminar ya que tiene un Vendedor en cartera de cliente asociado!</span>");
      }else{*/
-    $this->ClientePagador_model->eliminar($id, 'cliente');
     //}
   }
   /*
