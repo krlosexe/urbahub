@@ -1528,7 +1528,9 @@ Class Membresia_model extends CI_Model
 
         if(count($rs_membresia) == 0){
             $insertar1 = $this->mongo_db->insert("membresia", $data);
-            echo json_encode("<span>La membresía se ha registrado exitosamente!</span>");
+            if(!$case){
+                echo json_encode("<span>La membresía se ha registrado exitosamente!</span>");
+            }
         }else{
             if($case==false)
                 echo "<span>¡Ya se encuentra registrada una membresía con ese serial o con ese usuario!</span>";

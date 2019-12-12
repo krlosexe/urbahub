@@ -644,11 +644,10 @@ class Membresia extends CI_Controller
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         
         $formulario = $this->input->post();
-        //var_dump($formulario);die('');
         //--Para persona fisica
-        if($formulario["tipo_persona_actualizar"]=="fisica"){
+        if($formulario["tipo_persona_actualizar"]=="fisica" || $formulario["tipo_persona_actualizar"]=="FISICA"){
             $serial = trim(mb_strtoupper($formulario["serial_acceso_actualizar_fisica"]));
-        }else if($formulario["tipo_persona_actualizar"]=="moral"){
+        }else if($formulario["tipo_persona_actualizar"]=="moral" || $formulario["tipo_persona_actualizar"]=="MORAL"){
             $serial = trim(mb_strtoupper($formulario["serial_acceso_actualizar_moral"]));
         }
         //--

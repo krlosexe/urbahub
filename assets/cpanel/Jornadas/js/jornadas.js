@@ -491,7 +491,8 @@ function limpiar_form_recargos_actualizar(){
 
 
 		$.each($servicios, function( index, value ) {
-			console.log(value);
+			
+			if(value.codigo != "SAL" && value.codigo != "HC" ){
 			tbody+="<tr class='tr_servicios_mostrar' data='"+value.id_servicios+"'>\
 	                    <th>"+value.codigo+"</th>\
 	                    <th>"+value.titulo+"</th>\
@@ -501,6 +502,7 @@ function limpiar_form_recargos_actualizar(){
 	                    <th>"+value.disponible+"</th>\
 	                    <th style='display:none'>"+value.costo+"</th>\
 	                </tr>"
+			}
 	    });
 	    $("#tbody_servicios_mostrar").html(tbody);
 	}
@@ -664,8 +666,9 @@ function consultarMembresiaActualizar(){
 */
 function mostrarServiciosPaquete(servicios){
 	var tbody =  "";
-	console.log(servicios);
+
 	$.each(servicios, function( index, value ) {
+   	if(value.codigo != "SAL" && value.codigo != "HC" ){
 		tbody+="<tr class='tr_servicios' data='"+value.id_servicios+"'>\
                     <th>"+value.codigo+"<input type='hidden' class='categoria' value='"+value.categoria+"'></th>\
                     <th>"+value.titulo+"</th>\
@@ -675,6 +678,7 @@ function mostrarServiciosPaquete(servicios){
                     <th class='service_cantidad'>"+value.disponible+"</th>\
                     <th style='display:none'>"+value.costo+"</th>\
                 </tr>"
+            }
     });
     $("#tbody_servicios").html(tbody);
 

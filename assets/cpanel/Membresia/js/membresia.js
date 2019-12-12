@@ -62,7 +62,7 @@ $(document).ready(function(){
 							if(borrar == 0)
 			              		botones += "<span class='eliminar btn btn-xs btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='fa fa-trash-o' style='margin-bottom:5px'></i></span>";
 			          		
-			          		if(data.tipo_persona=="fisica")
+			          		if(data.tipo_persona=="fisica" || data.tipo_persona=="FISICA")
 								botones += "<a href='"+url_jornada+"'><span class='jornada btn btn-xs btn-success waves-effect' data-toggle='tooltip' title='Ir a jornada'><i class='fa fa-calendar' style='margin-bottom:5px'></i></span></a>"
 							//Nuevo boton de cancelar//
 			              		botones += "<span class='cancelar btn btn-xs btn-danger waves-effect' data-toggle='tooltip' title='Cancelar'><i class='fa fa-times' style='margin-bottom:5px'></i></span>";
@@ -1184,7 +1184,7 @@ function consultarClienteRFCModificar(rfc_cliente,tipo_per){
 	            	}
 	            }else{
 					mensajes('danger', "<span>No hay registros asociados al identificador consultado</span>"); 
-					if(tipo_per=="fisica"){
+					if(tipo_per=="fisica" || tipo_per=="FISICA"){
 						$("#rfc_cliente_actualizar_fisica").val("").focus()
 					}else{
 						$("#rfc_cliente_actualizar_moral").val("").focus()
@@ -1237,7 +1237,7 @@ function consultarClienteRFCMostrar(rfc_cliente,tipo_per){
 	            		//--
 	            	}else{//Si es un cliente
 						//--
-						if(tipo_per=="fisica"){
+						if(tipo_per=="fisica" || tipo_per=="FISICA"){
 							//---------------------------------------------------------------------
 							$("#nombre_fisica_mostrar").val(respuesta[0]["nombre_datos_personales"]);
 			            	$("#apellido_paterno_fisica_mostrar").val(respuesta[0]["apellido_p_datos_personales"]);
@@ -1285,7 +1285,7 @@ function consultarClienteRFCMostrar(rfc_cliente,tipo_per){
 							$('#iframedatosSaldosC').attr('src',urlSaldos)
 										   	            	
 							//---------------------------------------------------------------------
-						}else if(tipo_per=="moral"){
+						}else if(tipo_per=="moral" || tipo_per=="MORAL"){
 
 							//---------------------------------------------------------------------
 

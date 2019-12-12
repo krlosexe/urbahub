@@ -327,7 +327,7 @@ Class Jornadas_model extends CI_Model
         $listado = [];
         $resultados = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array('eliminado'=>false,'status'=>true))->get("membresia");
         foreach ($resultados as $clave => $valor) {
-            if($valor["tipo_persona"]=="fisica"){
+            if($valor["tipo_persona"]=="fisica" || $valor["tipo_persona"]=="FISICA"){
                 //---
                 $valores = $valor;
                 $valores["id_membresia"] = (string)$valor["_id"]->{'$id'};
