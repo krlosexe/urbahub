@@ -1414,6 +1414,7 @@ Class Jornadas_model extends CI_Model
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         //--
         $res_jornadas = $this->mongo_db->where($where_array_montos)->set($data_montos)->update("jornadas");   
+        $this->mongo_db->_clear();
         //var_dump($res_jornadas);die(''); 
         //Auditoria...
         /*$data_auditoria = array(
@@ -1434,9 +1435,9 @@ Class Jornadas_model extends CI_Model
 
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         //--
-        $res_jornadas = $this->mongo_db->where($where_array)->set($data)->update("membresia");   
-        
-        var_dump($res_jornadas);die(''); 
+        $res_jornadas = $this->mongo_db->get("membresia");   
+
+    
         //Auditoria...
         $data_auditoria = array(
                                         'cod_user'=>$id_usuario,

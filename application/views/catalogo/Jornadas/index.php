@@ -589,7 +589,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													                            		<option value="" selected>Seleccione</option>
 													                            		<?php foreach ($servicios_recargos as $servicio): ?>
 													                            			<?php if ($servicio['status']==true){ ?>
-													                            			<option value="<?= $servicio["id_servicios"]."|".$servicio['tipo']."|".$servicio['cod_servicios']."|".$servicio['costo'];?>" status="<?=$servicio['status'] ?>" tipo="<?=$servicio['tipo'] ?>"><?= $servicio["descripcion"]; ?></option>
+													                            			<option value="<?= $servicio["id_servicios"]."|".$servicio['tipo']."|".$servicio['cod_servicios']."|".$servicio['costo']."|".$servicio['categoria'];?>" status="<?=$servicio['status'] ?>" tipo="<?=$servicio['tipo'] ?>"><?= $servicio["descripcion"]; ?></option>
 													                            			<?php } ?>
 													                            		<?php endforeach ?>
 													                            	</select>
