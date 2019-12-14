@@ -14,6 +14,7 @@ class Jornadas extends CI_Controller
         $this->load->model('Menu_model');
         $this->load->model('Paquetes_model');
         $this->load->model('Jornadas_model');
+        $this->load->model('Membresia_model');
 
         //--
         $this->load->helper('consumir_rest');
@@ -399,6 +400,7 @@ class Jornadas extends CI_Controller
     *   Registrar recoargos
     */
     public function registrarRecargos(){
+
         $fecha = new MongoDB\BSON\UTCDateTime();
         $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
         $formulario = $this->input->post();
@@ -452,9 +454,12 @@ class Jornadas extends CI_Controller
         //--Para servicios contratados
         $servicios_contratados = $formulario["arreglo_servicios_contratados"];
         $arreglo_servicios_contratados = explode("*",$servicios_contratados);
+        prp($arreglo_servicios_contratados,1);
         if($arreglo_servicios_contratados[0]!=0){
             foreach ($arreglo_servicios_contratados as $clave_serv_contratados => $valor_serv_contratados) {
                 $fila_servicios_cont = explode("|",$valor_serv_contratados);
+                if(count($fila_servicios_cont)>1){
+                   
                 $data = array(
                               'id_servicio'=> $fila_servicios_cont[0],
                               'cantidad'=> $fila_servicios_cont[2],
@@ -475,18 +480,27 @@ class Jornadas extends CI_Controller
                                       'id_membresia' =>$id_membresia,
                                       '_id'=>$id_jornada_mongo 
                                     );
-                $this->Jornadas_model->actualizar_servicios_jornadas($where_array,$data);  
-                ///---
+
+                //$this->Jornadas_model->actualizar_servicios_jornadas($where_array,$data);  
+        
                 //--Actualizar membresia 
-                /*$data_membresia = array(
-                                  'servicios.$.cantidad'=> $fila_servicios_cont[3],
+
+                $data_membresia = array(
+                        'servicios.$.disponible'=> $fila_servicios_cont[3],
+                        'servicios.$.consumido'=>   $fila_servicios_cont[2],
                 );
+
                 $where_array_membresia = array(
-                                          'servicios.id_servicio' =>$fila_servicios_cont[0],
-                                        );*/
+                                          'servicios.servicios' =>$fila_servicios_cont[0],
+                                          '_id' =>new MongoDB\BSON\ObjectId($id_membresia),
+                                        //  '_id'=>$id_jornada_mongo 
+                                        );
+                $this->Membresia_model->actualizar_servicios_membresia($where_array_membresia,$data_membresia); 
+   
+                }
                 //var_dump($where_array_membresia);die('');
                 //$this->Jornadas_model->actualizar_servicios_membresia($where_array_membresia,$data_membresia); 
-                //--
+                //-- */
             }  
         }
         

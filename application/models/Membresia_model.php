@@ -1528,7 +1528,7 @@ Class Membresia_model extends CI_Model
 
         if(count($rs_membresia) == 0){
             $insertar1 = $this->mongo_db->insert("membresia", $data);
-            if(!$case){
+            if($case == false){
                 echo json_encode("<span>La membresía se ha registrado exitosamente!</span>");
             }
         }else{
@@ -2430,4 +2430,23 @@ Class Membresia_model extends CI_Model
         }
         return false;
     }
+
+     public function actualizar_servicios_membresia($where_array,$data){
+        $fecha = new MongoDB\BSON\UTCDateTime();
+
+        $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
+        //--
+     
+        //Auditoria...
+        $data_auditoria = array(
+                                        'cod_user'=>$id_usuario,
+                                        'nom_user'=>$this->session->userdata('nombre'),
+                                        'fecha'=>$fecha,
+                                        'accion'=>'Modificar servicio membresia ',
+                                        'operacion'=>''
+                                );
+     //  prp( $this->mongo_db->where($where_array)->get('membresia'),1);
+        $this->mongo_db->where($where_array)->set($data)->update("membresia");
+        $mod_auditoria = $this->mongo_db->where($where_array)->push('servicios.$.auditoria',$data_auditoria)->update("membresia");
+      }
 }    

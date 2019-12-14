@@ -551,7 +551,6 @@ function limpiar_form_recargos_actualizar(){
 			$("#alertas").css("display", "none");
 			var data = table.row( $(this).parents("tr") ).data();
 			$("#cliente_jornada_actualizar option[value='" + data.id_membresia   + "']").prop("selected",true);
-			console.log(data);
 			var id_membresia = data.id_membresia;
 			var id_jornada = data.id_jornada;
 			$("#id_jornada").val(id_jornada);
@@ -603,7 +602,6 @@ function consultarMembresiaActualizar(){
 	        success: function(respuesta){
 
 	        	$("#alertas").html('');
-	            console.log(respuesta);
 	            $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
 	            if(respuesta.length>0){
 					///--Renderizo cuadro de planes....
@@ -668,9 +666,12 @@ function mostrarServiciosPaquete(servicios){
 	var tbody =  "";
 
 	$.each(servicios, function( index, value ) {
+		value.titulo = value.titulo.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
+
    	if(value.codigo != "SAL" && value.codigo != "HC" ){
 		tbody+="<tr class='tr_servicios' data='"+value.id_servicios+"'>\
-                    <th>"+value.codigo+"<input type='hidden' class='categoria' value='"+value.categoria+"'></th>\
+                    <th>"+value.codigo+"<input type='hidden' class='categoria' value='"+value.categoria+"'>"+"<input type='hidden' class='categoria_case' value='"+value.titulo+"'>"+
+                    "</th>\
                     <th>"+value.titulo+"</th>\
                     <th>"+value.cantidad+"</th>\
                     <th>"+new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(value.costo)+"</th>\
@@ -1026,10 +1027,12 @@ function agregarServicio(select, tabla,valor_registrar){
 	var tipo = vector_value[1]; 
 	var codigo_servicio = vector_value[2];
 	var costo_servicios_calc = vector_value[3];
+	var categoria_servicio = vector_value[4];
 	var valor_servicio = $(valor_registrar).val(); 
 	var total_servicio = parseInt(valor_servicio)*costo_servicios_calc;
 	var costo_servicio = new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(vector_value[3]);
 	var total_servicio = new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(total_servicio);
+	var cargo_option = false;
 
 	if(isNaN(valor_servicio)){
 		valor_servicio = valor_servicio.toUpperCase(); 
@@ -1061,13 +1064,14 @@ function agregarServicio(select, tabla,valor_registrar){
 					id_servicio = $(this).attr("data");
 					//Si el servicio esta en la tabla de arriba
 					//alert(id_servicio+"=="+value)
-					if(id_servicio==value){
+					if(id_servicio==value ||  categoria_servicio.toUpperCase() == $(this).find(".categoria_case").val().toUpperCase()){
 						disponible = parseInt($(this).find("th").eq(5).html())
 						disponible_previo = parseInt($(this).find("th").eq(5).html())
 						consumido = parseInt($(this).find("th").eq(4).html())
 						cantidad = parseInt($(this).find("th").eq(2).html())
 						//alert("disponible:"+disponible)
 						if(disponible>0){
+
 							//valor_servicio2 = parseInt(valor_servicio)
 							//este valor cosumido es el mismo de la cantidad colocada en el input al agregar el servicio, si el valor disponible es negativo este valor tendra que restarse para llenar de info a la tabla superior e inferior
 							valor_consumido =  parseInt(valor_servicio)
@@ -1093,28 +1097,40 @@ function agregarServicio(select, tabla,valor_registrar){
 								//---	
 								$(tabla + " tbody").append(html);
 								//----
-								data2 = $("#arreglo_servicios_opcionales").attr("data2")
+								if(id_servicio==value)
+									data2 = $("#arreglo_servicios_opcionales").attr("data2")
+								if(categoria_servicio == $(this).find(".categoria_case").val())
+									data2 = id_servicio;
+
 								if(data2!="0"){
-									arreglo_servicios_opcionales = data2 +"*"+value+"|"+vector_value[3]+"|"+restarnte
+									arreglo_servicios_opcionales = data2 +"*"+value+"|"+vector_value[3]+"|"+restarnte+"|"+categoria_servicio
 								}else{
-									arreglo_servicios_opcionales = value+"|"+vector_value[3]+"|"+restarnte
+									arreglo_servicios_opcionales = value+"|"+vector_value[3]+"|"+restarnte+"|"+categoria_servicio
 								}
 								///alert(arreglo_servicios_contratados)
 								$("#arreglo_servicios_opcionales").attr("data2",arreglo_servicios_opcionales)
 								$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
+								existe = true
 							}
+							cargo_option = true;
 							//Asigno lo consumido
 							$(this).find("th").eq(4).html(consumido)
 							//Asigno lo disponible
 							$(this).find("th").eq(5).html(disponible)
-							existe = true
-							data = $("#arreglo_servicios_contratados").attr("data")
+							///
+							var data = $("#arreglo_servicios_contratados").attr("data")
+
+							if(id_servicio!=value && categoria_servicio.toUpperCase() == $(this).find(".categoria_case").val().toUpperCase()){
+								data = "0";
+								id_servicio = value+"*"+id_servicio
+							}
+				
 							if(data!="0"){
 								//arreglo_servicios_contratados = data +"*"+id_servicio+"|"+$(this).find("th").eq(6).html()+"|"+consumido+"|"+disponible
-								arreglo_servicios_contratados = data +"*"+id_servicio+"|"+$(this).find("th").eq(6).html()+"|"+valor_consumido+"|"+disponible
+								arreglo_servicios_contratados = data +"*"+id_servicio+"|"+vector_value[3]+"|"+consumido+"|"+disponible+"|"+categoria_servicio
 							}else{
 								//arreglo_servicios_contratados = id_servicio+"|"+$(this).find("th").eq(6).html()+"|"+consumido+"|"+disponible
-								arreglo_servicios_contratados = id_servicio+"|"+$(this).find("th").eq(6).html()+"|"+valor_consumido+"|"+disponible
+								arreglo_servicios_contratados = id_servicio+"|"+vector_value[3]+"|"+consumido+"|"+disponible+"|"+categoria_servicio
 							}
 							///alert(arreglo_servicios_contratados)
 							$("#arreglo_servicios_contratados").attr("data",arreglo_servicios_contratados)
@@ -1124,8 +1140,10 @@ function agregarServicio(select, tabla,valor_registrar){
 					//alert(id_servicio);
 					//alert($(this).find("th").eq(1).html());
 				});
+		
 				//-----
 				//Sino esta en la tabla inicial, lo agrego a la nueva tabla
+
 				if(!existe){
 					html += "<tr id='r" + value + "'><td>" + codigo_servicio + "</td>";
 					html += "<td>"+text + " <input type='hidden' class='id_servicio' name='id_servicio' value='" + value + "'></td>";
@@ -1138,13 +1156,15 @@ function agregarServicio(select, tabla,valor_registrar){
 					//---
 					data2 = $("#arreglo_servicios_opcionales").attr("data2")
 					if(data2!="0"){
-						arreglo_servicios_opcionales = data2+"*"+value+"|"+vector_value[3]+"|"+valor_servicio
+						arreglo_servicios_opcionales = data2+"*"+value+"|"+vector_value[3]+"|"+valor_servicio+"|"+categoria_servicio
 					}else{
-						arreglo_servicios_opcionales = value+"|"+vector_value[3]+"|"+valor_servicio
+						arreglo_servicios_opcionales = value+"|"+vector_value[3]+"|"+valor_servicio+"|"+categoria_servicio
 					}
 					///alert(arreglo_servicios_contratados)
-					$("#arreglo_servicios_opcionales").attr("data2",arreglo_servicios_opcionales)
-					$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
+					if(cargo_option == false){
+						$("#arreglo_servicios_opcionales").attr("data2",arreglo_servicios_opcionales)
+						$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
+					}
 				}
 				//---
 				//---Cargo los valores en los arrgelos respectivos
@@ -1260,6 +1280,7 @@ function recalcular_arreglo_opcional(){
 function cargarArreglosMontos(){
 	arreglo_servicios_opcionales = $("#arreglo_servicios_opcionales").attr("data2");
 	arreglo_servicios_contratados = $("#arreglo_servicios_contratados").attr("data");
+	
 	acum_serv1 = 0;
 	acum_serv2 = 0;
 
@@ -1273,6 +1294,7 @@ function cargarArreglosMontos(){
 				//alert(vector_servicios_inicial.length+"-"+index2)
 				vector_interno_ini = value.split("|");
 				acum_serv1 = acum_serv1+(vector_interno_ini[1]*vector_interno_ini[2])
+
 				//---
 				//Si es actualizar el monto total sera solo en base al ultimo valor del vector, esto para evitar tomar todos los valores cuando se actualiza se suma uno a uno
 				/*if(($("#tipo_registro").val()=="actualizar")&&(vector_servicios_inicial.length==index2)){
@@ -1294,7 +1316,8 @@ function cargarArreglosMontos(){
 			$.each(vector_servicios_segundo, function( index, value ) {
 				index3 = index+1
 				vector_interno_seg = value.split("|");
-				acum_serv2 = acum_serv2+(vector_interno_seg[1]*vector_interno_seg[2])
+				if(!isNaN(acum_serv2+(vector_interno_seg[1]*vector_interno_seg[2])))
+					acum_serv2 = acum_serv2+(vector_interno_seg[1]*vector_interno_seg[2])
 				/*if(($("#tipo_registro").val()=="actualizar")&&(vector_servicios_segundo.length==index3)){
 					acum_serv2 = (vector_interno_seg[1]*vector_interno_seg[2])
 				}*/
@@ -1305,6 +1328,7 @@ function cargarArreglosMontos(){
 	}	
 
 	acum_serv_total =	parseInt(acum_serv1) + parseInt(acum_serv2)
+
 	//alert("total:"+acum_serv_total)
 	//alert(acum_serv1+"-"+acum_serv2)
 	//Cargo los montos en campos  ocultos

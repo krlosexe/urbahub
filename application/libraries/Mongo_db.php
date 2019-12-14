@@ -2036,7 +2036,7 @@ Class Mongo_db{
 	*
 	* Resets the class variables to default settings
 	*/
-	private function _clear()
+	public function _clear()
 	{
 		$this->selects	= array();
 		$this->updates	= array();
