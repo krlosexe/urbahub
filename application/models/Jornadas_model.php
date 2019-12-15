@@ -885,11 +885,11 @@ Class Jornadas_model extends CI_Model
 
             $mes = $arr_recibos["mes"];
 
-            $fecha = new MongoDB\BSON\UTCDateTime();
+            $fecha2 = Date("d-m-Y");
+            $fecha = new DateTime($fecha2);
 
                 $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
 
-            $fecha2 = Date("d-m-Y");
             
             ///-------------------------------
             $data = array(
