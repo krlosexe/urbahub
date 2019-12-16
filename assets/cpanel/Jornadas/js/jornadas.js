@@ -69,7 +69,20 @@ function limpiar_form_recargos_actualizar(){
 		          		return botones;
 		          	}
 				},
-				{"data":"id_jornada"},
+				{"data":"fec_regins",
+					render : function(data, type, row) {
+						var valor = data.date;
+						a = valor.split(".");
+						dato = a[0].split(" ")
+						fecha = cambiarFormatoFecha(dato[0]);
+						dato2 = dato[1].split(".")
+						sinEspacio = dato2[0];
+						id = fecha+sinEspacio
+						singuion = id.replace(/-/g,"");
+						b = singuion.replace(/:/g,"");
+						return b;
+	          		}
+				},
 				{"data":"identificador_prospecto_cliente"},
 				{"data":"nombre_datos_personales_cliente"},
 				{"data":"planes"},

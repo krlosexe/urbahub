@@ -570,6 +570,16 @@ class Cobranza extends CI_Controller {
         //----------------------------------------------------------------------------
 	}
 
+	public function updateReciboTemporal(){
+		$fecha_pago = "2019-12-13";
+		$data = array(
+                          'fecha'=>new DateTime($fecha_pago),
+                          
+                          'fecha_movimiento'=>new DateTime($fecha_pago),
+                          'fecha_contable'=>new DateTime($fecha_pago));
+		 $this->mongo_db->where(array('id_venta'=>"5df0611ee31dd921710104f2","recibos.concepto"=> "RECARGOS 13-12-2019"))->set('recibos',$data)->update('recibos_cobranzas');
+	}
+
 
 	public function GetReciboPendienteCobranza($id_venta){
 		$res_cobranza  = $this->Cobranza_model->getrecibopendiente($id_venta);

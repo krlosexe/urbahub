@@ -91,7 +91,20 @@ function listarJornadasSaldos(fecha=""){
         	},
 		},
 		"columns":[
-			{"data":"id_jornadas"},
+			{"data":"actual",
+					render : function(data, type, row) {
+						
+						a = data.date.split(".");
+						dato = a[0].split(" ")
+						fecha = cambiarFormatoFecha(dato[0]);
+						dato2 = dato[1].split(".")
+						sinEspacio = dato2[0];
+						id = fecha+sinEspacio
+						singuion = id.replace(/-/g,"");
+						b = singuion.replace(/:/g,"");
+						return b;
+	          		}
+				},
 			{"data":"contratados"},
 			{"data":"consumidos"},
 			{"data":"disponibles"}			

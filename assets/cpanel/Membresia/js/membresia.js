@@ -395,9 +395,9 @@ $(document).ready(function(){
 				$(".pestana_datosTrabajadoresC").hide();
 				//--Asigno valores
 				if(isNaN(data.serial_acceso)== false){
-				$("#serial_acceso_actualizar_fisica").val('')
+				$("#serial_acceso_mostrar_fisica").val('')
 				}else{
-				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				 $("#serial_acceso_mostrar_fisica").val(data.serial_acceso)
 				}
 				$("#grupo_empresarial_mostrar_fisica").val(data.grupo_empresarial);
 				$("#rfc_cliente_mostrar_fisica").val(data.identificador_prospecto_cliente);
@@ -416,9 +416,9 @@ $(document).ready(function(){
 				/***/
 				//--Asigno valores
 				if(isNaN(data.serial_acceso)== false){
-				$("#serial_acceso_actualizar_fisica").val('')
+				$("#serial_acceso_mostrar_moral").val('')
 				}else{
-				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				 $("#serial_acceso_mostrar_moral").val(data.serial_acceso)
 				}
 				//alert(data.identificador_prospecto_cliente);
 				$("#rfc_cliente_mostrar_moral").val(data.identificador_prospecto_cliente)	
@@ -533,9 +533,9 @@ $(document).ready(function(){
 				$("#razon_social").focus()		
 				//--Asigno valores
 				if(isNaN(data.serial_acceso)== false){
-				$("#serial_acceso_actualizar_fisica").val('')
+				$("#serial_acceso_actualizar_moral").val('')
 				}else{
-				 $("#serial_acceso_actualizar_fisica").val(data.serial_acceso)
+				 $("#serial_acceso_actualizar_moral").val(data.serial_acceso)
 				}
 				$("#rfc_cliente_actualizar_moral").val(data.identificador_prospecto_cliente);
 				/*document.getElementById('razon_social_e').value = data.nombre_datos_personales;
