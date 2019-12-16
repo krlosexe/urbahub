@@ -669,7 +669,7 @@ Class Jornadas_model extends CI_Model
                 $valores["titulo"] = $rs_servicios[0]["descripcion"];
                 $valores["categoria"] = $rs_servicios[0]["categoria"];
                 $valores["cantidad"] = $valor->cantidad;
-                $valores["consumido"]  = (!$valor->consumido)?$this->consultar_servicio_consumido($valor->servicios,$id_membresia):$valor->consumido;
+                $valores["consumido"]  = (($total = $valor->disponible-$valor->cantidad)>0)?$total:0;
                 $valores["disponible"] = (!$valor->disponible)?(integer)$valor->cantidad-(integer)$valores["consumido"]:$valor->disponible;
                 //$valores["costo"] = str_replace(",","",$rs_servicios[0]["monto"]);
                 $valores["costo"] = str_replace(",","",$valor->monto);

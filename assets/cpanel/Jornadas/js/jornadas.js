@@ -1077,6 +1077,7 @@ function agregarServicio(select, tabla,valor_registrar){
 							valor_consumido =  parseInt(valor_servicio)
 							consumido = consumido + valor_consumido
 							disponible = disponible - valor_consumido
+
 							if(disponible<0){
 								//este valor consumido es el valor de lo que se condiera consumido en este recargo, si disponible es negativo quiere decir que el valor consumido para la tabla superior va a ser lo que se tenia disponible antes de agregar este servicio 
 								valor_consumido = disponible_previo
@@ -1110,8 +1111,9 @@ function agregarServicio(select, tabla,valor_registrar){
 								///alert(arreglo_servicios_contratados)
 								$("#arreglo_servicios_opcionales").attr("data2",arreglo_servicios_opcionales)
 								$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
-								existe = true
+								
 							}
+							existe = true
 							cargo_option = true;
 							//Asigno lo consumido
 							$(this).find("th").eq(4).html(consumido)
