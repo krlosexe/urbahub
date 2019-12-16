@@ -664,7 +664,6 @@ function consultarMembresiaActualizar(){
 */
 function mostrarServiciosPaquete(servicios){
 	var tbody =  "";
-
 	$.each(servicios, function( index, value ) {
 		value.titulo = value.titulo.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
 
@@ -1070,6 +1069,7 @@ function agregarServicio(select, tabla,valor_registrar){
 						consumido = parseInt($(this).find("th").eq(4).html())
 						cantidad = parseInt($(this).find("th").eq(2).html())
 						//alert("disponible:"+disponible)
+
 						if(disponible>0){
 
 							//valor_servicio2 = parseInt(valor_servicio)
@@ -1304,7 +1304,7 @@ function cargarArreglosMontos(){
 			});
 		}
 	}else{
-		acum_serv1 = 0;
+		acum_serv1 = ($('#monto_pagar').val() == '')?0:$('#monto_pagar').val();
 	}
 
 	//Recorro el vector de servicios contratados ->arriba
@@ -1324,7 +1324,7 @@ function cargarArreglosMontos(){
 			});
 		}
 	}else{
-		acum_serv2 = 0;
+		acum_serv2 = ($('#monto_total_recargo').val() == '')?0:$('#monto_total_recargo').val();
 	}	
 
 	acum_serv_total =	parseInt(acum_serv1) + parseInt(acum_serv2)
@@ -1343,13 +1343,13 @@ function cargarArreglosMontos(){
 
 	}
 	
-	$("#monto_total_recargo_oculto").val(acum_serv_total);
+	$("#monto_total_recargo_oculto").val(acum_serv2);
 	$("#monto_pagar_oculto").val(acum_serv1);
 	//alert("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	//console.log("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	
 	//Cargo los montos en campos visibles
-	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
+	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv2))
 	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv1))
 	//
 }

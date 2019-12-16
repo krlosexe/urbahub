@@ -159,34 +159,41 @@ Class Jornadas_model extends CI_Model
             
             $fecha_fin = $result[0]["fecha_fin"]->toDateTime();
             $fecha_fini = $fecha_fin->format('Y-m-d');
-            
             $fecha_actual = date('Y-m-d');
+        
             //var_dump($fecha_fini>=$fecha_actual);die('');
             //Si la fecha actual esta dentro de los tiempos de la membresia...
-            if(($fecha_ini<=$fecha_actual)&&($fecha_fini>=$fecha_actual)){
-                $rs_membresia = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array("eliminado"=>false,"id_membresia"=>$data["id_membresia"],'fecha_hora_fin'=>'Sin salir'))->get("jornadas");
-                //valido que no haya entrado esa membresia...
-                //var_dump($rs_membresia);die('');
-                if(count($rs_membresia) == 0){
+            if($fecha_ini<=$fecha_actual){
 
-                    $insertar1 = $this->mongo_db->insert("jornadas", $data);
-                    echo json_encode("<span>La jornada se ha registrado exitosamente!</span>");
-                }else{
-                    //$fecha_hora_inicio = $rs_membresia[0]["fecha_hora_inicio"]->toDateTime();
-                    //$fecha_hora_ini = $fecha_hora_inicio->format('Y-m-d');
+                if($fecha_fini>=$fecha_actual){
+                    $rs_membresia = $this->mongo_db->order_by(array('_id' => 'DESC'))->where(array("eliminado"=>false,"id_membresia"=>$data["id_membresia"],'fecha_hora_fin'=>'Sin salir'))->get("jornadas");
+                    //valido que no haya entrado esa membresia...
+                    //var_dump($rs_membresia);die('');
+                    if(count($rs_membresia) == 0){
 
-                    $fecha_hora_ini = date("Y-m-d",$rs_membresia[0]["fecha_hora_inicio"]);
-                    //var_dump($fecha_actual."==".$fecha_hora_ini);die('');
-                    if( $fecha_actual==$fecha_hora_ini){
-                        echo "<span>¡Ya se encuentra registrada un ingreso de jornada para ese usuario en este dia!</span>";
-                    }else{//Si existe pero para otro dia igual guardo...
                         $insertar1 = $this->mongo_db->insert("jornadas", $data);
                         echo json_encode("<span>La jornada se ha registrado exitosamente!</span>");
+                    }else{
+                        //$fecha_hora_inicio = $rs_membresia[0]["fecha_hora_inicio"]->toDateTime();
+                        //$fecha_hora_ini = $fecha_hora_inicio->format('Y-m-d');
+
+                        $fecha_hora_ini = date("Y-m-d",$rs_membresia[0]["fecha_hora_inicio"]);
+                        //var_dump($fecha_actual."==".$fecha_hora_ini);die('');
+                        if( $fecha_actual==$fecha_hora_ini){
+                            echo "<span>¡Ya se encuentra registrada un ingreso de jornada para ese usuario en este dia!</span>";
+                        }else{//Si existe pero para otro dia igual guardo...
+                            $insertar1 = $this->mongo_db->insert("jornadas", $data);
+                            echo json_encode("<span>La jornada se ha registrado exitosamente!</span>");
+                        }
                     }
+                }else{
+                    echo "<span>¡Su membresía a expirado debe renovarla!</span>";
                 }
+
             }else{
-                echo "<span>¡Su membresía a expirado debe renovarla!</span>";
+                 echo "<span>¡La membresia aun no ha iniciado!</span>";
             }
+
         }else{
              echo "<span>¡No se encuentran datos asociados a esta membresia!</span>";
         }
@@ -460,6 +467,7 @@ Class Jornadas_model extends CI_Model
             $precio =  number_format($res_paquetes[0]["precio"],2);
            
             $servicios = $res_paquetes[0]["servicios"];
+          
             #Recorro c/u de los servicios 
             foreach ($servicios as $clave_serv => $valor_serv) {
 
@@ -661,8 +669,8 @@ Class Jornadas_model extends CI_Model
                 $valores["titulo"] = $rs_servicios[0]["descripcion"];
                 $valores["categoria"] = $rs_servicios[0]["categoria"];
                 $valores["cantidad"] = $valor->cantidad;
-                $valores["consumido"] = $this->consultar_servicio_consumido($valor->servicios,$id_membresia);
-                $valores["disponible"] = (integer)$valor->cantidad-(integer)$valores["consumido"];
+                $valores["consumido"]  = (!$valor->consumido)?$this->consultar_servicio_consumido($valor->servicios,$id_membresia):$valor->consumido;
+                $valores["disponible"] = (!$valor->disponible)?(integer)$valor->cantidad-(integer)$valores["consumido"]:$valor->disponible;
                 //$valores["costo"] = str_replace(",","",$rs_servicios[0]["monto"]);
                 $valores["costo"] = str_replace(",","",$valor->monto);
                 $listado[]=$valores;

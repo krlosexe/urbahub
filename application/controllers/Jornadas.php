@@ -230,8 +230,9 @@ class Jornadas extends CI_Controller
         #Modificacion 31052019: consulto el numero de renovacion
         $numero_renovacion = $this->Jornadas_model->consultarNrenovacion($id_membresia );
         //---
+     
         $this->reglas_validacion();
-    
+      
         if($this->form_validation->run() == true){
           $data = array(
                           
@@ -417,6 +418,7 @@ class Jornadas extends CI_Controller
                           'monto_total_recargo'=> number_format($formulario["monto_total_recargo"],2,".",""),
                           'monto_pagar'=> number_format($formulario["monto_pagar"],2,".",""),
         );
+     
         $where_array_montos = array(
                                       '_id'=>$id_jornada_mongo 
                                 );
@@ -454,11 +456,11 @@ class Jornadas extends CI_Controller
         //--Para servicios contratados
         $servicios_contratados = $formulario["arreglo_servicios_contratados"];
         $arreglo_servicios_contratados = explode("*",$servicios_contratados);
-        prp($arreglo_servicios_contratados,1);
         if($arreglo_servicios_contratados[0]!=0){
             foreach ($arreglo_servicios_contratados as $clave_serv_contratados => $valor_serv_contratados) {
                 $fila_servicios_cont = explode("|",$valor_serv_contratados);
                 if(count($fila_servicios_cont)>1){
+
                    
                 $data = array(
                               'id_servicio'=> $fila_servicios_cont[0],
@@ -478,16 +480,16 @@ class Jornadas extends CI_Controller
                 );
                 $where_array = array(
                                       'id_membresia' =>$id_membresia,
-                                      '_id'=>$id_jornada_mongo 
+                                     // '_id'=>$id_jornada_mongo 
                                     );
 
                 //$this->Jornadas_model->actualizar_servicios_jornadas($where_array,$data);  
         
                 //--Actualizar membresia 
 
-                $data_membresia = array(
+                $data_membresia = array(    
                         'servicios.$.disponible'=> $fila_servicios_cont[3],
-                        'servicios.$.consumido'=>   $fila_servicios_cont[2],
+                        'servicios.$.consumido'=>  $fila_servicios_cont[2],
                 );
 
                 $where_array_membresia = array(
