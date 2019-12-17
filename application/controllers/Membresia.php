@@ -372,6 +372,7 @@ class Membresia extends CI_Controller
         $actual_renovacion = $arreglo_renovacion[1];
         $fecha = $this->input->post("fecha");
         $listado = $this->Membresia_model->listado_jornadas_saldos($id_membresia,$fecha,$numero_renovacion,$actual_renovacion);
+        
         /*foreach ($listado as $value) {
             $arreglo_data = $value;                       
             $listado2[] = $arreglo_data;

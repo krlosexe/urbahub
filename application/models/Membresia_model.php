@@ -1171,12 +1171,12 @@ Class Membresia_model extends CI_Model
                 $consumidos = $this->consultar_servicio_consumido($valor_servicios->servicios,$id_mem);
                 #4) Paso 4: Calculo cantidad disponible
                
-                $disponible = $valor_servicios->cantidad-$consumidos;
+                $consumidos = $valor_servicios->cantidad-$valor_servicios->disponible;;
                 $valores["id_servicios"] = $valor_servicios->servicios;
                 $valores["servicios"] = $titulo;
                 $valores["contratados"] = $valor_servicios->cantidad;
                 $valores["consumidos"] = $consumidos;
-                $valores["disponibles"] = $disponible;
+                $valores["disponibles"] = $valor_servicios->disponible;
                 #---
                 $listado[] = $valores;
             }
@@ -1200,7 +1200,7 @@ Class Membresia_model extends CI_Model
                 //---
             }
         }
-       
+
         //var_dump($listado);die('');
         return $listado;
     }

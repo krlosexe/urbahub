@@ -1126,6 +1126,7 @@ function agregarServicio(select, tabla,valor_registrar){
 								$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
 								
 							}
+							console.log('ee');
 							existe = true
 							cargo_option = true;
 							//Asigno lo consumido
@@ -1176,6 +1177,7 @@ function agregarServicio(select, tabla,valor_registrar){
 						arreglo_servicios_opcionales = value+"|"+vector_value[3]+"|"+valor_servicio+"|"+categoria_servicio
 					}
 					///alert(arreglo_servicios_contratados)
+					console.log(cargo_option)
 					if(cargo_option == false){
 						$("#arreglo_servicios_opcionales").attr("data2",arreglo_servicios_opcionales)
 						$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
@@ -1364,8 +1366,8 @@ function cargarArreglosMontos(){
 	//console.log("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	
 	//Cargo los montos en campos visibles
-	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv2))
-	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv1))
+	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv1))
+	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
 	//
 }
 /*------------------------------------------------------------------------------- */
