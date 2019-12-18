@@ -647,6 +647,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														                            			<!--Campo oculto -->
 														                            			<input type="hidden" name="monto_pagar_oculto" id="monto_pagar_oculto" class="form-control" style="float: right;" value="0" readonly>
 														                            			<!--Campo oculto monto a pagar-->
+																								<input type="hidden" name="servicios_contratados_oculto" id="servicios_contratados_oculto" class="form-control" style="float: right;" value="0" readonly>
+														                            			<!--Campo oculto para llevar conteo de los cargos a servicios contratados --->
 														                            			<input type="hidden" name="ultimo_monto_pagar_guardado" id="ultimo_monto_pagar_guardado" class="form-control" style="float: right;" value="0" readonly>
 														                            		</div>
 														                            	</div>

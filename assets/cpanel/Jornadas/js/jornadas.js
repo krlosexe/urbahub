@@ -211,7 +211,7 @@ function limpiar_form_recargos_actualizar(){
 		var id_membresia = $("#cliente_jornada_actualizar").val();
 		var arreglo_servicios_opcionales = $("#arreglo_servicios_opcionales").attr("data2");
 		var arreglo_servicios_contratados = $("#arreglo_servicios_contratados").attr("data");
-		var monto_total_recargo = $("#monto_total_recargo_oculto").val();
+		var monto_total_recargo = $("#monto_total_recargo_oculto").val()-$("#servicios_contratados_oculto").val();
 		var monto_pagar = $("#monto_pagar_oculto").val();
 		//--------------------------------------------------------------------------------------------
 		if((arreglo_servicios_opcionales!="")&&(arreglo_servicios_contratados!="")&&(monto_total_recargo!="")&&(monto_pagar!="")){
@@ -261,7 +261,7 @@ function limpiar_form_recargos_actualizar(){
 
 		            //---
 		            //--Asigno valores a ultimos monto guardado
-		            var monto_total_oculto =  $("#monto_total_recargo_oculto").val();
+		            var monto_total_oculto =  $("#monto_total_recargo_oculto").val()-$("#servicios_contratados_oculto").val();
 		            $("#ultimo_monto_total_guardado").val(monto_total_oculto);
 		            //--Asigno valores a ultimo monto pagado
 		            var monto_pagar_oculto = $("#monto_pagar_oculto").val();
@@ -1126,7 +1126,6 @@ function agregarServicio(select, tabla,valor_registrar){
 								$("#arreglo_servicios_opcionales").html(arreglo_servicios_opcionales)
 								
 							}
-							console.log('ee');
 							existe = true
 							cargo_option = true;
 							//Asigno lo consumido
@@ -1218,10 +1217,12 @@ function eliminarServicios(tr,id_servicio){
 			acum_serv_op = (vector_interno_ini[1]*vector_interno_ini[2])
 		}
 	})
+
 	//--
 	if(arreglo_nuevo_servicios==""){
 		arreglo_nuevo_servicios = "0";
 	}
+
 	//--
 	$("#arreglo_servicios_opcionales").attr("data2",arreglo_nuevo_servicios)
 	$("#arreglo_servicios_opcionales").html(arreglo_nuevo_servicios)	
@@ -1241,7 +1242,7 @@ function eliminarServicios(tr,id_servicio){
 	//Cargo los montos en campos visibles
 	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
 	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv1))
-	//---
+	//---*/
 }
 /*
 *	Recalcular arreglo opcional
@@ -1360,13 +1361,15 @@ function cargarArreglosMontos(){
 
 	}
 	
-	$("#monto_total_recargo_oculto").val(acum_serv2);
-	$("#monto_pagar_oculto").val(acum_serv1);
+	$("#servicios_contratados_oculto").val(acum_serv2);
+
+	$("#monto_total_recargo_oculto").val(acum_serv_total);
+	$("#monto_pagar_oculto").val(acum_serv_total);
 	//alert("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	//console.log("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	
 	//Cargo los montos en campos visibles
-	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv1))
+	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
 	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
 	//
 }
