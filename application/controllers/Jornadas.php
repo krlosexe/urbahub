@@ -209,6 +209,7 @@ class Jornadas extends CI_Controller
             $id_jornadas = "";
         }
         $membresia = $this->Jornadas_model->listado_membresia_filtro($formulario["id_membresia"],$id_jornadas);
+
         echo(json_encode($membresia));
     }
     

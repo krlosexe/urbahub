@@ -581,7 +581,8 @@ Class Jornadas_model extends CI_Model
                 //var_dump($valor["servicios"]);die('');
                 $valores["servicios"] = $this->obtenerServicios($valor["servicios"],$valores["id_membresia"]);
                 $valores["servicios_opcionales"] = $this->obtenerServiciosOpcionales($id_jornadas);
-                $valores["arreglo_montos"] = $this->ObtenerMontosJornadas($id_jornadas);          
+                $valores["arreglo_montos"] = $this->ObtenerMontosJornadas($id_jornadas);     
+                     
             }
             /*
             *

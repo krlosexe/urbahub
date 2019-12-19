@@ -211,7 +211,7 @@ function limpiar_form_recargos_actualizar(){
 		var id_membresia = $("#cliente_jornada_actualizar").val();
 		var arreglo_servicios_opcionales = $("#arreglo_servicios_opcionales").attr("data2");
 		var arreglo_servicios_contratados = $("#arreglo_servicios_contratados").attr("data");
-		var monto_total_recargo = $("#monto_total_recargo_oculto").val()-$("#servicios_contratados_oculto").val();
+		var monto_total_recargo = $("#monto_total_recargo_oculto").val();
 		var monto_pagar = $("#monto_pagar_oculto").val();
 		//--------------------------------------------------------------------------------------------
 		if((arreglo_servicios_opcionales!="")||(arreglo_servicios_contratados!="")&&(monto_total_recargo!="") || (monto_pagar!="")){
@@ -648,7 +648,7 @@ function consultarMembresiaActualizar(){
 					var servicios_opcionales = respuesta[0]["servicios_opcionales"]
 
 					mostrarServiciosOpcionales(respuesta[0]["servicios_opcionales"])
-
+				
 					mostrarArregloMontos(respuesta[0]["arreglo_montos"])
 					//--
 					//Muestro los datos del cliente
@@ -742,6 +742,7 @@ function mostrarServiciosOpcionales($arreglo_servicios){
 *	Mostrar arreglo montos
 */
 function mostrarArregloMontos($arreglo_montos){
+	$("#monto_total_recargo").val(0);
 	if($("#tipo_registro").val()=="actualizar"){
 		
 		if ($arreglo_montos["monto_pagar"]!=""){
@@ -753,6 +754,7 @@ function mostrarArregloMontos($arreglo_montos){
 	    }
 
 	    if ($arreglo_montos["monto_total_recargo"]!=""){
+
 	   		$("#monto_total_recargo").val($arreglo_montos["monto_total_recargo"]);
 	    }
 
