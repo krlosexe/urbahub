@@ -1542,9 +1542,9 @@ class ClientePagador extends CI_Controller
   public function eliminar ()
   {
     $id = $this->input->post('id');
-    $consulta = consultarClienteCotizacion($id);
+    $consulta = $this->ClientePagador_model->consultarClienteCotizacion($id);
     if($consulta){
-       echo ("<span>El Cliente NO se puede eliminar ya que tiene una Cotizacion asociada!</span>");
+       echo "<span>El Cliente NO se puede eliminar ya que tiene una Cotización asociada!</span>";
     }else{
     $this->ClientePagador_model->eliminar($id, 'cliente');
 

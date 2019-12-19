@@ -147,7 +147,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <table class="table table-bordered table-striped" id="tablaRecargos">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Id Servicios</th>
                                                                     <th>Servicios</th>
                                                                     <th>Contratados</th>
                                                                     <th>Consumidos</th>

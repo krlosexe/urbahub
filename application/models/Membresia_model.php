@@ -1098,6 +1098,7 @@ Class Membresia_model extends CI_Model
                     if($valor_servicios->tipo=="opcional"){
                         $servicios_jornadas["servicios"] = $valor_servicios->id_servicio;
                         $servicios_jornadas["cantidad"] = $valor_servicios->cantidad;
+                        $servicios_jornadas["fecha"] = $valor_servicios->auditoria[0]->fecha->toDateTime();
                         #4) Paso 4: Armo arreglo de id
                         $arreglo_id [] = $valor_servicios->id_servicio;
                         $listado [] = $servicios_jornadas;
@@ -1105,9 +1106,10 @@ Class Membresia_model extends CI_Model
                 }
             }
         }
-       
+    
         #5) Paso 5: Creo un arreglo unico de los servicios consumidos
         $arreglo_unico = array_unique($arreglo_id);
+
         #6) Paso 6: Recorro el arreglo de servicios unicos
         foreach ($arreglo_unico as $idServicio) {
             #7) Paso 7: Obtengo las posiciones donde sen encuentran los servicios unicos
@@ -1119,11 +1121,13 @@ Class Membresia_model extends CI_Model
             echo "<br>";*/
             #8) Paso 8: Recorro posicion
             foreach ($posicion as $valor_posicion) {
+                //prp($listado[$valor_posicion]['fecha'],1);
                 $cantidad = $cantidad+$listado[$valor_posicion]["cantidad"];
+                $fecha    =  $listado[$valor_posicion]['fecha'];
             }
-            #9) Paso 9: Consulto el titulo....
+            #9) Paso 9: Consulto el titulo.... $this->mongo_db->date($fecha_ini)
             $titulo = $this->consultar_titulo_servicios($idServicio);
-            $listado_def[] = array("id"=>$idServicio,"titulo"=>$titulo,"cantidad"=>$cantidad);
+            $listado_def[] = array("id"=>$idServicio,"titulo"=>$titulo,"cantidad"=>$cantidad,"fecha"=>$fecha);
             $cantidad = 0;
         }
         return $listado_def;

@@ -221,7 +221,7 @@ function listarRecargasSaldos(fecha=""){
         	},
 		},
 		"columns":[
-			{"data":"id_servicios"},
+			//{"data":"id_servicios"},
 			{"data":"servicios",
 				render : function(data, type, row) {
 					return data+"<input type='hidden' value='"+data+"' />";
@@ -269,7 +269,21 @@ function listarRecargasAdicionalesSaldos(fecha=""){
         	},
 		},
 		"columns":[
-			{"data":"id"},
+			{"data":"fecha",
+			render : function(data, type, row) {
+						
+						a = data.date.split(".");
+						dato = a[0].split(" ")
+						fecha = cambiarFormatoFecha(dato[0]);
+						dato2 = dato[1].split(".")
+						sinEspacio = dato2[0];
+						id = fecha+sinEspacio
+						singuion = id.replace(/-/g,"");
+						b = singuion.replace(/:/g,"");
+						return b;
+	          		}
+
+		},
 			{"data":"titulo"},
 			{"data":"cantidad"}		
 		],
