@@ -214,7 +214,7 @@ function limpiar_form_recargos_actualizar(){
 		var monto_total_recargo = $("#monto_total_recargo_oculto").val()-$("#servicios_contratados_oculto").val();
 		var monto_pagar = $("#monto_pagar_oculto").val();
 		//--------------------------------------------------------------------------------------------
-		if((arreglo_servicios_opcionales!="")&&(arreglo_servicios_contratados!="")&&(monto_total_recargo!="")&&(monto_pagar!="")){
+		if((arreglo_servicios_opcionales!="")||(arreglo_servicios_contratados!="")&&(monto_total_recargo!="") || (monto_pagar!="")){
 			var form  = "#form_recargos_actualizar"
 			var controlador = "Jornadas/registrarRecargos"
 		    var url=document.getElementById('ruta').value; //obtiene la ruta del input hidden con la variable <?=base_url()?>

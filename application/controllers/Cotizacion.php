@@ -1165,6 +1165,7 @@ class Cotizacion extends CI_Controller {
     }
 
     $data_service = [];
+
     foreach ($temp_correo["arreglo_datos"][0]["data_service"] as $key => $value){
      
       $servicios = $this->Cotizacion_model->getDataServicios($value->service)[0];
@@ -1196,7 +1197,12 @@ class Cotizacion extends CI_Controller {
 
           $servicios = $this->Cotizacion_model->getDataServicios($value->id_servicios);
          // echo json_encode($value->posicion)."<br><br>";
-
+          $servicios[0]['servicios'] = $servicios[0]['_id']->{'$id'};
+          if($servicios[0]['tipo'] == 'N'){
+            $temp_correo['arreglo_datos']["servicios"][]   = (object)$servicios[0];
+          }else{
+            $temp_correo['arreglo_datos']["servicios_c"][] = (object)$servicios[0];
+          }
           $servcies[] = $servicios[0];
         }
 
@@ -1206,9 +1212,12 @@ class Cotizacion extends CI_Controller {
 
       $data_planes[] = $data;
     }
-  
+    
     
     if(count($temp_correo['arreglo_datos']) > 0){
+      $servicios   = $temp_correo['arreglo_datos']['servicios'];
+      $servicios_c = $temp_correo['arreglo_datos']['servicios_c'];
+
       $temp_correo['arreglo_datos'] = $temp_correo['arreglo_datos'][0];
      
       $temp_correo["arreglo_datos"]["data_planes"] = $data_planes;
@@ -1217,10 +1226,9 @@ class Cotizacion extends CI_Controller {
       if($membresia){
         $temp_correo['arreglo_datos_planes'] = $this->Cotizacion_model->buscar_plan($temp_correo['arreglo_datos']['plan']);
       }
-      
-      
+     
       #Consulto los servicios
-      $temp_correo['arreglo_datos_servicios'] = $this->Cotizacion_model->buscar_servicios($id_cotizacion,$temp_correo['arreglo_datos']["servicios"],$temp_correo['arreglo_datos']["servicios_c"]);
+      $temp_correo['arreglo_datos_servicios'] = $this->Cotizacion_model->buscar_servicios($id_cotizacion,$servicios,$servicios_c);
     }
 
  
