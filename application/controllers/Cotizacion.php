@@ -1150,8 +1150,8 @@ class Cotizacion extends CI_Controller {
     $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
     #Consulto la cotizacion
     $temp_correo['arreglo_datos'] = $this->Cotizacion_model->buscar($id_cotizacion);
-    
-    $membresia = $temp_correo["arreglo_datos"][0]["membresia"];
+
+    $membresia = isset($temp_correo["arreglo_datos"][0]["membresia"])?$temp_correo["arreglo_datos"][0]["membresia"]:false;
     
     $tipo_persona = $temp_correo['arreglo_datos'][0]["tipo_persona"];
 
@@ -1165,7 +1165,7 @@ class Cotizacion extends CI_Controller {
     }
 
     $data_service = [];
-
+/*
     foreach ($temp_correo["arreglo_datos"][0]["data_service"] as $key => $value){
      
       $servicios = $this->Cotizacion_model->getDataServicios($value->service)[0];
@@ -1173,7 +1173,7 @@ class Cotizacion extends CI_Controller {
 
       $data_service[] = $value;
     }
-
+¨*/
 
  
     $this->array_sort_by($temp_correo["arreglo_datos"][0]["data_plan"], 'posicion_plan', $order = SORT_ASC);
@@ -1183,8 +1183,8 @@ class Cotizacion extends CI_Controller {
     foreach ($temp_correo["arreglo_datos"][0]["data_plan"] as $key => $value) {
       $id_plan = $value->id_plan;
       $plan    = $this->Cotizacion_model->getPlan($id_plan);
-      
       $id_paquete = $value->id_paquete;
+
       $paquete    = $this->Cotizacion_model->getPaquete($id_paquete);
 
 
@@ -1196,6 +1196,7 @@ class Cotizacion extends CI_Controller {
         foreach ($paquete[0]["servicios"] as $key => $value) {
 
           $servicios = $this->Cotizacion_model->getDataServicios($value->id_servicios);
+
          // echo json_encode($value->posicion)."<br><br>";
           $servicios[0]['servicios'] = $servicios[0]['_id']->{'$id'};
           if($servicios[0]['tipo'] == 'N'){
