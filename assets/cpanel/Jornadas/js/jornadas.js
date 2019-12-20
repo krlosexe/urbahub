@@ -1301,8 +1301,8 @@ function cargarArreglosMontos(){
 	arreglo_servicios_opcionales = $("#arreglo_servicios_opcionales").attr("data2");
 	arreglo_servicios_contratados = $("#arreglo_servicios_contratados").attr("data");
 	
-	acum_serv1 = 0;
-	acum_serv2 = 0;
+	acum_serv1 = 0.00;
+	acum_serv2 = 0.00;
 
 	//Recorro el vector de servicios opcionales ->abajo
 	if(arreglo_servicios_opcionales!="0"){
@@ -1362,17 +1362,17 @@ function cargarArreglosMontos(){
 		acum_serv1 = acum_serv1 + monto_pagar_oculto
 
 	}
-	
+	console.log(acum_serv1)
 	$("#servicios_contratados_oculto").val(acum_serv2);
 
 	$("#monto_total_recargo_oculto").val(acum_serv_total);
-	$("#monto_pagar_oculto").val(acum_serv_total);
+	$("#monto_pagar_oculto").val(acum_serv1);
 	//alert("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	//console.log("Monto total recargos"+acum_serv_total+"- Monto a pagar:"+acum_serv1)
 	
 	//Cargo los montos en campos visibles
 	$("#monto_total_recargo").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
-	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv_total))
+	$("#monto_pagar").val(new Intl.NumberFormat('en-IN', {  minimumFractionDigits: 2 }).format(acum_serv1))
 	//
 }
 /*------------------------------------------------------------------------------- */

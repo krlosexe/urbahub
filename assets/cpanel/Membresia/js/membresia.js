@@ -573,6 +573,7 @@ $(document).ready(function(){
 			$("#fecha_finE").html(cambiarFormatoFecha(fechaFin[0]));
 
 			cuadros('#cuadro1', '#cuadro4');
+			console.log('aaa : ')
 			consultarClienteRFCModificar(data.identificador_prospecto_cliente,data.tipo_persona);
 			/*
 			*	Activo pestaña de saldos
