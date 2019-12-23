@@ -90,9 +90,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                                    		<?php endforeach ?>
 		                                    	</select>
 				                            </div>
-				                            <div class="col-sm-6">
+				                            <div class="col-sm-3">
 			                            		<label for="cod_esquema_registrar">Esquema de Descuento*</label>
-		                                    	<select name="cod_esquema" id="cod_esquema_registrar" required class="form-control">
+		                                    	<select name="cod_esquema" id="cod_esquema_registrar" class="form-control">
 		                                    		<option value="" selected>Seleccione</option>
 		                                    		<?php var_dump($esquemas); foreach ($esquemas as $esquema): ?>
 			                                    		<?php if ($esquema['status']==true){ ?>
@@ -101,7 +101,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                                    		<?php endforeach ?>
 		                                    	</select>
 				                            </div>
-				                            <div class="col-sm-6">
+				                            <div class="col-sm-3">
+			                            		<label for="cod_esquema_registrar">Plan/Paquete</label>
+		                                    	<select name="plan_paquete" id="plan_paquete_r"  class="form-control">
+		                                    		<option value="" selected>Seleccione</option>
+		                                    		
+		                                    	</select>
+				                            </div>
+				                            <div class="col-sm-3">
+				                            		<label for="servicio_registrar">Servicios</label>
+			                                    	<select name="servicio" id="servicio_registrar" class="form-control">
+			                                    		<option value="" selected>Seleccione</option>
+
+			                                    		<?php foreach ($servicios as $servicio): ?>
+			                                    			<?php if ($servicio['status']==true){ ?>		                                    			
+			                                    					<option value="<?= $servicio["id_servicios"] ?>"><?= $servicio["descripcion"]; ?></option>
+			                                    	 			<?php } ?>
+			                                    		<?php endforeach ?>
+			                                    	</select>
+					                            </div>
+
+
+				                            <div class="col-sm-3">
 				                                <label for="descuento_registrar">% Descuento*</label>
 				                                <div class="form-group">
 				                                    <div class="form-line">
@@ -149,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                                    		<?php endforeach ?>
 	                                    	</select>
 			                            </div>
-			                            <div class="col-sm-6">
+			                            <div class="col-sm-3">
 		                            		<label for="cod_esquema_consultar">Esquema de Descuento*</label>
 	                                    	<select id="cod_esquema_consultar" class="form-control" disabled>
 	                                    		<option value="" selected>Seleccione</option>
@@ -159,7 +180,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                                    	<?php endforeach ?>
 	                                    	</select>
 			                            </div>
-			                            <div class="col-sm-6">
+			                             <div class="col-sm-3">
+			                            		<label for="cod_esquema_registrar">Plan/Paquete</label>
+		                                    	<select name="plan_paquete" id="plan_paquete_c"  class="form-control">
+		                                    		<option value="" selected>Seleccione</option>
+		                                    		
+		                                    	</select>
+				                            </div>
+				                            <div class="col-sm-3">
+				                            		<label for="servicio_registrar">Servicios</label>
+			                                    	<select name="servicio" id="servicio_consultar" class="form-control">
+			                                    		<option value="" selected>Seleccione</option>
+
+			                                    		<?php foreach ($servicios as $servicio): ?>
+			                                    			<?php if ($servicio['status']==true){ ?>
+
+			                                    		
+			                                    					<option value="<?= $servicio["id_servicios"] ?>"><?= $servicio["descripcion"]; ?></option>
+			                                    		
+			                                    			<?php } ?>
+			                                    		<?php endforeach ?>
+			                                    	</select>
+					                            </div>
+			                            <div class="col-sm-3">
 			                                <label for="descuento_registrar">% Descuento*</label>
 			                                <div class="form-group">
 			                                    <div class="form-line">
@@ -206,7 +249,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                                    		<?php endforeach ?>
 		                                    	</select>
 				                            </div>
-				                            <div class="col-sm-6">
+				                            <div class="col-sm-3">
 			                            		<label for="cod_esquema_actualizar">Esquema de Descuento*</label>
 		                                    	<select name="cod_esquema" id="cod_esquema_actualizar" required class="form-control">
 		                                    		<option value="" selected>Seleccione</option>
@@ -215,7 +258,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                                    		<?php endforeach ?>
 		                                    	</select>
 				                            </div>
-				                            <div class="col-sm-6">
+				                                <div class="col-sm-3">
+			                            		<label for="cod_esquema_registrar">Plan/Paquete</label>
+		                                    	<select name="plan_paquete" id="plan_paquete_e"  class="form-control">
+		                                    		<option value="" selected>Seleccione</option>
+		                                    		
+		                                    	</select>
+				                            </div>
+				                            <div class="col-sm-3">
+				                            		<label for="servicio_registrar">Servicios</label>
+			                                    	<select name="servicio" id="servicio_actualizar" class="form-control">
+			                                    		<option value="" selected>Seleccione</option>
+
+			                                    		<?php foreach ($servicios as $servicio): ?>
+			                                    			<?php if ($servicio['status']==true){ ?>
+
+			                                    				
+			                                    					<option value="<?= $servicio["id_servicios"] ?>"><?= $servicio["descripcion"]; ?></option>
+			                                    			
+			                                    			<?php } ?>
+			                                    		<?php endforeach ?>
+			                                    	</select>
+					                            </div>
+				                            <div class="col-sm-3">
 				                                <label for="descuento_registrar">% Descuento*</label>
 				                                <div class="form-group">
 				                                    <div class="form-line">

@@ -823,9 +823,8 @@ function addPlan() {
 	var input_plan_id    = "<input type='hidden' name='plan_id[]' value='"+plan_id+"'>"
 	var input_paquete_id = "<input type='hidden' name='paquete_id[]' class='paquete_add' value='"+paquete_id+"'>"
 
-
 	var select_plazos     = '<input type="text" value="'+plazos+'" name="plazos[]" class="form-control" placeholder="Plazos" readonly>'
-	var catn_trabajadores = '<input type="text"  name="cant_trabajadores[]" class="form-control cant_trabajadores" placeholder="Cantidad de Trabajadores" required>'
+	var catn_trabajadores = "<input type='text'  name='cant_trabajadores[]'' class='form-control cant_trabajadores-"+paquete_id+"' placeholder='Cantidad de Trabajadores' required>"
 
 	var btn_view   = "<span onclick='showModalServices(\"" + paquete_id + "\")' class='consultar btn btn-xs btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='fa fa-eye' style='margin-bottom:5px'></i></span>";
 
@@ -835,10 +834,12 @@ function addPlan() {
 	var monto = parseFloat($("#monto_paquete_registrar_fisica_oculto").val())
 
 
-	var monto_input = "<input type='hidden' class='monto_input' id='monto_tr' value='"+monto+"'>"
+	var monto_input = "<input type='text' class='monto_input"+paquete_id+"' id='monto_tr' value='"+monto+"'>"
 
 	var valid = true;
-
+	var descuento = getDescuento(paquete_id,'paquete');
+	var iva = getIva();
+ 
 
 	$("#tableRegistrarFisica tbody tr").each(function(){
 		var id_paquete = $(this).find(".paquete_add").val();
@@ -862,6 +863,15 @@ function addPlan() {
 		html+= "<td>"+select_plazos+"</td>";
 		html+= "<td>"+catn_trabajadores+"</td>";
 		html+= "<td>"+number_format(monto, 2)+"</td>";
+		if(descuento !=""){
+		html += `<td><a class="btn btn-xs btn-danger descuento-${paquete_id}  items-decuentos-conceptos" id_descuento_concepto="${paquete_id}" onclick="SelectDescuentoConcepto(${descuento},'${paquete_id}',1)">${descuento}%</td>`
+		}else{
+		html += "<td></td>"
+		}
+		//html += "<td><a id_descuento_concepto='"+paquete_id+"' class='btn btn-xs btn-danger descuento-"+paquete_id+" items-decuentos-conceptos' onclick='SelectDescuentoConcepto(this, "+paquete_id+", 1)'>"+descuento+"% </td>";
+		html += `<td><a class="btn btn-xs btn-danger porcentaje-${paquete_id}" onclick="selectIva(${iva},'${paquete_id}',2)">${iva}%</td>`
+		html+= `<td class="monto-iva-${paquete_id}"></td>`
+		html+= `<td class ="total-${paquete_id}"></td>`;
 	html += "</tr>";
 
 
@@ -873,13 +883,6 @@ function addPlan() {
 		warning("El registro ya se encuentra agregado");
 	}
 }
-
-
-
-
-
-
-
 
 
 
@@ -949,6 +952,68 @@ function cantidadTrabajadoreSumar() {
 	});
 }
 
+function selectIva(iva,id,key){
+	var monto = $("#monto_paquete_registrar_fisica_oculto").val()
+	var cantidad = $(".cant_trabajadores-"+id).val()
+    var monto_iva  = (((parseFloat(monto)*cantidad)*parseFloat(iva))/parseFloat(100))
+	var montoTotal = parseFloat(monto_iva)+ (parseFloat(monto)*cantidad)
+	if($(".descuento-"+id).hasClass("btn-success")){
+	 var descuento = getDescuento(id,'paquete')
+	 var descuentoT = (parseFloat(monto)*cantidad)-((((parseFloat(monto)*cantidad)*parseFloat(descuento))/parseFloat(100)))
+	 var monto_iva  = (((parseFloat(descuentoT)*cantidad)*parseFloat(iva))/parseFloat(100))
+	 var montoTotal = parseFloat(monto_iva)+ (parseFloat(descuentoT)*cantidad)
+	}
+	
+
+	 $(".porcentaje-"+id).toggleClass("btn-success");
+	 if($(".porcentaje-"+id).hasClass("btn-success")){
+            $(".monto-iva-"+id).text(number_format(monto_iva,2)) 
+            $(".total-"+id).text(number_format(montoTotal,2))
+
+        } else{
+      		var montoTotal = parseFloat(monto)*cantidad
+	        $(".monto-iva-"+id).text('-');
+            $(".total-"+id).text(number_format(montoTotal,2))                                                                   
+        }
+            $(".monto_tr"+id).val(montoTotal)
+            sumar()
+}
+
+	function SelectDescuentoConcepto(descuento,id,key){
+	var monto = $("#monto_paquete_registrar_fisica_oculto").val()
+	var cantidad = $(".cant_trabajadores-"+id).val()
+	var montoDecuento  = (((parseFloat(monto)*cantidad)*parseFloat(descuento))/parseFloat(100))
+	var montoTotal = (parseFloat(monto)*cantidad) -parseFloat(montoDecuento)
+	var iva = getIva();
+	$(".descuento-"+id).toggleClass("btn-success");
+		if($(".descuento-"+id).hasClass("btn-success")){
+           $(".total-"+id).text(number_format(montoTotal,2))      
+        } else{
+      		var montoTotal = parseFloat(monto)*cantidad
+            $(".monto-iva-"+id).text('-');
+            $(".total-"+id).text(number_format(montoTotal,2))           
+        }
+	}
+
+	function cantidad_input(id){
+    var iva = getIva();
+    var cantidad = ($("#cantidad_input"+id).val() == undefined) ? 1 : $("#cantidad_input"+id).val() 
+    var  monto   = $(".monto-total-concepto-"+id).text().replace(',',"")
+    var total    = parseFloat(cantidad) * parseFloat(monto) 
+    var  monto_iva = (parseFloat(total)*parseFloat(iva))/parseFloat(100)
+    var  montoTotal = parseFloat(monto_iva)+ parseFloat(total)
+
+    $(".monto-total"+id).text(number_format(total,2))
+     if($(".porcentaje-"+id).hasClass("btn-success")){
+        $(".monto_iva"+id).text(number_format(monto_iva,2))
+        $(".montocIva"+id).text(number_format(montoTotal,2)) 
+    }else{
+        $(".montocIva"+id).text(number_format(total,2))                                               
+     }
+    //calcular_monto_total()
+                    
+  
+    }
 
 
 
@@ -1730,6 +1795,48 @@ function enviar_emailC(){
 
 		});
 	}
+
+
+		function getDescuento(id,tipo){
+			 var data
+		      $.ajax({
+		            url:document.getElementById('ruta').value + 'Descuento/getDescuento',
+		            type:'GET',
+		            dataType:'JSON',
+		            async: false,
+		              data:{
+							"id":id,
+							"tipo":tipo
+						},
+		            
+		            success: function(respuesta){ 
+		            if(respuesta == null){
+		            data ="";
+		            }else{
+		           data = respuesta.descuento
+
+		            }
+		            } 
+		    });
+		      return data;
+		  }
+		
+
+		 function getIva(){
+		 var data = 15;
+		    /*  $.ajax({
+		            url:document.getElementById('ruta').value + 'Conceptos/getIva',
+		            type:'GET',
+		            dataType:'JSON',
+		            async: false,
+		            
+		            success: function(respuesta){ 
+		            data =  respuesta.porcentaje;
+		            } 
+		    });*/
+		      return data;
+		  }
+		
 /*--------------------------------------------------------------------------------------------------------------------------------*/	
 /*
 *	Aceptar cotizacion

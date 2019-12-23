@@ -9,6 +9,7 @@ class Descuento extends CI_Controller
     //$this->load->database();
     $this->load->library('session');
     $this->load->model('Descuento_model');
+    $this->load->model('Paquetes_model');
     $this->load->model('Menu_model');
     $this->load->library('form_validation');
     //--
@@ -38,6 +39,7 @@ class Descuento extends CI_Controller
     $arreglo_esquemas = consumir_rest('Lista_Valor','buscar', array('cod_static_tipo_valor'=>"ESQUEMAS", 'cod_static_lista_valor'=>"DESCUENTO"));
     $tipo = (is_array($arreglo_esquemas->data)?$arreglo_esquemas->data[0]->id_lista_valor:'');
     $datos['esquemas'] = $this->Descuento_model->esquemas($tipo);
+    $data['servicios'] = $this->Paquetes_model->listado_servicios();
     
     //$datos['tipos_vendedores'] = $this->Descuento_model->tipos_vendedores();
     $this->operaciones      = $this->menu_rol_operaciones->control($data['modulos'], $data['vistas']);
@@ -71,6 +73,7 @@ class Descuento extends CI_Controller
 
   public function registrar_descuento()
   {
+  
     $this->reglas_descuento();
     $this->mensajes_reglas_descuento();
     $fecha = new MongoDB\BSON\UTCDateTime();
@@ -79,8 +82,9 @@ class Descuento extends CI_Controller
       $data=array(
         'tipo_plazo' => $this->input->post('tipo_plazo'),
         'tipo_vendedor' => $this->input->post('tipo_vendedor'),
-        //'descuento' => trim(str_replace(',', '.', $this->input->post('descuento'))),
+        'plan_paquete' =>  $this->input->post('plan_paquete'),
         'descuento' => $this->input->post('descuento'),
+        'servicio' => $this->input->post('servicio'),
         'cod_esquema' => $this->input->post('cod_esquema'),
         'status' => true,
         'eliminado' => false,
@@ -102,12 +106,15 @@ class Descuento extends CI_Controller
 
   public function actualizar_descuento()
   {
+   // prp($this->input->post(),1);
     $this->reglas_descuento();
     $this->mensajes_reglas_descuento();
     if($this->form_validation->run() == true){
       $data=array(
         'tipo_plazo' => $this->input->post('tipo_plazo'),
         'tipo_vendedor' => $this->input->post('tipo_vendedor'),
+        'plan_paquete' =>  $this->input->post('plan_paquete'),
+        'servicio' => $this->input->post('servicio'),
         //'descuento' => trim(str_replace(',', '.', $this->input->post('descuento'))),
         'descuento' => $this->input->post('descuento'),
         'cod_esquema' => $this->input->post('cod_esquema'),
@@ -156,6 +163,19 @@ class Descuento extends CI_Controller
   {
     $this->Descuento_model->status_multiple_descuento($this->input->post('id'), $this->input->post('status'));
     echo json_encode("<span>Cambios realizados exitosamente!</span>"); // envio de mensaje exitoso
+  }
+
+  public function getDescuento(){
+    $id= $this->input->get('id');
+    $tipo= $this->input->get('tipo');
+    if($tipo == "paquete"){
+      $condicion = array('eliminado'=>false,'plan_paquete'=> $id);
+    }else{
+      $condicion = array('eliminado'=>false,'servicio'=> $id);
+    }
+    $resultados = $this->mongo_db->where($condicion)->get('descuentos');
+    echo json_encode($resultados[0]);
+
   }
 
 }//Fin class Bancos

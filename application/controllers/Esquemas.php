@@ -106,6 +106,8 @@ class Esquemas extends CI_Controller
             'descripcion' => trim(mb_strtoupper($this->input->post('descripcion'))),
             'status' => true,
             'eliminado' => false,
+            'indicador_servicio' => $this->input->post('indicador_servicio'),
+            'plan_paquete'  => $this->input->post('plan_paquete'),
             'auditoria' => [array(
                                       "cod_user" => $id_usuario,
                                       "nomuser" => $this->session->userdata('nombre'),
@@ -135,6 +137,8 @@ class Esquemas extends CI_Controller
         'tipo' => $this->input->post('tipo'),
         'cod_esquema' => trim(mb_strtoupper($this->input->post('cod_esquema'))),
         'descripcion' => trim(mb_strtoupper($this->input->post('descripcion'))),
+        'indicador_servicio' => $this->input->post('indicador_servicio'),
+        'plan_paquete'  => $this->input->post('plan_paquete'),
       );
       $this->Esquemas_model->actualizar_esquema($this->input->post('id_esquema'), $data);
     }else{

@@ -1132,6 +1132,8 @@ class Cotizacion extends CI_Controller {
 
   public function array_sort_by(&$arrIni, $col, $order = SORT_ASC)
   {
+    if(isset($col->posicion)){
+
       $arrAux = array();
       foreach ($arrIni as $key=> $row)
       {
@@ -1139,6 +1141,7 @@ class Cotizacion extends CI_Controller {
           $arrAux[$key] = strtolower($arrAux[$key]);
       }
       array_multisort($arrAux, $order, $arrIni);
+    }
   }
 
 
@@ -1189,7 +1192,6 @@ class Cotizacion extends CI_Controller {
 
 
       $servcies = array();
-
 
       $this->array_sort_by($paquete[0]["servicios"], 'posicion', $order = SORT_ASC);
 
@@ -1245,7 +1247,7 @@ class Cotizacion extends CI_Controller {
 		include 'application/third_party/html2pdf-master/examples/res/corrida.php';
 		$content = ob_get_clean();
 		$html2pdf = new Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en', true, 'UTF-8', array(0, 0, 0, 0));
-    
+    $html2pdf->setTestTdInOnePage(false);
     $html2pdf->writeHTML($content);
     if ($save == 1) {
 			$html2pdf->output(__DIR__.'../../../assets/outpdf/corrida.pdf', 'F');

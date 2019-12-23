@@ -117,36 +117,7 @@ Class Descuento_model extends CI_Model
 
     public function actualizar_descuento($id, $data)
     {
-        /*$this->db->where('tipo_plazo', $data['tipo_plazo']);
-        $this->db->where('tipo_vendedor', $data['tipo_vendedor']);
-        $this->db->where('descuento', $data['descuento']);
-        $this->db->where('cod_esquema', $data['cod_esquema']);
-        $this->db->limit(1);
-        $resultados = $this->db->get($this->tabla_descuento);
-        if ($resultados->num_rows() == 0) {
-            $this->db->where('id_descuento', $id);
-            $this->db->update($this->tabla_descuento, $data);
-            $datos=array(
-                'usr_regmod' => $this->session->userdata('id_usuario'),
-                'fec_regmod' => date('Y-m-d'),
-            );
-            $this->db->insert('auditoria', $datos);
-            echo json_encode("<span>El descuento se ha editado exitosamente!</span>");
-        } else {
-            $array = $resultados->row();
-            if ($array->id_descuento == $id) {
-                $this->db->where('id_descuento', $id);
-                $this->db->update($this->tabla_descuento, $data);
-                $datos=array(
-                    'usr_regmod' => $this->session->userdata('id_usuario'),
-                    'fec_regmod' => date('Y-m-d'),
-                );
-                $this->db->insert('auditoria', $datos);
-                echo json_encode("<span>El descuento se ha editado exitosamente!</span>");
-            } else {
-                echo "<span>¡Ya se encuentra registrado un descuento con las mismas características!</span>";
-            }
-        }*/
+   
         //---------------------------------------------------------------------------------
         //--Migracion MONGO DB
         $fecha = new MongoDB\BSON\UTCDateTime();
@@ -155,9 +126,10 @@ Class Descuento_model extends CI_Model
 
         $id_descuento = new MongoDB\BSON\ObjectId($id);
         //--Consulto si existe el descuento
-        $res_descuento = $this->mongo_db->limit(1)->where(array('tipo_plazo'=>$data['tipo_plazo'],'tipo_vendedor'=>$data['tipo_vendedor'],'descuento'=>$data['descuento'],'cod_esquema'=>$data['cod_esquema'],"eliminado"=>false))->get($this->tabla_descuento);
+        $res_descuento = $this->mongo_db->limit(1)->where(array('tipo_plazo'=>$data['tipo_plazo'],'tipo_vendedor'=>$data['tipo_vendedor'],'plan_paquete'=>$data['plan_paquete'],'servicio'=>$data['servicio'],'descuento'=>$data['descuento'],'cod_esquema'=>$data['cod_esquema'],"eliminado"=>false))->get($this->tabla_descuento);
         //Si el registro mantiene ĺos mismos campos
         if(count($res_descuento)==0){
+    
             //Actualizo los campos
             $mod_descuento = $this->mongo_db->where(array('_id'=>$id_descuento))->set($data)->update($this->tabla_descuento);
             //Auditoria...

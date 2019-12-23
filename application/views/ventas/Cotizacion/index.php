@@ -343,6 +343,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            				<th>Vigencia</th>
 							                            				<th>Cantidad de trabajadores</th>
 							                            				<th>Precio</th>
+							                            				<th>Descuento</th>
+							                            				<th colspan="2">I.V.A</th>
+							                            				<th>Total</th>
+							                            			</tr>
+							                            			<tr>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th> </th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th>%</th>
+							                            				<th>Monto</th>
+							                            				<th></th>
 							                            			</tr>
 							                            		</thead>
 							                            		<tbody id="tbodyRegistrarFisica"></tbody>

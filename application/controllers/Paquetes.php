@@ -46,7 +46,7 @@ class Paquetes extends CI_Controller
   public function listado_paquetes()
   {
     //--Cambio con servicio ag2
-    $listado = $this->Paquetes_model->listado_paquetes_planes_servicios();  
+     $listado = $this->Paquetes_model->listado_paquetes_planes_servicios();  
     echo json_encode($listado);
   }
 

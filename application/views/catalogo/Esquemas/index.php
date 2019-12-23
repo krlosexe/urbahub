@@ -97,6 +97,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				                                    </div>
 				                                </div>
 				                            </div>
+				                            <div class="col-sm-2">
+			                            		<label for="cod_esquema_registrar">Descuento por Servicio</label>
+		                                    	<div class="switch">
+												    <label>
+												      No
+												      <input type="checkbox" id="indicador_registrar">
+												      <span class="lever"></span>
+												      Si
+												    </label>
+												  </div>
+				                            </div>
+				                            <input type="hidden" name="indicador_servicio" id="indicador_servicio">
+                            			<br>
+                            			  <div class="col-sm-4">
+			                            		<label for="tipo_registrar">Plan/Paquete</label>
+		                                    	<select name="plan_paquete" id="plan_paquete" required class="form-control select-order" disabled>
+		                                    		<option value="" selected>Seleccione</option>
+		                                    	</select>
+				                            </div>
                                 			<br>
                                 			<div class="col-sm-4 col-sm-offset-5">
 		                                        <button type="button" onclick="regresar('#cuadro2')" class="btn btn-primary waves-effect">Regresar</button>
@@ -144,7 +163,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			                                    </div>
 			                                </div>
 			                            </div>
-                            			<br>
+			                             <div class="col-sm-2">
+		                            		<label for="cod_esquema_registrar">Descuento por Servicio</label>
+	                                    	<div class="switch">
+											    <label>
+											      No
+											      <input type="checkbox" id="indicador_view" disabled>
+											      <span class="lever"></span>
+											      Si
+											    </label>
+											  </div>
+			                            </div>
+			                            <input type="hidden" name="indicador_servicio" id="indicador_servicio_view" disabled>
+
+
+			                            <div class="col-sm-4">
+		                            		<label for="tipo_registrar">Plan/Paquete</label>
+	                                    	<select name="plan_paquete" id="plan_paquete_view" required class="form-control select-order" disabled>
+	                                    		<option value="" selected>Seleccione</option>
+	                                    	</select>
+			                            </div>
+
                             			<div class="col-sm-2 col-sm-offset-5">
 	                                        <button type="button" onclick="regresar('#cuadro3')" class="btn btn-primary waves-effect">Regresar</button>
 		                                </div>
@@ -190,6 +229,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				                                    </div>
 				                                </div>
 				                            </div>
+				                              <div class="col-sm-2">
+			                            		<label for="cod_esquema_registrar">Descuento por Servicio</label>
+		                                    	<div class="switch">
+												    <label>
+												      No
+												      <input type="checkbox" id="indicador_edit">
+												      <span class="lever"></span>
+												      Si
+												    </label>
+												  </div>
+				                            </div>
+				                            <input type="hidden" name="indicador_servicio" id="indicador_servicio_edit">
+
+
+				                            <div class="col-sm-4">
+			                            		<label for="tipo_registrar">Plan/Paquete</label>
+		                                    	<select name="plan_paquete" id="plan_paquete_edit" required class="form-control select-order" disabled>
+		                                    		<option value="" selected>Seleccione</option>
+		                                    	</select>
+				                            </div>
+
 				                            <input type="hidden" name="id_esquema" id="id_esquema_actualizar">
                                 			<br>
                                 			<div class="col-sm-4 col-sm-offset-5">

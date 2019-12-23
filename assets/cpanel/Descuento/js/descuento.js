@@ -111,6 +111,9 @@ $(document).ready(function(){
 			$("#tipo_plazo_consultar option[value='" + data.tipo_plazo + "']").prop("selected",true);
 			$("#tipo_vendedor_consultar option[value='" + data.tipo_vendedor + "']").prop("selected",true);
 			$("#cod_esquema_consultar option[value='" + data.cod_esquema + "']").prop("selected",true);
+			getPaquetes('plan_paquete_c')
+			$("#plan_paquete_c option[value='" + data.plan_paquete + "']").prop("selected",true);
+			$("#servicio_consultar option[value='" + data.servicio + "']").prop("selected",true);
 			//document.getElementById('descuento_consultar').value = data.descuento.replace('.','.');
 			document.getElementById('descuento_consultar').value = data.descuento;
 			cuadros('#cuadro1', '#cuadro3');
@@ -127,12 +130,14 @@ $(document).ready(function(){
 		$(tbody).on("click", "span.editar", function(){
 			$("#alertas").css("display", "none");
 			var data = table.row( $(this).parents("tr") ).data();
+			console.log(data)
 			$("#tipo_plazo_actualizar option[value='" + data.tipo_plazo + "']").prop("selected",true);
 			$("#tipo_vendedor_actualizar option[value='" + data.tipo_vendedor + "']").prop("selected",true);
 			$("#cod_esquema_actualizar option[value='" + data.cod_esquema + "']").prop("selected",true);
 			document.getElementById('id_descuento_actualizar').value = data.id_descuento;
-			//document.getElementById('descuento_actualizar').value = data.descuento.replace('.','.');
-			//alert(data.descuento)
+			getPaquetes('plan_paquete_e')
+			$("#plan_paquete_e option[value='" + data.plan_paquete + "']").prop("selected",true);
+			$("#servicio_actualizar option[value='" + data.servicio + "']").prop("selected",true);
 			document.getElementById('descuento_actualizar').value = data.descuento;
 			cuadros('#cuadro1', '#cuadro4');
 			$("#id_vendedor_actualizar").focus();
@@ -187,4 +192,47 @@ $(document).ready(function(){
 	function porcentaje(input){
         $(input).inputmask('999.99', {reverse: true});
     }
+
+   $("#cod_esquema_registrar").on("change", function(){
+   	getPaquetes('plan_paquete_r')
+   });
+	 $("#cod_esquema_actualizar").on("change", function(){
+	   	getPaquetes('plan_paquete_e')
+	   });
+
+ function getPaquetes(select){
+	var url=document.getElementById('ruta').value;
+     $.ajax({
+            url:url+'Paquetes/listado_paquetes',
+            type:'POST',
+            dataType:'JSON',
+            async: false,
+           
+            beforeSend: function(){
+               // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+            },
+            error: function (data) {
+                //mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+            },
+            success: function(data){
+                $("#"+select+" option").remove();
+                $("#"+select).append($('<option>',
+                {
+                    value: "",
+                    text : " Seleccione..."
+                }));
+                $.each(data, function(i, item){
+                	  if (item.status == 1) {
+                        $("#"+select).append($('<option>',
+                         {
+                            value: item._id.$id,
+                            text : item.descripcion
+                        }));
+                    }
+                });
+
+            }
+        });
+
+ }
 /* ------------------------------------------------------------------------------- */

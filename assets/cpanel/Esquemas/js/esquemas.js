@@ -78,7 +78,28 @@ $(document).ready(function(){
 		activar("#tabla tbody", table);
 	}
 /* ------------------------------------------------------------------------------- */
+$("#indicador_registrar").on("change", function(){
+	if ($("#indicador_registrar").is(':checked')) {
+		$("#plan_paquete").removeAttr("disabled").attr("required", "required");
+		$("#indicador_servicio").val("1");
+	}else{
+		$("#plan_paquete").attr("disabled", "disabled").removeAttr("required");
+		$("#indicador_servicio").val("0");
+	}
+});
 
+
+
+
+$("#indicador_edit").on("change", function(){
+	if ($("#indicador_edit").is(':checked')) {
+		$("#plan_paquete_edit").removeAttr("disabled").attr("required", "required");
+		$("#indicador_servicio_edit").val("1");
+	}else{
+		$("#plan_paquete_edit").attr("disabled", "disabled").removeAttr("required");
+		$("#indicador_servicio_edit").val("0");
+	}
+});
 /* ------------------------------------------------------------------------------- */
 	/* 
 		Funcion que muestra el cuadro2 para mostrar el formulario de registrar.
@@ -88,6 +109,7 @@ $(document).ready(function(){
 		$("#alertas").css("display", "none");
 		$("#form_esquema_registrar")[0].reset();
 		$("#tipo_registrar").focus();
+		cargarPlanes("#plan_paquete");
 	}
 /* ------------------------------------------------------------------------------- */
 
@@ -111,6 +133,15 @@ $(document).ready(function(){
 			$("#tipo_consultar option[value='" + data.tipo + "']").attr("selected","selected");
 			document.getElementById('cod_esquema_consultar').value = data.cod_esquema;
 			document.getElementById('descripcion_consultar').value = data.descripcion;
+			if (data.indicador_servicio == "1") {
+				$("#indicador_view").prop("checked","checked");
+			}else{
+				$("#indicador_view").removeAttr("checked");
+			}
+			cargarPlanes("#plan_paquete_view");
+			$("#plan_paquete_view option[value='" + data.plan_paquete + "']").prop("selected",true);
+			console.log(data)
+
 			cuadros('#cuadro1', '#cuadro3');
 		});
 	}
@@ -125,10 +156,20 @@ $(document).ready(function(){
 		$(tbody).on("click", "span.editar", function(){
 			$("#alertas").css("display", "none");
 			var data = table.row( $(this).parents("tr") ).data();
+			console.log(data)
 			$("#tipo_actualizar option[value='" + data.tipo + "']").prop("selected",true);
 			document.getElementById('id_esquema_actualizar').value = data.id_esquema;
 			document.getElementById('cod_esquema_actualizar').value = data.cod_esquema;
 			document.getElementById('descripcion_actualizar').value = data.descripcion;
+			cargarPlanes("#plan_paquete_edit");
+			$("#plan_paquete_edit option[value='" + data.plan_paquete + "']").prop("selected",true);
+			if (data.indicador_servicio == "1") {
+				$("#indicador_edit").prop("checked","checked");
+				$("#plan_paquete_edit").removeAttr("disabled").attr("required");
+			}else{
+				$("#indicador_edit").removeAttr("checked");
+				$("#plan_paquete_edit").removeAttr("required").attr("disabled", "disabled");
+			}
 			cuadros('#cuadro1', '#cuadro4');
 			$("#tipo_actualizar").focus();
 		});
@@ -176,6 +217,40 @@ $(document).ready(function(){
 		$(tbody).on("click", "span.activar", function(){
             var data=table.row($(this).parents("tr")).data();
             statusConfirmacion('Esquemas/status_esquema', data.id_esquema, 1, "¿Esta seguro de activar el registro?", 'activar');
+        });
+	}
+
+	function cargarPlanes(select) {
+		var url=document.getElementById('ruta').value;
+        $.ajax({
+            url:url+'Paquetes/listado_paquetes',
+            type:'POST',
+            dataType:'JSON',
+            async: false,
+            beforeSend: function(){
+               // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+            },
+            error: function (data) {
+                //mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+            },
+            success: function(data){
+                $(select+" option").remove();
+                $(select).append($('<option>',
+                {
+                    value: "",
+                    text : " Seleccione..."
+                }));
+                $.each(data, function(i, item){
+                	  if (item.status == 1) {
+                        $(select).append($('<option>',
+                         {
+                            value: item._id.$id,
+                            text : item.descripcion
+                        }));
+                    }
+                });
+
+            }
         });
 	}
 /* ------------------------------------------------------------------------------- */
