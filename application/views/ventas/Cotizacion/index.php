@@ -662,12 +662,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		                                                	<table class="table table-bordered table-striped table-hover" id="tableMostrarFisica">
 							                            		<thead>
 							                            			<tr>
-																		<th></th>
-																		<th>Planes</th>
+							                            				<th></th>
+							                            				<th>Planes</th>
 							                            				<th>Paquetes</th>
 							                            				<th>Vigencia</th>
 							                            				<th>Cantidad de trabajadores</th>
 							                            				<th>Precio</th>
+							                            				<th>Descuento</th>
+							                            				<th colspan="2">I.V.A</th>
+							                            				<th>Total</th>
+							                            			</tr>
+							                            			<tr>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th> </th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th>%</th>
+							                            				<th>Monto</th>
+							                            				<th></th>
 							                            			</tr>
 							                            		</thead>
 							                            		<tbody id="tbodyMostrarFisica"></tbody>
@@ -678,10 +693,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 															<table class="table table-bordered table-striped table-hover" id="tableServiceMostrar">
 							                            		<thead>
 							                            			<tr>
-																		<th>Servicio</th>
+							                            				
+							                            				<th>Servicio</th>
 							                            				<th>Monto PU</th>
 							                            				<th>Cantidad</th>
+																		<th>Descuento</th>
+							                            				<th colspan="2">I.V.A</th>
 																		<th>Total</th>
+																																				
+							                            			</tr>
+							                            		
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th>%</th>
+							                            				<th>Monto</th>
+							                            				<th></th>
+							                            			<tr>
+							                            				
 							                            			</tr>
 							                            		</thead>
 							                            		<tbody></tbody>

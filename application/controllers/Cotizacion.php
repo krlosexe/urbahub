@@ -179,7 +179,8 @@ class Cotizacion extends CI_Controller {
           $data = array(
             "service"  => $value,
             "monto"    =>  $this->input->post("monto_service")[$key],
-            "cantidad" =>  $this->input->post("cantidad_service")[$key]
+            "cantidad" =>  $this->input->post("cantidad_service")[$key],
+            "iva" =>  $this->input->post("iva")[$key]
           );
 
           $data_service[] = $data;
@@ -276,6 +277,7 @@ class Cotizacion extends CI_Controller {
         $paquetes          = $this->input->post('paquete_id');
         $plazos            = $this->input->post('plazos');
         $cant_trabajadores = $this->input->post('cant_trabajadores');
+         $iva = $this->input->post('iva');
 
         $data_plan = array();
         foreach ($planes as $key => $value) {
@@ -285,6 +287,7 @@ class Cotizacion extends CI_Controller {
             $data_array["id_paquete"]        = $paquetes[$key];
             $data_array["plazo"]             = $plazos[$key];
             $data_array["cant_trabajadore"]  = $cant_trabajadores[$key];
+            $data_array["iva"]               = $iva[$key];
 
             $data_plan[] = $data_array;
         }
@@ -713,9 +716,7 @@ class Cotizacion extends CI_Controller {
         $dias_prorrata = (date('t', strtotime($fecha_aprobacion)) - $dia_fecha_aprobacion) + 1;
       }
       
-
       foreach($paquetes as $key => $value){
-
         $numero_secuencia = 0;
         $paquete  = $this->Cotizacion_model->getPaquete($value)[0];
         $plan     = $this->Cotizacion_model->getPlan($paquete["plan"])[0];
@@ -802,10 +803,22 @@ class Cotizacion extends CI_Controller {
                                                             )]   
                                     );
 
+
+
             $ArrayRecibos[] = $data_prorrata;
 
-            $sum = 1;
+          if(($service_array = $this->find_paquetes_array($rs_cotizacion,$paquete)) && $service_array ){
+              if($service_array->iva && $service_array->iva > 0){
+                $data_prorrata['cargo']  = ((($mensualidad[$key] / 30) * $dias_prorrata) * floatval(str_replace('%','',$service_array->iva)))/100;
+                $data_prorrata['saldo']  = ((($mensualidad[$key] / 30) * $dias_prorrata) * floatval(str_replace('%','',$service_array->iva)))/100;
+                $data_prorrata['concepto'] = 'I.V.A - PRORRATA';
+                $ArrayRecibos[] = $data_prorrata;
+            }
+           $sum = 1;
+          }
         }
+
+
 
 
         $dia_init  = '01';
@@ -844,13 +857,29 @@ class Cotizacion extends CI_Controller {
                                               )]   
                       );
 
+          if(($service_array =  $this->find_paquetes_array($rs_cotizacion,$paquete)) && $service_array ){
+              $data['cargo']  = $data['cargo'] * $service_array->cant_trabajadore;
+              $data['saldo']  = $data['saldo'] * $service_array->cant_trabajadore;
+          }
+
           $ArrayRecibos[] = $data;
+
+          if(($service_array = $this->find_paquetes_array($rs_cotizacion,$paquete)) && $service_array ){
+              if($service_array->iva && $service_array->iva > 0){
+                $cargo_saldo            =  $data['cargo'] * $service_array->cant_trabajadore;
+                $data['numero_recibo']  = ($i + $sum);
+                $data['cargo']  = (($cargo_saldo  * floatval(str_replace('%','',$service_array->iva)))/100);
+                $data['saldo']  = (($cargo_saldo  * floatval(str_replace('%','',$service_array->iva)))/100);
+                 $data['concepto'] = 'I.V.A - MENSUALIDAD';
+                $ArrayRecibos[] = $data;
+              }
+          }
+
           
           $new_fecha = date("Y-m-d",strtotime($new_fecha->format("Y-m-d")."+ 1 month")); 
           $new_fecha = new DateTime($new_fecha);
 
 
-          
  
         }
 
@@ -884,16 +913,22 @@ class Cotizacion extends CI_Controller {
             'fecha_aprobacion'  => $fecha_aprobacion,
             'condicion'         => 'APROBADO'  
           );
-
-       $actualizar = $this->Cotizacion_model->actualizar_cotizacion($data);
-       $this->Cotizacion_model->saveCobranza($datos);
+   
+        $actualizar = $this->Cotizacion_model->actualizar_cotizacion($data);
+        $this->Cotizacion_model->saveCobranza($datos);
       }
 
       echo json_encode("<span>Cambios realizados exitosamente, la solicitud ha sido aprobada!</span>");
     }
 
-
-
+    public function find_paquetes_array($array,$paquete){
+      foreach ($array['data_plan'] as $value) {
+        if($value->id_paquete == $paquete['_id']->{'$id'} && $value->id_plan == $paquete['plan']){
+          return $value;
+        } 
+      }
+      return false;
+    }
 
 
     public function AprobarCotizacionOtrosServicios(){
@@ -905,9 +940,8 @@ class Cotizacion extends CI_Controller {
       $services = $this->input->post("data_service");
       $ArrayRecibos   = array();
       $count = 0;
-
-     
-      $listado = $this->Servicios_model->listado_esquema();
+      $cotizacion =  $this->mongo_db->where(array('_id' => new MongoDB\BSON\ObjectId($this->input->post("id_cotizacion"))))->get("cotizacion")[0];
+    //  $listado = $this->Servicios_model->listado_esquema();
       $numero_secuencia = 0;
       foreach($services as $key => $value){
         $numero_secuencia++;
@@ -943,10 +977,26 @@ class Cotizacion extends CI_Controller {
                                   )]   
           );
 
+          if(($service_array = $this->find_array($cotizacion,$resultados['_id']->{'$id'})) && $service_array ){
+              $data['cargo']  = $value["monto"] * $service_array->cantidad;
+              $data['saldo']  = $value["monto"] * $service_array->cantidad;
+          }
+
           $ArrayRecibos[] = $data;
+    
+          if( ($service_array = $this->find_array($cotizacion,$resultados['_id']->{'$id'})) && $service_array ){
+            if($service_array->iva && $service_array->iva > 0){
+              $monto = $value["monto"] * $service_array->cantidad;
+              $monto_prev_porcentaje = ($monto * floatval(str_replace('%','',$service_array->iva)))/100;
+              $data['concepto']      = 'I.V.A - '.$resultados["descripcion"];        
+              $data['cargo'] = $monto_prev_porcentaje;
+              $data['saldo'] = $monto_prev_porcentaje;
+              $ArrayRecibos[] = $data;
+            }
+          }
+      
       }
 
-      
         $datos = array(
           'id_venta'        => $this->input->post("id_cotizacion"),
           'numero_corrida'  => $this->input->post("numero_cotizacion"),
@@ -968,21 +1018,29 @@ class Cotizacion extends CI_Controller {
         );
 
 
-
         $data = array(
           'id_cotizacion'     => $this->input->post("id_cotizacion"),
          // 'fecha_aprobacion'  => $fecha_aprobacion,
           'condicion'         => 'APROBADO'  
         );
 
-     $actualizar = $this->Cotizacion_model->actualizar_cotizacion($data);
-     $this->Cotizacion_model->saveCobranza($datos);
+      $actualizar = $this->Cotizacion_model->actualizar_cotizacion($data);
+      $this->Cotizacion_model->saveCobranza($datos);
 
-     echo json_encode("<span>Cambios realizados exitosamente, la solicitud ha sido aprobada!</span>");
+      echo json_encode("<span>Cambios realizados exitosamente, la solicitud ha sido aprobada!</span>");
 
      
 
 
+    }
+
+    public function find_array($array,$id_mongo){
+      foreach ($array['data_service'] as $value) {
+        if($value->service == $id_mongo){
+          return $value;
+        } 
+      }
+      return false;
     }
     /*
     * Aceptar cotizacion
@@ -1132,8 +1190,6 @@ class Cotizacion extends CI_Controller {
 
   public function array_sort_by(&$arrIni, $col, $order = SORT_ASC)
   {
-    if(isset($col->posicion)){
-
       $arrAux = array();
       foreach ($arrIni as $key=> $row)
       {
@@ -1141,7 +1197,6 @@ class Cotizacion extends CI_Controller {
           $arrAux[$key] = strtolower($arrAux[$key]);
       }
       array_multisort($arrAux, $order, $arrIni);
-    }
   }
 
 
@@ -1153,8 +1208,8 @@ class Cotizacion extends CI_Controller {
     $id_usuario = new MongoDB\BSON\ObjectId($this->session->userdata('id_usuario'));
     #Consulto la cotizacion
     $temp_correo['arreglo_datos'] = $this->Cotizacion_model->buscar($id_cotizacion);
-
-    $membresia = isset($temp_correo["arreglo_datos"][0]["membresia"])?$temp_correo["arreglo_datos"][0]["membresia"]:false;
+    
+    $membresia = $temp_correo["arreglo_datos"][0]["membresia"];
     
     $tipo_persona = $temp_correo['arreglo_datos'][0]["tipo_persona"];
 
@@ -1168,7 +1223,6 @@ class Cotizacion extends CI_Controller {
     }
 
     $data_service = [];
-/*
     foreach ($temp_correo["arreglo_datos"][0]["data_service"] as $key => $value){
      
       $servicios = $this->Cotizacion_model->getDataServicios($value->service)[0];
@@ -1176,7 +1230,7 @@ class Cotizacion extends CI_Controller {
 
       $data_service[] = $value;
     }
-¨*/
+
 
  
     $this->array_sort_by($temp_correo["arreglo_datos"][0]["data_plan"], 'posicion_plan', $order = SORT_ASC);
@@ -1186,26 +1240,21 @@ class Cotizacion extends CI_Controller {
     foreach ($temp_correo["arreglo_datos"][0]["data_plan"] as $key => $value) {
       $id_plan = $value->id_plan;
       $plan    = $this->Cotizacion_model->getPlan($id_plan);
+      
       $id_paquete = $value->id_paquete;
-
       $paquete    = $this->Cotizacion_model->getPaquete($id_paquete);
 
 
       $servcies = array();
+
 
       $this->array_sort_by($paquete[0]["servicios"], 'posicion', $order = SORT_ASC);
 
         foreach ($paquete[0]["servicios"] as $key => $value) {
 
           $servicios = $this->Cotizacion_model->getDataServicios($value->id_servicios);
-
          // echo json_encode($value->posicion)."<br><br>";
-          $servicios[0]['servicios'] = $servicios[0]['_id']->{'$id'};
-          if($servicios[0]['tipo'] == 'N'){
-            $temp_correo['arreglo_datos']["servicios"][]   = (object)$servicios[0];
-          }else{
-            $temp_correo['arreglo_datos']["servicios_c"][] = (object)$servicios[0];
-          }
+
           $servcies[] = $servicios[0];
         }
 
@@ -1215,12 +1264,9 @@ class Cotizacion extends CI_Controller {
 
       $data_planes[] = $data;
     }
-    
+  
     
     if(count($temp_correo['arreglo_datos']) > 0){
-      $servicios   = $temp_correo['arreglo_datos']['servicios'];
-      $servicios_c = $temp_correo['arreglo_datos']['servicios_c'];
-
       $temp_correo['arreglo_datos'] = $temp_correo['arreglo_datos'][0];
      
       $temp_correo["arreglo_datos"]["data_planes"] = $data_planes;
@@ -1229,9 +1275,10 @@ class Cotizacion extends CI_Controller {
       if($membresia){
         $temp_correo['arreglo_datos_planes'] = $this->Cotizacion_model->buscar_plan($temp_correo['arreglo_datos']['plan']);
       }
-     
+      
+      
       #Consulto los servicios
-      $temp_correo['arreglo_datos_servicios'] = $this->Cotizacion_model->buscar_servicios($id_cotizacion,$servicios,$servicios_c);
+      $temp_correo['arreglo_datos_servicios'] = $this->Cotizacion_model->buscar_servicios($id_cotizacion,$temp_correo['arreglo_datos']["servicios"],$temp_correo['arreglo_datos']["servicios_c"]);
     }
 
  
@@ -1247,14 +1294,21 @@ class Cotizacion extends CI_Controller {
 		include 'application/third_party/html2pdf-master/examples/res/corrida.php';
 		$content = ob_get_clean();
 		$html2pdf = new Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en', true, 'UTF-8', array(0, 0, 0, 0));
-    $html2pdf->setTestTdInOnePage(false);
+    
     $html2pdf->writeHTML($content);
     if ($save == 1) {
-			$html2pdf->output(__DIR__.'../../../assets/outpdf/corrida.pdf', 'F');
+      $html2pdf->output(__DIR__.'../../../assets/outpdf/corrida.pdf', 'F');
+      
+      
 		}else{
-			$html2pdf->output();
+    //  $html2pdf->output();
+      $html2pdf->output(__DIR__.'../../../assets/outpdf/corrida.pdf', 'F');
     }
+
+
+    echo "<script>window.open('".base_url().'assets/outpdf/corrida.pdf'."', '_self');</script>";
   }
+
 
 
 

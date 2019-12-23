@@ -621,7 +621,7 @@ function limpiar_form_fisica_montosE(){
 *	Función para consultar planes
 */
 function consultarPlan(paquete,id_plan,proceso){
-
+	console.log(proceso)
 	$("#tableMostrarFisica").css("display", "inline-block")
 	$("#tableServiceMostrar").css("display", "none")
 
@@ -739,6 +739,7 @@ function consultarPlan(paquete,id_plan,proceso){
 								//---armo la tabla de servicios
 								servicios = respuesta[0]["servicios"]
 								//$(tabla + " tbody").html("");
+
 								$.each(servicios, function( index, value ) {
 								//--
 									html += "<tr><td>" + value["codigo_servicios"] + "</td>";
@@ -760,6 +761,7 @@ function consultarPlan(paquete,id_plan,proceso){
 			}
 			else if(proceso=="mostrar"){
 				//--
+				console.log(respuesta)
 				if(respuesta.length>0){
 					//---
 					/* Aqui muestro el resultado de la consulta*/
@@ -783,6 +785,7 @@ function consultarPlan(paquete,id_plan,proceso){
 					}						
 					//---armo la tabla de servicios
 					servicios = respuesta[0]["servicios"]
+					console.log(servicios)
 					//$(tabla + " tbody").html("");
 					$.each(servicios, function( index, value ) {
 					//--
@@ -819,12 +822,11 @@ function addPlan() {
 
 	var html = "";
 
-
 	var input_plan_id    = "<input type='hidden' name='plan_id[]' value='"+plan_id+"'>"
 	var input_paquete_id = "<input type='hidden' name='paquete_id[]' class='paquete_add' value='"+paquete_id+"'>"
 
 	var select_plazos     = '<input type="text" value="'+plazos+'" name="plazos[]" class="form-control" placeholder="Plazos" readonly>'
-	var catn_trabajadores = "<input type='text'  name='cant_trabajadores[]'' class='form-control cant_trabajadores-"+paquete_id+"' placeholder='Cantidad de Trabajadores' required>"
+	var catn_trabajadores = `<input type="text"  name="cant_trabajadores[]"  onkeyup="sumar('cantidad',this)" class="form-control cant_trabajadores" placeholder="Cantidad" required>`
 
 	var btn_view   = "<span onclick='showModalServices(\"" + paquete_id + "\")' class='consultar btn btn-xs btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='fa fa-eye' style='margin-bottom:5px'></i></span>";
 
@@ -834,11 +836,12 @@ function addPlan() {
 	var monto = parseFloat($("#monto_paquete_registrar_fisica_oculto").val())
 
 
-	var monto_input = "<input type='hidden' class='monto_input"+paquete_id+"' id='monto_tr' value='"+monto+"'>"
+	var monto_input = `<input type="hidden" class="monto_input" id="monto_tr" value="${monto}">`
 
 	var valid = true;
 	var descuento = getDescuento(paquete_id,'paquete');
 	var iva = getIva();
+	var ivaInput    = "<input type='hidden' name='iva[]' id='ivaInput'>"
  
 
 	$("#tableRegistrarFisica tbody tr").each(function(){
@@ -857,21 +860,21 @@ function addPlan() {
 
 	
 	html += "<tr id='tr_"+count+"'>";
-		html+= "<td>"+btn_view+" "+btn_delete+" "+monto_input+""+input_plan_id+input_paquete_id+"</td>";
+		html+= "<td>"+btn_view+" "+btn_delete+" "+monto_input+""+input_plan_id+input_paquete_id+""+ivaInput+"</td>";
 		html+= "<td>"+plan_name+"</td>";
 		html+= "<td>"+paquete_name+"</td>";
 		html+= "<td>"+select_plazos+"</td>";
 		html+= "<td>"+catn_trabajadores+"</td>";
 		html+= "<td>"+number_format(monto, 2)+"</td>";
 		if(descuento !=""){
-		html += `<td><a class="btn btn-xs btn-danger descuento-${paquete_id}  items-decuentos-conceptos" id_descuento_concepto="${paquete_id}" onclick="SelectDescuentoConcepto(${descuento},'${paquete_id}',1)">${descuento}%</td>`
+		html += `<td><a class="btn btn-xs btn-danger descuento-${paquete_id}  items-decuentos-conceptos" id_descuento_concepto="${paquete_id}" onclick="sumar("descuento",this)">${descuento}%</td>`
 		}else{
 		html += "<td></td>"
 		}
 		//html += "<td><a id_descuento_concepto='"+paquete_id+"' class='btn btn-xs btn-danger descuento-"+paquete_id+" items-decuentos-conceptos' onclick='SelectDescuentoConcepto(this, "+paquete_id+", 1)'>"+descuento+"% </td>";
-		html += `<td><a class="btn btn-xs btn-danger porcentaje-${paquete_id}" onclick="selectIva(${iva},'${paquete_id}',2)">${iva}%</td>`
-		html+= `<td class="monto-iva-${paquete_id}"></td>`
-		html+= `<td class ="total-${paquete_id}"></td>`;
+		html += `<td><a class="btn btn-xs btn-danger porcentaje" onclick="sumar('iva',this)">${iva}%</td>`
+		html+= `<td class="monto-iva"></td>`
+		html+= `<td class ="total"></td>`;
 	html += "</tr>";
 
 
@@ -908,6 +911,7 @@ function addService() {
 	var valid = true;
 	var descuento = getDescuento(service_id,'servicio');
 	var iva = getIva();
+	var ivaInput    = "<input type='hidden' name='iva[]' id='ivaInput'>"
 	// $("#tableRegistrarFisica tbody tr").each(function(){
 	// 	var id_paquete = $(this).find(".paquete_add").val();
 	// 	if(id_paquete == paquete_id){
@@ -924,16 +928,16 @@ function addService() {
 
 	
 	html += "<tr id='tr_"+count_service+"'>";
-		html+= "<td>"+btn_delete+" "+monto_input+""+input_service_id+cantidad_input+"</td>";
+		html+= "<td>"+btn_delete+" "+monto_input+""+input_service_id+cantidad_input+ivaInput+"</td>";
 		html+= "<td>"+service_name+"</td>";
 		html+= "<td>"+number_format(monto_service, 2)+"</td>";
 		html+= "<td>"+cantidad_service+"</td>";
 		if(descuento !=""){
-		html += `<td><a class="btn btn-xs btn-danger descuento items-decuentos-conceptos" id_descuento_concepto="${service_id}" onclick="sumarService('descuento')">${descuento}%</td>`
+		html += `<td><a class="btn btn-xs btn-danger descuento items-decuentos-conceptos" id_descuento_concepto="${service_id}" onclick="sumarService('descuento',this)">${descuento}%</td>`
 		}else{
 		html += "<td></td>"
 		}
-		html += `<td><a class="btn btn-xs btn-danger iva_porcentaje" onclick="sumarService('iva')">${iva}%</td>`
+		html += `<td><a class="btn btn-xs btn-danger iva_porcentaje" onclick="sumarService('iva',this)">${iva}%</td>`
 		html+= `<td class="monto-iva"></td>`
 		html += "<td class ='monto_total'>"+number_format((inNum(cantidad_service) * inNum(monto_service)), 2)+"</td>"
 		
@@ -1095,77 +1099,141 @@ function cantidadTrabajadoreSumarEdit() {
 
 
 
-function sumar(){
+function sumar(toque="",tr_reference){
 	var suma = 0;
 	var total_trabajadores = 0;
-	$("#tableRegistrarFisica tbody tr").each(function() {
+	tr_reference = tr_reference.parentElement.parentElement;
+	$(tr_reference).each(function() {
+		var montoD 			  = inNum($(this).find(".monto_input").val());
     	var monto             = inNum($(this).find(".monto_input").val());
     	var cant_trabajadores = inNum($(this).find(".cant_trabajadores").val());
-    	suma      = suma + monto * cant_trabajadores;
 
-    	total_trabajadores = total_trabajadores + cant_trabajadores;
+  		if(toque == "descuento"){
+			$(this).find(".descuento").toggleClass("btn-success");
+			var descuento = inNum($(this).find(".descuento").html())
+		}
+
+		if (toque == "iva"){
+			$(this).find(".porcentaje").toggleClass("btn-success");	
+			var iva  = inNum($(this).find(".porcentaje").html())
+		}
+
+		if($(this).find(".descuento").hasClass("btn-success")){ //si hay descuento activo
+			var montoDecuento  = ((parseFloat(monto)*cantidad)*parseFloat(descuento))
+			var montoTotal = (parseFloat(monto)*cantidad) -parseFloat(montoDecuento)
+			var tieneDescuento = true
+			$(this).find(".total").text(number_format(montoTotal,2))
+
+	  	} else{
+	      	var montoTotal = parseFloat(monto)*cant_trabajadores
+	      	var tieneDescuento = false
+	        $(this).find(".total").text(number_format(montoTotal,2)) 
+	    }
+
+	    if($(this).find(".porcentaje").hasClass("btn-success")){ // si hay iva activo
+			$(this).find("#ivaInput").val($(this).find(".porcentaje").html()) 
+	        if(tieneDescuento == true){
+	        	montoD = ((parseFloat(monto)*cant_trabajadores)-((parseFloat(monto)*cant_trabajadores)*parseFloat(descuento)))
+	        }else{
+	        	montoD = monto;
+	        }
+	        var montoIva  = ((parseFloat(montoD)*cant_trabajadores)*parseFloat(iva))
+			$(this).find(".monto-iva").text(number_format(montoIva,2)) 
+			var montoTotal = (parseFloat(montoD)*cant_trabajadores) + parseFloat(montoIva)
+			$(this).find(".total").text(number_format(montoTotal,2))  
+
+	    }else{
+	    	$(this).find("#ivaInput").val('') 
+	      	var montoTotal = parseFloat(montoD)*cant_trabajadores
+	      	$(this).find(".monto-iva").text('-') 
+	        $(this).find(".total").text(number_format(montoTotal,2))           
+	    }
+
 	});
+
+	var total_trabajadores = 0;
+	Array.from(document.querySelectorAll('#tableRegistrarFisica .cant_trabajadores')).map( 
+		function (item){ 
+			total_trabajadores =  parseFloat(total_trabajadores) + parseFloat(item.value)
+		}
+	)
+
+	var suma = 0;
+	Array.from(document.querySelectorAll('#tableRegistrarFisica .total')).map( 
+		function (item){ 
+			suma =  parseFloat(suma) + parseFloat($(item).html().replace(',',""))
+		}
+	)
 
 	var monto_inscripcion = 1000 * total_trabajadores;
 
 	$("#monto_inscripcion_registrar_fisica").val(number_format(monto_inscripcion, 2))
-
-
 	$("#monto_paquete_registrar_fisica").val(number_format(suma, 2))
-
-
-	$("#monto_total_registrar_fisica").val(number_format(suma + parseFloat(inNum($("#monto_inscripcion_registrar_fisica").val())), 2))
+	$("#monto_total_registrar_fisica").val(number_format(suma + monto_inscripcion, 2))
 }
 
 
 
-function sumarService(toque = ""){
+function sumarService(toque = "",tr_reference){
 	var suma = 0;
 	var cantidad_services = 0;
-	$("#tableRegistrarServiceFisica tbody tr").each(function() {
-    	var monto             = inNum($(this).find(".monto_input").val());
-		var cantidad          = inNum($(this).find(".cantidad_input").val());
-		if(toque == "descuento"){
-		 $(this).find(".descuento").toggleClass("btn-success");
-		var descuento         = inNum($(this).find(".descuento").html())
-		
-		}
-		if (toque == "iva"){
-		 $(this).find(".iva_porcentaje").toggleClass("btn-success");	
-		var iva  = inNum($(this).find(".iva_porcentaje").html())
-		}
-		if($(this).find(".descuento").hasClass("btn-success")){ //si hay descuento activo
-		var montoDecuento  = ((parseFloat(monto)*cantidad)*parseFloat(descuento))
-		var montoTotal = (parseFloat(monto)*cantidad) -parseFloat(montoDecuento)
-		var tieneDescuento = true
-		  $(this).find(".monto_total").text(number_format(montoTotal,2))      
-        } else{
-      		var montoTotal = parseFloat(monto)*cantidad
-      		var tieneDescuento = false
-            $(this).find(".monto_total").text(number_format(montoTotal,2))           
-        }
+	/// si llega la referencia, significa que se dio click para calcular el iva o descuento
+	if(tr_reference){
+		tr_reference = tr_reference.parentElement.parentElement;
+		$(tr_reference).each(function() {
+			//console.log(this)
+			var montoD			  = inNum($(this).find(".monto_input").val());
+	    	var monto             = inNum($(this).find(".monto_input").val());
+			var cantidad          = inNum($(this).find(".cantidad_input").val());
+			
+			if(toque == "descuento"){
+			 $(this).find(".descuento").toggleClass("btn-success");
 
-        if($(this).find(".iva_porcentaje").hasClass("btn-success")){ // si hay iva activo
-        	if(tieneDescuento == true){
-        		montoD = ((parseFloat(monto)*cantidad)-((parseFloat(monto)*cantidad)*parseFloat(descuento)))
-        	}else{
-        		montoD = monto
-        	}
-		var montoIva  = ((parseFloat(montoD)*cantidad)*parseFloat(iva))
-		 $(this).find(".monto-iva").text(number_format(montoIva,2)) 
-		var montoTotal = (parseFloat(montoD)*cantidad) + parseFloat(montoIva)
-		  $(this).find(".monto_total").text(number_format(montoTotal,2))      
-        } else{
-      		var montoTotal = parseFloat(montoD)*cantidad
-      		 $(this).find(".monto-iva").text('-') 
-            $(this).find(".monto_total").text(number_format(montoTotal,2))           
-        }
+			var descuento         = inNum($(this).find(".descuento").html())
+			
+			}
+			if (toque == "iva"){
+			 $(this).find(".iva_porcentaje").toggleClass("btn-success");	
+			var iva  = inNum($(this).find(".iva_porcentaje").html())
+			}
+			if($(this).find(".descuento").hasClass("btn-success")){ //si hay descuento activo
+			var montoDecuento  = ((parseFloat(monto)*cantidad)*parseFloat(descuento))
+			var montoTotal = (parseFloat(monto)*cantidad) -parseFloat(montoDecuento)
+			var tieneDescuento = true
+			  $(this).find(".monto_total").text(number_format(montoTotal,2))      
+	        } else{
+	      		var montoTotal = parseFloat(monto)*cantidad
+	      		var tieneDescuento = false
+	            $(this).find(".monto_total").text(number_format(montoTotal,2))           
+	        }
 
-    	suma      = suma + montoTotal * cantidad;
+	        if($(this).find(".iva_porcentaje").hasClass("btn-success")){ // si hay iva activo
+	        	$(this).find("#ivaInput").val($(this).find(".iva_porcentaje").html()) 
+	        	if(tieneDescuento == true){
+	        		montoD = ((parseFloat(monto)*cantidad)-((parseFloat(monto)*cantidad)*parseFloat(descuento)))
+	        	}else{
+	        		montoD = monto
+	        	}
+			  var montoIva  = ((parseFloat(montoD)*cantidad)*parseFloat(iva))
+			   $(this).find(".monto-iva").text(number_format(montoIva,2)) 
+			  var montoTotal = (parseFloat(montoD)*cantidad) + parseFloat(montoIva)
+			  $(this).find(".monto_total").text(number_format(montoTotal,2))      
+	        } else{
+	        	$(this).find("#ivaInput").val('') 
+	      		var montoTotal = parseFloat(montoD)*cantidad
+	      		 $(this).find(".monto-iva").text('-') 
+	            $(this).find(".monto_total").text(number_format(montoTotal,2))           
+	        }
 
-	});
+		});
+	}
 
-	 $("#monto_total_registrar_fisica").val(number_format(suma, 2))
+	/// recorrido y calculo del total 
+	$("#tableRegistrarServiceFisica tbody .monto_total").each(function() {
+		suma = parseFloat(suma) + parseFloat($(this).html());
+	})
+
+	$("#monto_total_registrar_fisica").val(number_format(suma, 2))
 }
 
 
@@ -1321,6 +1389,7 @@ function consultarPaquetes(plan,proceso,campo_paquete){
 
 		base_url = document.getElementById('ruta').value;
 		$(tbody).on("click", "span.consultar", function(){
+
 			//----------------------------------------------------------------------
 
 			var data = table.row( $(this).parents("tr") ).data();
@@ -1404,7 +1473,7 @@ function consultarPaquetes(plan,proceso,campo_paquete){
 			}else{
 				$("#indicador_jornadas_mostrar").prop("checked", false);
 				$(".remove").css("display", "none")
-
+				console.log(data)
 				consultarServicios(data.data_service,'mostrar');
 
 			}
@@ -1452,7 +1521,6 @@ function consultarPaquetes(plan,proceso,campo_paquete){
 
 		        },
 		         success: function(respuesta){
-
 		         	count++;
 
 		         	var name_plan    = respuesta.plan.titulo+" "+respuesta.plan.descripcion
@@ -1485,6 +1553,10 @@ function consultarPaquetes(plan,proceso,campo_paquete){
 					    html+= "<td>"+select_plazos+"</td>";
 						html+= "<td>"+catn_trabajadores+"</td>";
 						html+= "<td>"+number_format(respuesta.paquete.precio, 2)+"</td>";
+						html+= "<td></td>";
+						html +=(item.iva)?`<td>${item.iva}</td>`:'<td></td>';
+						html+= (item.iva)?`<td class="monto-iva">${number_format(calculo_ivaver(item.iva,respuesta.paquete.precio),2)}</td>`:'<td></td>'
+						html+= `<td class ="total">${number_format(suma_all(item.iva,respuesta.paquete.precio),2)}</td>`;
 					html += "</tr>";
 
 					$(table).append(html);
@@ -1498,6 +1570,16 @@ function consultarPaquetes(plan,proceso,campo_paquete){
 		    });
         });
 	    
+	}
+
+	let calculo_ivaver =(iva,precio)=>{
+		console.log('prieto')
+		return (inNum(iva)*parseFloat(precio.replace(",","")));
+	}
+
+	let suma_all =(iva,precio)=>{
+		var iva = (iva)?calculo_ivaver(iva,precio):0;
+		return parseFloat(precio.replace(",","")) + parseFloat(iva);
 	}
 /* ------------------------------------------------------------------------------- */
 	/*
@@ -2296,12 +2378,15 @@ function consultarServicios(service,proceso){
 			$.each(data, function (key2, dataService) { 
 
 				$.each(service, function (key, item) { 
-					if(item.service == dataService._id.$id){
+					if(item.service == dataService._id.$id){					
 						html += "<tr>"
 							html += "<td>"+dataService.descripcion+"</td>"
 							html += "<td>"+item.monto+"</td>"
 							html += "<td>"+item.cantidad+"</td>"
-							html += "<td>"+(inNum(item.cantidad) * inNum(item.monto)) +"</td>"
+							html+= "<td></td>";
+							html +=(item.iva)?`<td>${item.iva}</td>`:'<td></td>';
+							html+= (item.iva)?`<td class="monto-iva">${number_format(calculo_iva_servicio(item.cantidad,item.monto,item.iva),2)}</td>`:'<td></td>';
+							html += "<td class ='monto_total'>"+number_format(calculo_total(item.cantidad,item.monto,item.iva), 2)+"</td>"
 						html += "</tr>"
 					}	
 				});
@@ -2320,4 +2405,20 @@ function consultarServicios(service,proceso){
 		
 	//----------------------------------------
 }
+
+
+let calculo_iva_servicio =(cantidad,monto,iva)=>{
+	if(iva){
+		var monto_prev = cantidad*monto;
+		return (inNum(iva)*monto_prev); 
+	}
+	return '';
+}
+
+let calculo_total =(cantidad,monto,iva)=>{
+	var total_iv = ( (iv = calculo_iva_servicio(cantidad,monto,iva)) && iv != '') ?iv:0;
+	var total    = cantidad*monto;
+	return parseFloat(total_iv) + parseFloat(total);
+}
+
 

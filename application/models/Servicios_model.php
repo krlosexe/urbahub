@@ -71,6 +71,7 @@ Class Servicios_model extends CI_Model
                 $res_tipo_serv = $this->mongo_db->where(array('_id'=>$id))->get('tipo_servicios');
                 $valor["titulo_servicio"] = $res_tipo_serv[0]["titulo"];
             }
+
             $valor["monto"] = number_format($valor["monto"],2);
             $valor["id_servicios"] = (string)$valor["_id"]->{'$id'};
             $listado[] = $valor;

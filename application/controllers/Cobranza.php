@@ -170,6 +170,29 @@ class Cobranza extends CI_Controller {
 		$this->array_sort_by2($listado2,"numero_recibo","operacion");               
 		echo json_encode($listado2);
 	}
+
+
+	public function getTotales(){
+
+		$formulario = $this->input->get();
+		$res_cobranza = $this->Cobranza_model->listado_cobranza_recibos($formulario["cobranza"]);
+		$recibos = $res_cobranza[0]["recibos"];
+		
+		$total  = 0;
+		$abonos = 0;
+		foreach ($recibos as $valor_recibos) {
+			
+			$abonos = $abonos + $valor_recibos->abono;
+			
+			if(($valor_recibos->concepto == "INSCRIPCION") || ($valor_recibos->concepto == "PRORRATA") || ($valor_recibos->concepto == "MENSUALIDAD") || ($valor_recibos->concepto == "RECARGOS") || ($valor_recibos->concepto == "RESERVACIÓN") || ($valor_recibos->concepto == "RESERVACIÓN CANCELADA")){
+				$total = $total + $valor_recibos->cargo;
+			}
+		}
+		echo json_encode(array("total" => $total, "saldo" => ($total - $abonos)));
+
+	}
+
+
 	/*
 	*
 	*/
