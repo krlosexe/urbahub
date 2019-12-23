@@ -834,7 +834,7 @@ function addPlan() {
 	var monto = parseFloat($("#monto_paquete_registrar_fisica_oculto").val())
 
 
-	var monto_input = "<input type='text' class='monto_input"+paquete_id+"' id='monto_tr' value='"+monto+"'>"
+	var monto_input = "<input type='hidden' class='monto_input"+paquete_id+"' id='monto_tr' value='"+monto+"'>"
 
 	var valid = true;
 	var descuento = getDescuento(paquete_id,'paquete');
@@ -906,7 +906,8 @@ function addService() {
 	var cantidad_input = "<input type='hidden' name='cantidad_service[]' class='cantidad_input' value='"+cantidad_service+"'>"
 
 	var valid = true;
-
+	var descuento = getDescuento(service_id,'servicio');
+	var iva = getIva();
 	// $("#tableRegistrarFisica tbody tr").each(function(){
 	// 	var id_paquete = $(this).find(".paquete_add").val();
 	// 	if(id_paquete == paquete_id){
@@ -927,7 +928,14 @@ function addService() {
 		html+= "<td>"+service_name+"</td>";
 		html+= "<td>"+number_format(monto_service, 2)+"</td>";
 		html+= "<td>"+cantidad_service+"</td>";
-		html += "<td>"+number_format((inNum(cantidad_service) * inNum(monto_service)), 2)+"</td>"
+		if(descuento !=""){
+		html += `<td><a class="btn btn-xs btn-danger descuento items-decuentos-conceptos" id_descuento_concepto="${service_id}" onclick="sumarService('descuento')">${descuento}%</td>`
+		}else{
+		html += "<td></td>"
+		}
+		html += `<td><a class="btn btn-xs btn-danger iva_porcentaje" onclick="sumarService('iva')">${iva}%</td>`
+		html+= `<td class="monto-iva"></td>`
+		html += "<td class ='monto_total'>"+number_format((inNum(cantidad_service) * inNum(monto_service)), 2)+"</td>"
 		
 	html += "</tr>";
 
@@ -1111,14 +1119,49 @@ function sumar(){
 
 
 
-function sumarService(){
+function sumarService(toque = ""){
 	var suma = 0;
 	var cantidad_services = 0;
 	$("#tableRegistrarServiceFisica tbody tr").each(function() {
     	var monto             = inNum($(this).find(".monto_input").val());
 		var cantidad          = inNum($(this).find(".cantidad_input").val());
+		if(toque == "descuento"){
+		 $(this).find(".descuento").toggleClass("btn-success");
+		var descuento         = inNum($(this).find(".descuento").html())
 		
-    	suma      = suma + monto * cantidad;
+		}
+		if (toque == "iva"){
+		 $(this).find(".iva_porcentaje").toggleClass("btn-success");	
+		var iva  = inNum($(this).find(".iva_porcentaje").html())
+		}
+		if($(this).find(".descuento").hasClass("btn-success")){ //si hay descuento activo
+		var montoDecuento  = ((parseFloat(monto)*cantidad)*parseFloat(descuento))
+		var montoTotal = (parseFloat(monto)*cantidad) -parseFloat(montoDecuento)
+		var tieneDescuento = true
+		  $(this).find(".monto_total").text(number_format(montoTotal,2))      
+        } else{
+      		var montoTotal = parseFloat(monto)*cantidad
+      		var tieneDescuento = false
+            $(this).find(".monto_total").text(number_format(montoTotal,2))           
+        }
+
+        if($(this).find(".iva_porcentaje").hasClass("btn-success")){ // si hay iva activo
+        	if(tieneDescuento == true){
+        		montoD = ((parseFloat(monto)*cantidad)-((parseFloat(monto)*cantidad)*parseFloat(descuento)))
+        	}else{
+        		montoD = monto
+        	}
+		var montoIva  = ((parseFloat(montoD)*cantidad)*parseFloat(iva))
+		 $(this).find(".monto-iva").text(number_format(montoIva,2)) 
+		var montoTotal = (parseFloat(montoD)*cantidad) + parseFloat(montoIva)
+		  $(this).find(".monto_total").text(number_format(montoTotal,2))      
+        } else{
+      		var montoTotal = parseFloat(montoD)*cantidad
+      		 $(this).find(".monto-iva").text('-') 
+            $(this).find(".monto_total").text(number_format(montoTotal,2))           
+        }
+
+    	suma      = suma + montoTotal * cantidad;
 
 	});
 
@@ -1144,8 +1187,6 @@ function sumarEdit(){
 	$("#monto_inscripcion_actualizar_fisica").val(number_format(monto_inscripcion, 2))
 
 	$("#monto_paquete_actualizar_fisica").val(number_format(suma, 2))
-
-
 	$("#monto_total_actualizar_fisica").val(number_format(suma + parseFloat(inNum($("#monto_inscripcion_actualizar_fisica").val())), 2))
 
 
@@ -1414,7 +1455,6 @@ function consultarPaquetes(plan,proceso,campo_paquete){
 
 		         	count++;
 
-		         	console.log(respuesta);
 		         	var name_plan    = respuesta.plan.titulo+" "+respuesta.plan.descripcion
 		         	var name_paquete = respuesta.paquete.descripcion
 
@@ -1823,7 +1863,7 @@ function enviar_emailC(){
 		
 
 		 function getIva(){
-		 var data = 15;
+		 var data = 16;
 		    /*  $.ajax({
 		            url:document.getElementById('ruta').value + 'Conceptos/getIva',
 		            type:'GET',
@@ -2140,7 +2180,8 @@ function GetPlanes(select, membresia){
 		}));
 		$.each(data, function(i, item){
 			if(item.status == true){
-				if((membresia == true && item.membresia == "S") || (membresia == false && item.membresia == "N")){
+				if((membresia == true && item.tipo == "S") || (membresia == false && item.tipo == "N")){
+					console.log('oli')
 					$(select).append($('<option>',
 					{
 					  value: item.id_servicios,

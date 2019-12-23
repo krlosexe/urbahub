@@ -373,7 +373,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							                            				<th>Servicio</th>
 							                            				<th>Monto PU</th>
 							                            				<th>Cantidad</th>
+																		<th>Descuento</th>
+							                            				<th colspan="2">I.V.A</th>
 																		<th>Total</th>
+																																				
+							                            			</tr>
+							                            			<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th></th>
+							                            				<th>%</th>
+							                            				<th>Monto</th>
+							                            				<th></th>
+							                            			<tr>
+							                            				
 							                            			</tr>
 							                            		</thead>
 							                            		<tbody></tbody>
